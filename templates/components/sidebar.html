@@ -1,0 +1,68 @@
+<div class="sidebar" id="sidebar">
+
+    <!-- TOP USER -->
+    <div class="sidebar-top">
+        <div class="user-info">
+            <div class="user-avatar">U</div>
+            <div class="user-text">
+                <p class="user-name">Anushka</p>
+                <span class="user-role">Explorer · Intermediate</span>
+            </div>
+
+            <button class="menu-toggle" onclick="toggleSidebar()">
+                <img src="{{ url_for('static', filename='images/menu.png') }}">
+            </button>
+        </div>
+    </div>
+
+    <!-- MENU -->
+    <div class="sidebar-menu">
+
+        <div class="menu-item active">
+            <img src="{{ url_for('static', filename='images/home.png') }}">
+            <span>Home Feed</span>
+        </div>
+
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/bolt.png') }}">
+            <span>Daily Brief</span>
+        </div>
+
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/tools-1.png') }}">
+            <span>Tools Library</span>
+        </div>
+
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/opportunity.png') }}">
+            <span>Student Opportunities</span>
+        </div>
+
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/saved.png') }}">
+            <span>Saved Items</span>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="sidebar-bottom">
+
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/bell.png') }}">
+            <span>Notifications</span>
+        </div>
+
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/settings.png') }}">
+            <span>Settings</span>
+        </div>
+
+        <div class="menu-item logout">
+            <img src="{{ url_for('static', filename='images/logout.png') }}">
+            <span>Log Out</span>
+        </div>
+
+    </div>
+
+</div>

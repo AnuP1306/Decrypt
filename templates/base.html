@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decrypt</title>
+
+    <!-- 🔤 Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap&family=Inter:wght@400;500&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+
+    <!-- 🎨 Main CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<script>
+    function toggleSidebar() {
+        document.getElementById("sidebar").classList.toggle("collapsed");
+    }
+    </script>
+
+<body>
+
+    <!-- 🔝 Navbar -->
+    {% include "components/navbar.html" %}
+
+    <div class="layout">
+
+        <!-- 📌 Sidebar -->
+        {% include "components/sidebar.html" %}
+
+        <!-- 📄 Main Content -->
+        <main class="main-content">
+            {% block content %}
+            {% endblock %}
+        </main>
+
+    </div>
+
+    <!-- 🔻 Footer -->
+    {% include "components/footer.html" %}
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("collapsed");
+            document.querySelector(".layout").classList.toggle("collapsed");
+        }
+        </script>
+
+</body>
+</html>
