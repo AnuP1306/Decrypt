@@ -1,0 +1,26 @@
+<nav class="navbar">
+
+    <!-- LEFT: Logo -->
+    <div class="nav-left">
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="logo" class="logo-img">
+        <h1 class="logo-text">Decrypt</h1>
+
+
+    </div>
+
+    <!-- CENTER: Search -->
+    <div class="nav-center">
+        <div class="search-wrapper">
+            <img src="{{ url_for('static', filename='images/search.png') }}" class="search-icon">
+            <input type="text" placeholder="Search topics, tools, news..." class="search-input">
+        </div>
+    </div>
+
+    <!-- RIGHT: Notification -->
+    <div class="nav-right">
+        <div class="notif-wrapper">
+            <img src="{{ url_for('static', filename='images/notification.png') }}" class="notif-icon">
+        </div>
+    </div>
+
+</nav>
