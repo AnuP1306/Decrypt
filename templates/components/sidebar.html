@@ -63,10 +63,10 @@
             <span>Settings</span>
         </div>
 
-        <div class="menu-item logout">
-            <img src="{{ url_for('static', filename='images/logout.png') }}">
-            <span>Log Out</span>
-        </div>
+        <a href="{{ url_for('home.landing') }}" class="menu-item logout">
+    <img src="{{ url_for('static', filename='images/logout.png') }}">
+    <span>Log Out</span>
+</a>
 
     </div>
 
