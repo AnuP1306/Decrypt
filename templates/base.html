@@ -1,49 +1,522 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Decrypt</title>
 
-    <!-- 🔤 Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap&family=Inter:wght@400;500&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&amp;family=Space+Grotesk:wght@500&amp;display=swap" rel="stylesheet">
 
-    <!-- 🎨 Main CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
-
-<script>
-    function toggleSidebar() {
-        document.getElementById("sidebar").classList.toggle("collapsed");
-    }
-    </script>
 
 <body>
 
-    <!-- 🔝 Navbar -->
-    {% include "components/navbar.html" %}
+<!-- Navbar -->
+<nav class="navbar">
 
-    <div class="layout">
+    <!-- LEFT: Logo -->
+    <div class="nav-left">
+        <img src="/static/images/logo.svg" alt="logo" class="logo-img">
+        <h1 class="logo-text">Decrypt</h1>
 
-        <!-- 📌 Sidebar -->
-        {% include "components/sidebar.html" %}
-
-        <!-- 📄 Main Content -->
-        <main class="main-content">
-            {% block content %}
-            {% endblock %}
-        </main>
 
     </div>
 
-    <!-- 🔻 Footer -->
-    {% include "components/footer.html" %}
-    <script>
-        function toggleSidebar() {
-            document.getElementById("sidebar").classList.toggle("collapsed");
-            document.querySelector(".layout").classList.toggle("collapsed");
-        }
-        </script>
+    <!-- CENTER: Search -->
+    <div class="nav-center">
+        <div class="search-wrapper">
+            <img src="/static/images/search.png" class="search-icon">
+            <input type="text" placeholder="Search topics, tools, news..." class="search-input">
+        </div>
+    </div>
 
-</body>
-</html>
+    <!-- RIGHT: Notification -->
+    <div class="nav-right">
+        <div class="notif-wrapper">
+            <img src="/static/images/notification.png" class="notif-icon">
+        </div>
+    </div>
+
+</nav>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+
+    <!-- TOP USER -->
+    <div class="sidebar-top">
+        <div class="user-info">
+            <div class="user-avatar">U</div>
+            <div class="user-text">
+                <p class="user-name">Anushka</p>
+                <span class="user-role">Explorer · Intermediate</span>
+            </div>
+
+            <button class="menu-toggle" onclick="toggleSidebar()">
+                <img src="/static/images/menu.png">
+            </button>
+        </div>
+    </div>
+
+    <!-- MENU -->
+    <div class="sidebar-menu">
+
+        <div class="menu-item active">
+            <img src="/static/images/home.png">
+            <span>Home Feed</span>
+        </div>
+
+        <div class="menu-item">
+            <img src="/static/images/bolt.png">
+            <span>Daily Brief</span>
+        </div>
+
+        <div class="menu-item">
+            <img src="/static/images/tools-1.png">
+            <span>Tools Library</span>
+        </div>
+
+        <div class="menu-item">
+            <img src="/static/images/opportunity.png">
+            <span>Student Opportunities</span>
+        </div>
+
+        <div class="menu-item">
+            <img src="/static/images/saved.png">
+            <span>Saved Items</span>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="sidebar-bottom">
+
+        <div class="menu-item">
+            <img src="/static/images/bell.png">
+            <span>Notifications</span>
+        </div>
+
+        <div class="menu-item">
+            <img src="/static/images/settings.png">
+            <span>Settings</span>
+        </div>
+
+        <div class="menu-item logout">
+            <img src="/static/images/logout.png">
+            <span>Log Out</span>
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- Main -->
+    <main class="main-content">
+        <div class="feed-container">
+
+            <!-- INTRO -->
+            <div class="feed-intro">
+                <h1 class="feed-title">
+                    News that actually 
+                    <span class="highlight">makes sense</span>
+                </h1>
+                <p class="feed-subtext">
+                    No jargon. No confusion. Just what's happening in the world — explained your way.
+                </p>
+            </div>
+
+            <!-- TODAY BRIEF -->
+            <div class="brief-card">
+                <div class="brief-left">
+                    <img src="/static/images/logo.svg" class="brief-icon">
+                    <div>
+                        <p class="brief-title">Today’s Brief</p>
+                        <span class="brief-sub">10 stories for you · Est. 8 min read</span>
+                    </div>
+                </div>
+
+                <button class="brief-btn">Start Reading →</button>
+            </div>
+
+            <!-- FILTER -->
+            <div class="feed-filters">
+                <button class="filter active">All</button>
+                <button class="filter">AI</button>
+                <button class="filter">IT</button>
+                <button class="filter">Electronics</button>
+            </div>
+
+            <!-- NEWS CARD -->
+            <div class="news-card" id="newsCard">
+
+                
+                <div class="card-image">
+                    <img src="/static/images/news1.1.png">
+            
+                    <span class="domain-pill ai">AI</span>
+            
+                    <div class="save-btn" onclick="toggleSave(this)">
+                        <img src="/static/images/save.svg">
+                    </div>
+                </div>
+            
+                
+                <div class="card-content">
+            
+                    
+                    <div id="cardContent">
+            
+                        <h2 class="card-title">
+                            OpenAI launches GPT-5 with reasoning capabilities
+                        </h2>
+            
+                        <p class="card-desc">
+                            OpenAI unveiled GPT-5 with advanced reasoning and multi-modal capabilities, marking a major leap in AI development.OpenAI unveiled GPT-5 with advanced reasoning and multi-modal capabilities, marking a major leap in AI development.
+                        </p>
+            
+                    </div>
+            
+                   
+                    <button class="next-btn" onclick="nextPage()">
+                        <img src="/static/images/arrow-right.png">
+                    </button>
+            
+                   
+                    <div class="card-actions">
+            
+                        <div class="left-actions">
+            
+                            <div class="action like-action" onclick="toggleLike(this)">
+                                <img src="/static/images/like.png" class="like-icon">
+                                <span class="like-count">32</span>
+                            </div>
+            
+                            <div class="action comment-action" onclick="toggleComment(this)">
+                                <img src="/static/images/comment.svg">
+                                <span class="comment-count">0</span>
+                            </div>
+            
+                            <div class="action">
+                                <img src="/static/images/share.svg">
+                                <span>Share</span>
+                            </div>
+
+                            <div class="level-toggle">
+                                <button class="level-btn active" onclick="setLevel('beginner', this)">B</button>
+                                <button class="level-btn" onclick="setLevel('intermediate', this)">I</button>
+                                <button class="level-btn" onclick="setLevel('advanced', this)">A</button>
+                            </div>
+            
+                        </div>
+            
+                        <div class="comment-section">
+                            <div class="comments-list"></div>
+            
+                            <div class="comment-input-box">
+                                <input type="text" placeholder="Write a comment...">
+                                <button onclick="postComment(this)">
+                                    <img src="/static/images/send.png">
+                                </button>
+                            </div>
+                        </div>
+            
+                        <button class="chatbot-btn" onclick="toggleBot(this)">
+                            <img src="/static/images/bot.svg">
+                            <span>Ask Bot</span>
+                        </button>
+            
+                    </div>
+            
+                    <div class="article-bot">
+                        <div class="bot-header">
+                            <div class="bot-title">
+                                <img src="/static/images/bot-white.png">
+                                <span>Article Bot — OpenAI drops GPT-5...</span>
+                            </div>
+                            <button class="close-bot" onclick="toggleBot(this)">✕</button>
+                        </div>
+            
+                        <div class="bot-body">
+                            <div class="bot-message">
+                                Hey! I’ve read the full article. Ask me anything — I’ll answer based on this article only.
+                            </div>
+            
+                            <div class="bot-suggestions">
+                                <span>TLDR?</span>
+                                <span>Why it matters?</span>
+                                <span>Explain simply</span>
+                            </div>
+            
+                            <div class="bot-input">
+                                <input type="text" placeholder="Ask about this article...">
+                                <button>
+                                    <img src="/static/images/send.png">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+            
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+</div>
+
+<!-- Footer -->
+
+
+<!-- SCRIPTS -->
+<script>
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("collapsed");
+}
+</script>
+
+<script>
+function toggleLike(el) {
+    const icon = el.querySelector(".like-icon");
+    const count = el.querySelector(".like-count");
+
+    let current = parseInt(count.innerText);
+
+    if (el.classList.contains("liked")) {
+        el.classList.remove("liked");
+        icon.src = "/static/images/like.png";
+        count.innerText = current - 1;
+    } else {
+        el.classList.add("liked");
+        icon.src = "/static/images/like-filled.png";
+        count.innerText = current + 1;
+    }
+}
+</script>
+
+<script>
+function toggleBot(btn) {
+    const card = btn.closest(".news-card");
+    const bot = card.querySelector(".article-bot");
+    btn.classList.toggle("active");
+    bot.classList.toggle("show");
+}
+</script>
+<script>
+function toggleSave(btn) {
+    btn.classList.toggle("saved");
+}</script>
+
+<script>
+    function toggleComment(btn) {
+        const card = btn.closest(".news-card");
+        const section = card.querySelector(".comment-section");
+        section.classList.toggle("show");
+    }
+    
+    function postComment(button) {
+        const input = button.previousElementSibling;
+        const text = input.value.trim();
+    
+        if (text === "") return;
+    
+        const card = button.closest(".news-card");
+        const list = card.querySelector(".comments-list");
+        const count = card.querySelector(".comment-count");
+    
+        const comment = document.createElement("div");
+        comment.className = "comment-item";
+    
+        comment.innerHTML = `
+            <div class="comment-avatar">Y</div>
+            <div class="comment-content">
+                <div class="comment-header">
+                    <strong>You</strong> Just now
+                </div>
+                <div class="comment-text">${text}</div>
+            </div>
+        `;
+    
+        list.appendChild(comment);
+    
+        count.innerText = parseInt(count.innerText) + 1;
+        input.value = "";
+    }
+    </script>
+    <script>
+//         let currentPage = 0;
+        
+//         // 🔥 DYNAMIC DATA (THIS WILL COME FROM API LATER)
+//         let currentLevel = "beginner";
+
+// const articleData = {
+//   beginner: [
+//     {
+//       title: "OpenAI launches GPT-5",
+//       desc: "A new AI model that is smarter and better at understanding tasks.",
+//       showImage: true
+//     },
+//     {
+//       title: "What does it do?",
+//       desc: "It helps users solve problems, answer questions, and write content easily.",
+//       showImage: true
+//     }
+//   ],
+
+//   intermediate: [
+//     {
+//       title: "OpenAI launches GPT-5 with reasoning",
+//       desc: "GPT-5 improves reasoning and multi-modal understanding.",
+//       showImage: true
+//     },
+//     {
+//       title: "Key improvement",
+//       desc: "Better context awareness and accuracy across tasks.",
+//       showImage: true
+//     }
+//   ],
+
+//   advanced: [
+//     {
+//       title: "GPT-5 introduces advanced reasoning architecture",
+//       desc: "The model significantly enhances inference and contextual depth.",
+//       showImage: true
+//     },
+//     {
+//       title: "Impact",
+//       desc: "Potential disruption across industries like healthcare, AI research, and automation.",
+//       showImage: true
+//     }
+//   ]
+// };
+//         // const articlePages = [
+//         //     {
+//         //         title: "OpenAI launches GPT-5 with reasoning capabilities",
+//         //         desc: "OpenAI unveiled GPT-5 with advanced reasoning and multi-modal capabilities, marking a major leap in AI development."
+//         //     },
+//         //     {
+//         //         title: "What makes GPT-5 different?",
+//         //         desc: "GPT-5 introduces deeper reasoning, better context retention, and improved accuracy across tasks."
+//         //     },
+//         //     {
+//         //         title: "Why this matters",
+//         //         desc: "This could transform industries like education, healthcare, and software development."
+//         //     }
+//         // ];
+
+//         function nextPage() {
+//     const pages = articleData[currentLevel];
+
+//     if (currentPage < pages.length - 1) {
+//         currentPage++;
+//         updatePage();
+//     }
+// }
+
+// function prevPage() {
+//     if (currentPage > 0) {
+//         currentPage--;
+//         updatePage();
+//     }
+// }
+
+// function updatePage() {
+//     const content = document.getElementById("cardContent");
+//     const image = document.getElementById("cardImage");
+
+//     const pages = articleData[currentLevel];
+//     const page = pages[currentPage];
+
+//     content.style.opacity = 0;
+
+//     setTimeout(() => {
+//         content.innerHTML = `
+//             <h2 class="card-title">${page.title}</h2>
+//             <p class="card-desc">${page.desc}</p>
+//         `;
+
+//         content.style.opacity = 1;
+//     }, 150);
+// }
+// function setLevel(level, btn) {
+//     currentLevel = level;
+//     currentPage = 0;
+
+//     document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
+//     btn.classList.add("active");
+
+//     updatePage();
+// }
+
+// updatePage();
+        
+//         // function nextPage() {
+//         //     currentPage++;
+        
+//         //     if (currentPage >= articlePages.length) {
+//         //         currentPage = 0; // loop back
+//         //     }
+        
+//         //     const content = document.getElementById("cardContent");
+        
+//         //     // fade effect
+//         //     content.style.opacity = 0;
+        
+//         //     setTimeout(() => {
+//         //         content.innerHTML = `
+//         //             <h2 class="card-title">${articlePages[currentPage].title}</h2>
+//         //             <p class="card-desc">${articlePages[currentPage].desc}</p>
+//         //         `;
+//         //         content.style.opacity = 1;
+//         //     }, 200);
+//         // }
+//         </script>
+
+<!-- let currentLevel = "beginner";
+
+const articleData = {
+  beginner: [
+    {
+      title: "OpenAI launches GPT-5",
+      desc: "A new AI model that is smarter and better at understanding tasks.",
+      showImage: true
+    },
+    {
+      title: "What does it do?",
+      desc: "It helps users solve problems, answer questions, and write content easily.",
+      showImage: true
+    }
+  ],
+
+  intermediate: [
+    {
+      title: "OpenAI launches GPT-5 with reasoning",
+      desc: "GPT-5 improves reasoning and multi-modal understanding.",
+      showImage: true
+    },
+    {
+      title: "Key improvement",
+      desc: "Better context awareness and accuracy across tasks.",
+      showImage: true
+    }
+  ],
+
+  advanced: [
+    {
+      title: "GPT-5 introduces advanced reasoning architecture",
+      desc: "The model significantly enhances inference and contextual depth.",
+      showImage: true
+    },
+    {
+      title: "Impact",
+      desc: "Potential disruption across industries like healthcare, AI research, and automation.",
+      showImage: true
+    }
+  ]
+}; -->
+<script src="/static/js/news.js"></script>
+
+
+
+</body></html>
