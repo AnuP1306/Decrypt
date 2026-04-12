@@ -8,6 +8,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/rightSidebar.css">
 </head>
 
 <body>
@@ -263,6 +264,80 @@
 
         </div>
     </main>
+    <!-- ✅ RIGHT SIDEBAR ADD THIS -->
+    <div class="right-sidebar">
+
+        <!-- CHATBOT -->
+        <div class="rs-card chatbot-card">
+            <div class="rs-header">
+                <img src="/static/images/bot.png">
+                <span>ChatBot</span>
+            </div>
+
+            <div class="chat-body" id="chatBody">
+                <div class="chat-msg bot">
+                    Ask me anything about news or tools.
+                </div>
+            </div>
+
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="Ask me anything...">
+                <button onclick="sendChat()">
+                    <img src="/static/images/send.png">
+                </button>
+            </div>
+        </div>
+
+        <!-- SAVED NEWS -->
+        <div class="rs-card">
+            <div class="rs-header">
+                <img src="/static/images/bookmark.png">
+                <span>Saved News</span>
+            </div>
+
+            <p class="rs-empty">No saved articles yet.</p>
+
+            <span class="rs-link" onclick="goToSaved()">View All →</span>
+        </div>
+
+        <!-- TRENDING TOOLS -->
+        <div class="rs-card">
+            <div class="rs-header">
+                <img src="/static/images/tools-2.png">
+                <span>Trending Tools</span>
+            </div>
+
+            <div class="tools-grid">
+
+                <div class="tool" onclick="openTool('https://elicit.org')">
+                    E<br><span>Elicit</span>
+                </div>
+            
+                <div class="tool" onclick="openTool('https://uizard.io')">
+                    U<br><span>Uizard</span>
+                </div>
+            
+                <div class="tool" onclick="openTool('https://codeium.com')">
+                    C<br><span>Codeium</span>
+                </div>
+            
+                <div class="tool" onclick="openTool('https://flourish.studio')">
+                    F<br><span>Flourish</span>
+                </div>
+            
+                <div class="tool" onclick="openTool('https://podcast.adobe.com')">
+                    A<br><span>Adobe Podcast</span>
+                </div>
+            
+                <div class="tool" onclick="openTool('https://tome.app')">
+                    T<br><span>Tome</span>
+                </div>
+            
+            </div>
+        </div>
+
+    </div>
+</div>
 
 </div>
 
@@ -516,6 +591,39 @@ const articleData = {
   ]
 }; -->
 <script src="/static/js/news.js"></script>
+<script>
+    function openTool(url) {
+        window.open(url, "_blank");
+    }
+    </script>
+    <script>
+        function sendChat() {
+            const input = document.getElementById("chatInput");
+            const text = input.value.trim();
+            if (!text) return;
+        
+            const chatBody = document.getElementById("chatBody");
+        
+            // user msg
+            chatBody.innerHTML += `<div class="chat-msg user">${text}</div>`;
+        
+            // fake bot response
+            chatBody.innerHTML += `<div class="chat-msg bot">
+                This is a demo response. AI will be connected later.
+            </div>`;
+        
+            input.value = "";
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+        
+        // 🔥 SAVED BUTTON
+        function goToSaved() {
+            alert("Saved page not built yet");
+        
+            // ✅ FUTURE:
+            // window.location.href = "/saved";
+        }
+        </script>
 
 
 
