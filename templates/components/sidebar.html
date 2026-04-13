@@ -17,15 +17,11 @@
 
     <!-- MENU -->
     <div class="sidebar-menu">
-<a href="{{ url_for('home.home') }}"
-   class="menu-item {% if active_page == 'home' %}active{% endif %}">
-    <img src="{{ url_for('static', filename='images/home.png') }}">
-    <span>Home Feed</span>
-</a>
-     <!-- <div class="menu-item active"> -->
-            <!-- <img src="{{ url_for('static', filename='images/home.png') }}"> -->
-            <!-- <span>Home Feed</span> -->
-        <!-- </div> -->
+
+        <div class="menu-item active">
+            <img src="{{ url_for('static', filename='images/home.png') }}">
+            <span>Home Feed</span>
+        </div>
 
         <div class="menu-item">
             <img src="{{ url_for('static', filename='images/bolt.png') }}">
@@ -37,11 +33,10 @@
             <span>Tools Library</span>
         </div>
 
-      <a href="{{ url_for('opportunities.opportunities_page') }}"
-   class="menu-item {% if active_page == 'opportunities' %}active{% endif %}">
-    <img src="{{ url_for('static', filename='images/opportunity.png') }}">
-    <span>Student Opportunities</span>
-</a>
+        <div class="menu-item">
+            <img src="{{ url_for('static', filename='images/opportunity.png') }}">
+            <span>Student Opportunities</span>
+        </div>
 
         <div class="menu-item">
             <img src="{{ url_for('static', filename='images/saved.png') }}">
