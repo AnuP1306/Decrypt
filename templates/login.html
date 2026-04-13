@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Decrypt</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+
+<body>
+
+<div class="login-wrapper">
+
+  <!-- LEFT PANEL -->
+  <div class="login-left">
+
+     <div class="login-left-content">   <!-- 🔥 REQUIRED -->
+
+    <img src="{{ url_for('static', filename='images/logo.svg') }}" class="login-logo">
+
+    <h1>DECRYPT</h1>
+    <p class="tagline">
+      "the tech news platform for people who actually want to know what’s going on"
+    </p>
+
+ <div class="features">
+
+  <div class="feature-item">
+    <div class="icon-circle">
+      <img src="{{ url_for('static', filename='images/thunder.png') }}">
+    </div>
+    <span>Smart summaries, no fluff</span>
+    
+  </div>
+
+  <div class="feature-item">
+    <div class="icon-circle">
+      <img src="{{ url_for('static', filename='images/thunder.png') }}">
+    </div>
+    <span>AI bot on every article</span>
+  </div>
+
+  <div class="feature-item">
+    <div class="icon-circle">
+      <img src="{{ url_for('static', filename='images/thunder.png') }}">
+    </div>
+    <span>Student perks unlocked</span>
+  </div>
+
+</div>
+
+    <div class="login-rings">
+  <div class="ring ring-blue"></div>
+  <div class="ring ring-green"></div>
+</div>
+
+</div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="login-right">
+
+    <div class="login-box">   <!-- ✅ ADD THIS -->
+
+    <a href="{{ url_for('home.landing') }}" class="back">← Back to home</a>
+
+    <h2>Welcome back</h2>
+    <p class="sub">you were gone? we missed you bestie</p>
+
+    <form>
+
+      <label>Email</label>
+      <input type="email" placeholder="your@email.com">
+
+      <label>Password</label>
+      <input type="password" placeholder="your secret stuff">
+      
+      <div class="forgot">
+  <a href="#">Forgot password?</a>
+</div>
+
+      <button class="login-btn">Log In →</button>
+
+    </form>
+
+    <div class="divider">or continue with</div>
+
+    <div class="socials">
+      <button>Google</button>
+      <button>GitHub</button>
+    </div>
+
+    <p class="signup">
+      New here? <a href="#">Create an account</a>
+    </p>
+
+    </div>   <!-- ✅ END -->
+
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -12,7 +12,14 @@ def landing():
 def home():
     return render_template("home.html", active_page="home")
 
+# LOGIN PAGE
+@home_bp.route('/login')
+def login():
+    return render_template("login.html")
+
 # ✅ LOGOUT → back to landing
 @home_bp.route('/logout')
 def logout():
     return redirect(url_for('home.landing'))
+
+
