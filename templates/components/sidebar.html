@@ -18,7 +18,7 @@
     <!-- MENU -->
     <div class="sidebar-menu">
 
-        <div class="menu-item active">
+        <div class="menu-item ">
             <img src="{{ url_for('static', filename='images/home.png') }}">
             <span>Home Feed</span>
         </div>
@@ -28,10 +28,10 @@
             <span>Daily Brief</span>
         </div>
 
-        <div class="menu-item">
-            <img src="{{ url_for('static', filename='images/tools-1.png') }}">
-            <span>Tools Library</span>
-        </div>
+       <a href="/tools" class="menu-item {% if request.path == '/tools' %}active{% endif %}">
+    <img src="{{ url_for('static', filename='images/tools-1.png') }}">
+    <span>Tools Library</span>
+</a>
 
         <div class="menu-item">
             <img src="{{ url_for('static', filename='images/opportunity.png') }}">
