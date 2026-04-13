@@ -10,13 +10,10 @@
 /* Container */
 .container {
   max-width: 1100px;
-    transform: translateY(-40px);   /* pulls content slightly UP */  
-  margin-top: 60px;   /* pushes entire hero content down */
-  /* margin: 0 auto; */
+  margin: 0 auto;
   padding: 0 20px;
-   position: relative;
-    z-index: 2;
-    
+  position: relative;
+  z-index: 2;
 }
 
 .landing-nav {
@@ -126,7 +123,7 @@
 .hero {
   min-height: 100vh;
   display: block;            /* ❗ remove flex centering */
-  padding-top: 120px;        /* pushes hero content DOWN */
+ padding-top: 160px;   /* ✅ pushes content BELOW navbar */
   text-align: center;
   position: relative;
   overflow: hidden;
