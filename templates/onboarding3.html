@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Onboarding - Step 3</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/onboarding3.css') }}">
+</head>
+
+<body>
+
+<div class="onboard-wrapper">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+
+    <div class="logo-row">
+      <img src="{{ url_for('static', filename='images/logo.svg') }}">
+      <span class="logo-text">DECRYPT</span>
+    </div>
+
+    <div class="progress-info">3 of 3</div>
+
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar">
+    <div class="progress-fill step3"></div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <div class="step-pill">⚡ Step 3</div>
+
+    <h1>
+      what topics do you<br>
+      want more of?
+    </h1>
+
+    <p class="subtitle">
+      your feed will be based on this (pick as many as you want)
+    </p>
+
+    <!-- OPTIONS -->
+    <div class="options">
+
+      <div class="option"><span>🤖</span> AI & Machine Learning</div>
+      <div class="option"><span>⛓️</span> Web3 & Crypto</div>
+      <div class="option"><span>💰</span> Startups & Funding</div>
+      <div class="option"><span>🛠️</span> Cool new tools</div>
+      <div class="option"><span>⚖️</span> Big Tech & Policy</div>
+      <div class="option"><span>🎮</span> Gaming & Metaverse</div>
+      <div class="option"><span>🔬</span> Science & Research</div>
+      <div class="option"><span>💼</span> Jobs & Internships</div>
+
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions">
+
+      <a href="{{ url_for('auth.onboarding2') }}" class="back-link">← back</a>
+
+      <button type="button" class="continue-btn">
+        Let's go! →
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const options = document.querySelectorAll('.option');
+const btn = document.querySelector('.continue-btn');
+
+let selected = new Set();
+
+options.forEach(option => {
+  option.addEventListener('click', () => {
+
+    const text = option.innerText.trim();
+
+    if (selected.has(text)) {
+      selected.delete(text);
+      option.classList.remove('active');
+    } else {
+      selected.add(text);
+      option.classList.add('active');
+    }
+
+    if (selected.size > 0) {
+      btn.classList.add('enabled');
+    } else {
+      btn.classList.remove('enabled');
+    }
+  });
+});
+
+
+// 🚀 FINAL SAVE
+btn.addEventListener('click', async () => {
+  if (selected.size === 0) return;
+
+  const data = {
+    step1: JSON.parse(sessionStorage.getItem('onboarding_step1') || "[]"),
+    step2: sessionStorage.getItem('onboarding_step2'),
+    step3: [...selected]
+  };
+
+  console.log("FINAL DATA:", data);
+
+  try {
+    await fetch("/save-onboarding", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+
+    // 🧹 clear temp storage
+    sessionStorage.clear();
+
+    // 🚀 go to dashboard (IMPORTANT CHANGE)
+    window.location.href = "/home"; //[it should be "/dashboard"]
+
+  } catch (err) {
+    console.error("Save failed:", err);
+  }
+});
+</script>
+
+</script>
+
+
+</body>
+</html>

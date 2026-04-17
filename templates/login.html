@@ -69,27 +69,27 @@
     <h2>Welcome back</h2>
     <p class="sub">you were gone? we missed you bestie</p>
 
-    <form>
+   <form onsubmit="event.preventDefault(); login();">
 
-      <label>Email</label>
-      <input type="email" placeholder="your@email.com">
+  <label>Email</label>
+  <input type="email" id="email" placeholder="your@email.com">
 
-      <label>Password</label>
-      <input type="password" placeholder="your secret stuff">
-      
-      <div class="forgot">
-  <a href="#">Forgot password?</a>
-</div>
+  <label>Password</label>
+  <input type="password" id="password" placeholder="your secret stuff">
+  
+  <div class="forgot">
+    <a href="#">Forgot password?</a>
+  </div>
 
-      <button class="login-btn">Log In →</button>
+  <button type="submit" class="login-btn">Log In →</button>
 
-    </form>
+</form>
 
     <div class="divider">or continue with</div>
 
     <div class="socials">
-      <button>Google</button>
-      <button>GitHub</button>
+     <button type="button" onclick="googleLogin()">Google</button>
+     <button type="button" onclick="githubLogin()">GitHub</button>
     </div>
 
     <p class="signup">
@@ -101,6 +101,100 @@
   </div>
 
 </div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+  import { 
+    getAuth, 
+    signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    GithubAuthProvider,
+    signInWithPopup
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDfVRHh1CyuAaflxyiN4tBhb3K0LbzoWHg",
+    authDomain: "decrypt-auth-b999d.firebaseapp.com",
+    projectId: "decrypt-auth-b999d"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider();
+
+  window.login = function () {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(userCredential => userCredential.user.getIdToken())
+      .then(token => {
+        return fetch("/verify-token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ token })
+        });
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          window.location.href = "/home";
+        }
+      })
+      .catch(err => alert(err.message));
+  };
+
+let isLoggingIn = false;
+
+window.googleLogin = function () {
+  if (isLoggingIn) return;
+  isLoggingIn = true;
+
+  signInWithPopup(auth, googleProvider)
+    .then(result => result.user.getIdToken())
+    .then(token => {
+      return fetch("/verify-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token })
+      });
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "success") {
+        window.location.href = "/home";
+      }
+    })
+    .catch(err => alert(err.message))
+    .finally(() => isLoggingIn = false);
+};
+
+window.githubLogin = function () {
+  signInWithPopup(auth, githubProvider)
+    .then(result => result.user.getIdToken())
+    .then(token => {
+      return fetch("/verify-token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ token })
+      });
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.status === "success") {
+        window.location.href = "/home";
+      }
+    })
+    .catch(err => alert(err.message));
+};
+
+</script>
 
 </body>
 </html>

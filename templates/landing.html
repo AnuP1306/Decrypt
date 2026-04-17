@@ -11,9 +11,12 @@
     </div>
 
     <div class="nav-right">
-    <a href="{{ url_for('home.login') }}" class="nav-login">Login</a>
-      <a href="/signup" class="nav-btn">Get Started →</a>
-    </div>
+  <a href="{{ url_for('auth.login_page') }}" class="nav-login">Login</a>
+
+  <a href="{{ url_for('auth.signup_page') }}" class="nav-btn">
+    Get Started →
+  </a>
+</div>
 
   </div>
 </nav>

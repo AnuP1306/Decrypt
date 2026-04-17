@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Onboarding - Step 2</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/onboarding2.css') }}">
+</head>
+
+<body>
+
+<div class="onboard-wrapper">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+
+    <div class="logo-row">
+      <img src="{{ url_for('static', filename='images/logo.svg') }}">
+      <span class="logo-text">DECRYPT</span>
+    </div>
+
+    <div class="progress-info">2 of 3</div>
+
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-bar">
+    <div class="progress-fill step2"></div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <div class="step-pill">⚡ Step 2</div>
+
+    <h1>
+      how much do you<br>
+      already know?
+    </h1>
+
+    <p class="subtitle">
+      no judgment, seriously
+    </p>
+
+    <!-- OPTIONS -->
+    <div class="options">
+
+      <div class="option">
+        <span>🌱</span>
+        Beginner — I know what WiFi is and that’s it
+      </div>
+
+      <div class="option">
+        <span>📈</span>
+        Intermediate — I’ve used ChatGPT more than Google
+      </div>
+
+      <div class="option">
+        <span>🔥</span>
+        Advanced — I have opinions about programming languages
+      </div>
+
+      <div class="option">
+        <span>👾</span>
+        Expert — I’m only here to fact-check y’all
+      </div>
+
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions">
+
+      <a href="{{ url_for('auth.onboarding1') }}" class="back-link">← back</a>
+
+      <button 
+        type="button"
+        class="continue-btn"
+        data-url="{{ url_for('auth.onboarding3') }}">
+        Continue →
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const options = document.querySelectorAll('.option');
+const btn = document.querySelector('.continue-btn');
+
+let selected = null;
+
+options.forEach(option => {
+  option.addEventListener('click', () => {
+
+    // single select
+    options.forEach(o => o.classList.remove('active'));
+    option.classList.add('active');
+
+    selected = option.innerText.trim();
+
+    btn.classList.add('enabled');
+  });
+});
+
+
+// 🚀 CONTINUE BUTTON
+btn.addEventListener('click', () => {
+  if (!selected) return;
+
+  // ✅ SAVE STEP 2
+  sessionStorage.setItem('onboarding_step2', selected);
+
+  console.log("Step2 saved:", selected);
+
+  // 👉 go to step 3
+  window.location.href = "/onboarding3";
+});
+</script>
+
+</body>
+</html>
