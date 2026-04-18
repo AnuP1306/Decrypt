@@ -183,6 +183,10 @@ h1, h2, h3 {
   flex-direction: column;
   gap: 8px;
 }
+.sidebar a {
+  text-decoration: none;
+  color: inherit;   /* keeps white */
+}
 
 /* ITEM */
 .menu-item {
@@ -203,7 +207,7 @@ h1, h2, h3 {
 
 /* HOVER */
 .menu-item:hover {
-  background: rgba(255, 255, 255, 0.1);
+   background: #3f38e8;
   color: white;
 }
 

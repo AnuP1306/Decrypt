@@ -1,0 +1,562 @@
+{% extends "base.html" %}
+
+<!-- ✅ CSS goes here -->
+{% block extra_css %}
+
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="tools-page">
+
+  <a href="{{ url_for('home.home') }}" class="back-btn">
+  ← Back
+</a>
+    <div class="top-label">
+  <span class="icon">🔧</span>
+  TOOLS LIBRARY
+</div>
+
+    <!-- Heading -->
+    <h1 class="page-title">AI tools that actually
+         <span class="heighlight">go hard</span> 
+        </h1>
+    <p class="page-subtitle">The lesser-known, criminally underrated AI tools and sites. Free stuff prioritized. Your LinkedIn bio is about to level up.</p>
+
+     <div class="stats">
+  <div class="card2">
+    <h2>200+</h2>
+    <p>Tools Listed</p>
+  </div>
+  <div class="card2">
+    <h2>80%</h2>
+    <p>Free Tools</p>
+  </div>
+  <div class="card2">
+    <h2>Weekly</h2>
+    <p>Updated</p>
+  </div>
+</div>
+
+    <!-- Search -->
+    <div class="search-box">
+        <input type="text" placeholder="Search tools..." id="searchInput" />
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="categories">
+  <button class="active" data-filter="all">All</button>
+  <button data-filter="research">Research</button>
+  <button data-filter="visualization">Visualization</button>
+  <button data-filter="audio">Audio</button>
+  <button data-filter="presentation">Presentation</button>
+  <button data-filter="design">Design</button>
+  <button data-filter="coding">Coding</button>
+</div>
+    <!-- tool cards -->
+
+
+    <!-- research Cards 1 -->
+    <div class="tools-list">
+<div class="card" data-category="research">
+
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="Elicit">   <div class="rating">⭐ 4.8</div>
+
+    <div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">Research</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <h3>Elicit</h3>
+    <p>
+      AI research assistant that finds and summarizes academic papers. Much easier than traditional research tools.
+    </p>
+
+    <div class="hashtags">
+     <span>#Research</span><span>#AI</span><span>#Papers</span>
+    </div>
+
+    <a href="https://elicit.com" target="_blank" class="btn">Check it out ↗</a>
+  </div>
+
+</div>
+
+<!-- card 2 -->
+ <div class="card" data-category="research">
+
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="Scite">
+    <div class="rating">⭐ 4.6</div>
+
+    <div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">Coding</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <h3>Scite</h3>
+    <p>
+     Shows whether research papers are supported or contradicted by other studies.</p>
+ <div class="hashtags">
+       <span>#Citations</span><span>#Research</span><span>#AI</span>
+    </div>
+
+    <a href="https://scite.ai" target="_blank" class="btn" >Check it out ↗</a>
+  </div>
+
+</div>
+
+<!-- card 3 -->
+ <div class="card" data-category="research">
+
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/4149/4149678.png" alt="Consensus">
+    <div class="rating">⭐ 4.7</div>
+
+    <div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">Audio</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <h3>Consensus</h3>
+    <p>
+    Answers questions using only scientific studies and research-backed evidence. </p>
+  <div class="hashtags">
+     <span>#Science</span><span>#Research</span><span>#Facts</span>
+    </div>
+
+
+    <a href="https://consensus.app" target="_blank" class="btn">Check it out ↗</a>
+  </div>
+
+</div>
+
+<!-- Design cards -->
+ <div class="card" data-category="design">
+
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/1821/1821923.png" alt="Visily"> 
+   <div class="rating">⭐ 4.9</div>
+
+    <div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">Design</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <h3>Visily</h3>
+    <p>
+     AI UI design tool that converts text into app screens. Beginner-friendly alternative to Figma.
+    </p>
+ <div class="hashtags">
+       <span>#UI</span><span>#Design</span><span>#AI</span>
+    </div>
+
+
+    <a href="https://visily.ai"  target="_blank" class="btn">Check it out ↗</a>
+  </div>
+
+</div> 
+<!-- card 2 -->
+ <div class="card" data-category="design">
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="Uizard"> 
+   <div class="rating">⭐ 4.9</div>
+
+   <div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">design</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <h3>Uizard</h3>
+    <p>
+     Transforms sketches into real app designs instantly using AI. </p>
+
+    <div class="hashtags">
+       <span>#Prototype</span><span>#Design</span><span>#AI</span>
+    </div>
+ <a  href="https://uizard.io" target="_blank" class="btn">Check it out ↗</a>
+    
+  </div>
+</div>
+
+<!-- card 3 -->
+
+<div class="card" data-category="design">
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/1006/1006771.png" alt="Shots">   
+   <div class="rating">⭐ 4.9</div>
+ <div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">design</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <h3>Shots.so</h3>
+    <p>
+     Create stunning mockups instantly for your UI screenshots and portfolios. </p>
+
+    <div class="hashtags">
+        <span>#Design</span><span>#Mockup</span><span>#UI</span>
+    </div>
+ <a href="https://shots.so" target="_blank" class="btn">Check it out ↗</a>
+    
+  </div>
+</div>
+     
+<!-- Coding cards 1 -->
+ <div class="card" data-category="design">
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968350.png" alt="Codeium"> 
+   <div class="rating">⭐ 4.9</div>
+   <div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">design</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <h3>Codeium</h3>
+    <p>Free AI coding assistant similar to GitHub Copilot with powerful autocomplete.</p>
+    <div class="hashtags">
+      <span>#Coding</span><span>#AI</span><span>#Dev</span>
+    </div>
+<a href="https://codeium.com" target="_blank" class="btn">Check it out ↗</a>
+    
+  </div>
+</div>      
+
+
+<!-- card 2 -->
+ <div class="card" data-category="coding">
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/2103/2103633.png" alt="Mutable AI">   
+   <div class="rating">⭐ 4.9</div>
+ <div class="tags-top">
+
+      <span class="tag free">FREE</span>
+      <span class="tag category">coding</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <h3>Mutable AI</h3>
+    <p>AI that edits, improves and explains your code directly inside your editor.</p>
+    <div class="hashtags">
+      <span>#Code</span><span>#AI</span><span>#Productivity</span>
+    </div>
+ <a href="https://mutable.ai" target="_blank" class="btn">Check it out ↗</a>
+    
+  </div>
+</div> 
+
+<!-- card 3 -->
+ <div class="card" data-category="coding">
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/906/906334.png" alt="Pieces">    
+   <div class="rating">⭐ 4.9</div>
+<div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">coding</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+     <h3>Pieces</h3>
+    <p>Automatically saves useful code snippets so you never lose important code again.</p>
+    <div class="hashtags">
+      <span>#Snippets</span><span>#Dev</span><span>#Tools</span>
+    </div>
+ <a href="https://pieces.app" target="_blank" class="btn">Check it out ↗</a>
+    
+  </div>
+</div>   
+
+<!-- visualization card 1 -->
+ <div class="card" data-category="visualization">
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Flourish">    
+   <div class="rating">⭐ 4.9</div>
+<div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">visualization</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <h3>Flourish</h3>
+    <p>Create interactive charts and storytelling dashboards easily.</p>
+    <div class="hashtags">
+      <span>#Data</span><span>#Charts</span><span>#Visualization</span>
+    </div>
+ <a href="https://flourish.studio"  target="_blank" class="btn">Check it out ↗</a>
+    
+  </div>
+</div>   
+
+
+<!-- card 2 -->
+ <div class="card" data-category="visualization">
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/2920/2920349.png" alt="RAWGraphs">    
+   <div class="rating">⭐ 4.9</div>
+<div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">visualization</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+   <h3>RAWGraphs</h3>
+    <p>Advanced open-source tool for creating unique and complex data visualizations.</p>
+    <div class="hashtags">
+      <span>#Graphs</span><span>#Data</span><span>#OpenSource</span>
+    </div>
+ <a href="https://rawgraphs.io" target="_blank" class="btn">Check it out ↗</a>
+    
+  </div>
+</div>   
+
+
+
+<!-- card 3 -->
+ <div class="card" data-category="visualization">
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/2721/2721273.png" alt="ChartAI">    
+   <div class="rating">⭐ 4.9</div>
+<div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">visualization</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+     <h3>ChartAI</h3>
+    <p>Generate charts instantly by simply describing your data in text.</p>
+    <div class="hashtags">
+      <span>#AI</span><span>#Charts</span><span>#Data</span>
+    </div>
+ <a  href="#" target="_blank" class="btn">Check it out ↗</a>
+    
+  </div>
+</div>   
+
+
+
+<!-- audio card 1 -->
+ <div class="card" data-category="audio">
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/5968/5968520.png" alt="Adobe Podcast">    
+   <div class="rating">⭐ 4.9</div>
+<div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">audio</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+     <h3>Adobe Podcast AI</h3>
+    <p>Enhance your voice to studio-quality audio using AI.</p>
+    <div class="hashtags">
+      <span>#Audio</span><span>#AI</span><span>#Podcast</span>
+    </div>
+ <a href="https://podcast.adobe.com"  target="_blank" class="btn">Check it out ↗</a>
+    
+  </div>
+</div>   
+
+
+<!-- card 2 -->
+ <div class="card" data-category="audio">
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/727/727269.png" alt="Krisp">    
+   <div class="rating">⭐ 4.9</div>
+<div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">audio</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+   <h3>Krisp</h3>
+    <p>Removes background noise from calls and recordings in real time.</p>
+    <div class="hashtags">
+      <span>#Audio</span><span>#NoiseCancel</span><span>#Meetings</span>
+    </div>
+ <a href="https://krisp.ai" target="_blank" class="btn">Check it out ↗</a>
+    
+  </div>
+</div>   
+
+
+
+<!-- card 3 -->
+ <div class="card" data-category="audio">
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/727/727245.png" alt="Auphonic">    
+   <div class="rating">⭐ 4.9</div>
+<div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">audio</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+     <h3>Auphonic</h3>
+    <p>Automatically balances audio levels for professional-quality sound.</p>
+    <div class="hashtags">
+      <span>#Audio</span><span>#Editing</span><span>#Podcast</span>
+    </div>
+ <a  href="https://auphonic.com" target="_blank" class="btn">Check it out ↗</a>
+    
+  </div>
+</div>   
+
+
+
+
+
+
+<!--presentation 1 -->
+ <div class="card" data-category="presentation">
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/1828/1828919.png" alt="Gamma">    
+   <div class="rating">⭐ 4.9</div>
+<div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">presentation</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <h3>Gamma</h3>
+    <p>Create beautiful AI-powered presentations faster than PowerPoint.</p>
+    <div class="hashtags">
+      <span>#Presentation</span><span>#AI</span><span>#Slides</span>
+    </div>
+ <a href="https://gamma.app"  target="_blank" class="btn">Check it out ↗</a>
+    
+  </div>
+</div>   
+
+
+<!-- card 2 -->
+ <div class="card" data-category="presentation">
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="Tome">    
+   <div class="rating">⭐ 4.9</div>
+<div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">presentation</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+     <h3>Tome</h3>
+    <p>Story-based AI presentation tool focused on narrative storytelling.</p>
+    <div class="hashtags">
+      <span>#Storytelling</span><span>#Slides</span><span>#AI</span>
+    </div>
+ <a href="https://tome.app" target="_blank" class="btn">Check it out ↗</a>
+    
+  </div>
+</div>   
+
+
+
+<!-- card 3 -->
+ <div class="card" data-category="presentation">
+  <div class="card-img">
+<img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" alt="Decktopus">   
+   <div class="rating">⭐ 4.9</div>
+ <div class="tags-top">
+      <span class="tag free">FREE</span>
+      <span class="tag category">presentation</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+      <h3>Decktopus</h3>
+    <p>Auto-generates complete presentations with design and content.</p>
+    <div class="hashtags">
+      <span>#Slides</span><span>#AI</span><span>#Productivity</span>
+    </div>
+ <a  href="https://decktopus.com" class="btn">Check it out ↗</a>
+    
+  </div>
+</div>   
+</div>
+ </div>
+
+    {% endblock %}
+
+<!-- ✅ JS goes here -->
+{% block extra_js %}
+
+ <script>
+  const buttons = document.querySelectorAll(".categories button");
+  const cards = document.querySelectorAll(".card");
+  const searchInput = document.getElementById("searchInput");
+
+  let currentFilter = "all";
+
+  // FILTER CLICK
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+
+      // active button highlight
+      buttons.forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      currentFilter = button.getAttribute("data-filter");
+
+      filterAndSearch();
+    });
+  });
+
+  // SEARCH INPUT
+  searchInput.addEventListener("keyup", () => {
+    filterAndSearch();
+  });
+
+  // MAIN FUNCTION (FILTER + SEARCH TOGETHER)
+  function filterAndSearch() {
+    const searchValue = searchInput.value.toLowerCase();
+
+    cards.forEach(card => {
+      const category = card.getAttribute("data-category");
+      const title = card.querySelector("h3").innerText.toLowerCase();
+      const desc = card.querySelector("p").innerText.toLowerCase();
+
+      const matchesFilter =
+        currentFilter === "all" || category === currentFilter;
+
+      const matchesSearch =
+        title.includes(searchValue) || desc.includes(searchValue);
+
+      if (matchesFilter && matchesSearch) {
+        card.style.display = "flex";   // IMPORTANT
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+</script>
+
+{% endblock %}
