@@ -33,10 +33,10 @@
             <span>Tools Library</span>
         </div>
 
-        <div class="menu-item">
-            <img src="{{ url_for('static', filename='images/opportunity.png') }}">
-            <span>Student Opportunities</span>
-        </div>
+        <a href="{{ url_for('opportunities.opportunities_page') }}" class="menu-item">
+    <img src="{{ url_for('static', filename='images/opportunity.png') }}">
+    <span>Student Opportunities</span>
+</a>
 
         <div class="menu-item">
             <img src="{{ url_for('static', filename='images/saved.png') }}">
