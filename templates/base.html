@@ -10,6 +10,7 @@
 
     <!-- 🎨 Main CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
 </head>
 
 <script>
@@ -44,6 +45,11 @@
             document.querySelector(".layout").classList.toggle("collapsed");
         }
         </script>
+
+        
+<!-- ✅ Page Specific JS -->
+    {% block extra_js %}{% endblock %}
+
 
 </body>
 </html>

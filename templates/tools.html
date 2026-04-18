@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 
-{% block content %}
+<!-- ✅ CSS goes here -->
+{% block extra_css %}
+
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">
+
+{% endblock %}
+
+
+{% block content %}
 
 <div class="tools-page">
 
@@ -493,12 +501,14 @@
     
   </div>
 </div>   
-
 </div>
+ </div>
 
-        
+    {% endblock %}
 
-    </div>
+<!-- ✅ JS goes here -->
+{% block extra_js %}
+
  <script>
   const buttons = document.querySelectorAll(".categories button");
   const cards = document.querySelectorAll(".card");
