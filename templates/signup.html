@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up - Decrypt</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
+</head>
+
+<body>
+
+<div class="signup-wrapper">
+
+  <!-- LEFT SIDE -->
+  <div class="signup-left">
+
+    <a href="{{ url_for('home.landing') }}" class="back">← Back</a>
+
+    <div class="signup-container">
+
+      <!-- LOGO -->
+       <div class="logo-row">
+  <img src="{{ url_for('static', filename='images/logo.svg') }}">
+  <span class="logo-text">DECRYPT</span>
+</div>
+
+      <h1>Join the gang</h1>
+      <p class="subtitle">
+        free, no credit card, no weird emails. just vibes and news.
+      </p>
+
+    <form class="signup-form">
+
+  <div class="form-group">
+    <label>What do we call you?</label>
+    <input type="text" placeholder="Your name (or alias, we don’t judge)">
+  </div>
+
+  <div class="form-group">
+    <label>Your email (we won’t spam, promise)</label>
+    <input type="email" placeholder="you@example.com">
+  </div>
+
+  <div class="form-group">
+    <label>Password</label>
+    <input type="text" placeholder="make it good">
+  </div>
+
+  <div class="form-group">
+    <label>Confirm Password</label>
+    <input type="password" placeholder="don’t mess this up">
+  </div>
+
+  <div class="terms">
+    <input type="checkbox">
+    <span>
+      I agree to the <a href="#">Terms of Service</a> and 
+      <a href="#">Privacy Policy</a>. I’m not a robot (hopefully).
+    </span>
+  </div>
+
+<button class="signup-btn" type="button" id="signupBtn">
+  Create Account →
+</button>
+
+</form>
+
+      <p class="login-link">
+        Already a Decrypter? 
+        <a href="{{ url_for('auth.login_page') }}">Log in</a>
+      </p>
+
+    </div>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="signup-right">
+
+  <div class="right-content">
+
+    <!-- IMAGE -->
+    <img src="{{ url_for('static', filename='images/Technewz.png') }}" class="Technewz-img">
+
+    <p class="right-tag">
+      Built for the Locked-in generation
+    </p>
+
+    <!-- FEATURES (LOGIN STYLE) -->
+    <div class="features">
+
+      <div class="feature-item">
+        <div class="icon-circle">
+          <img src="{{ url_for('static', filename='images/thunder.png') }}">
+        </div>
+        <span>50+ news articles daily</span>
+      </div>
+
+      <div class="feature-item">
+        <div class="icon-circle">
+          <img src="{{ url_for('static', filename='images/thunder.png') }}">
+        </div>
+        <span>AI tools for students</span>
+      </div>
+
+      <div class="feature-item">
+        <div class="icon-circle">
+          <img src="{{ url_for('static', filename='images/thunder.png') }}">
+        </div>
+        <span>Free student opportunities</span>
+      </div>
+
+      <div class="feature-item">
+        <div class="icon-circle">
+          <img src="{{ url_for('static', filename='images/thunder.png') }}">
+        </div>
+        <span>10-min daily flashcards</span>
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDfVRHh1CyuAaflxyiN4tBhb3K0LbzoWHg",
+  authDomain: "decrypt-auth-b999d.firebaseapp.com",
+  projectId: "decrypt-auth-b999d"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+
+// 🚀 SIGNUP LOGIC
+document.getElementById("signupBtn").addEventListener("click", async () => {
+
+  const email = document.querySelector('input[type="email"]').value;
+  const password = document.querySelector('input[type="password"]').value;
+
+  try {
+    const userCred = await createUserWithEmailAndPassword(auth, email, password);
+
+    const token = await userCred.user.getIdToken();
+
+    await fetch("/verify-token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ token })
+    });
+
+    window.location.href = "/onboarding1";
+
+  } catch (err) {
+    alert(err.message);
+  }
+});
+</script>
+
+</body>
+</html>

@@ -10,13 +10,10 @@
 
     <!-- 🎨 Main CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
 
-<script>
-    function toggleSidebar() {
-        document.getElementById("sidebar").classList.toggle("collapsed");
-    }
-    </script>
+    <!-- ✅ Page-specific CSS -->
+    {% block extra_css %}{% endblock %}
+</head>
 
 <body>
 
@@ -45,5 +42,8 @@
         }
         </script>
 
+
+<!-- ✅ Page-specific JS -->
+{% block extra_js %}{% endblock %}
 </body>
 </html>

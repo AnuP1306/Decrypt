@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Onboarding - Step 1</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/onboarding1.css') }}">
+</head>
+
+<body>
+
+<div class="onboard-wrapper">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+
+    <div class="logo-row">
+  <img src="{{ url_for('static', filename='images/logo.svg') }}">
+  <span class="logo-text">DECRYPT</span>
+</div>
+
+    <div class="progress-info">1 of 3</div>
+
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-bar">
+    <div class="progress-fill"></div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="content">
+
+    <!-- STEP -->
+    <div class="step-pill">⚡Step 1</div>
+
+    <!-- TITLE -->
+    <h1>
+      what kind of tech<br>
+      person are you?
+    </h1>
+
+    <p class="subtitle">
+      pick your vibe(s) (pick as many as you want)
+    </p>
+
+    <!-- OPTIONS -->
+    <div class="options">
+
+      <div class="option">
+        <span>💻</span> Developer
+      </div>
+
+      <div class="option">
+        <span>🎨</span> Designer
+      </div>
+
+      <div class="option">
+        <span>📊</span> Product/PM
+      </div>
+
+      <div class="option">
+        <span>🧠</span> Data/AI nerd
+      </div>
+
+      <div class="option">
+        <span>₿</span> Crypto curious
+      </div>
+
+      <div class="option">
+        <span>🔐</span> Cybersecurity
+      </div>
+
+      <div class="option">
+        <span>🚀</span> Startup founder (in training)
+      </div>
+
+      <div class="option">
+        <span>👀</span> Just curious
+      </div>
+
+    </div>
+
+    <!-- BUTTON -->
+  <button 
+  type="button"
+  class="continue-btn" 
+  data-url="{{ url_for('auth.onboarding2') }}">
+  Continue →
+</button>
+
+  </div>
+
+</div>
+
+<script>
+const options = document.querySelectorAll('.option');
+const btn = document.querySelector('.continue-btn');
+
+let selected = new Set();
+
+options.forEach(option => {
+  option.addEventListener('click', () => {
+
+    const text = option.innerText.trim();
+
+    if (selected.has(text)) {
+      selected.delete(text);
+      option.classList.remove('active');
+    } else {
+      selected.add(text);
+      option.classList.add('active');
+    }
+
+    // enable button
+    if (selected.size > 0) {
+      btn.classList.add('enabled');
+    } else {
+      btn.classList.remove('enabled');
+    }
+  });
+});
+
+
+// 🚀 CONTINUE BUTTON LOGIC
+btn.addEventListener('click', () => {
+  if (selected.size === 0) return;
+
+  // ✅ SAVE TO SESSION STORAGE
+  sessionStorage.setItem('onboarding_step1', JSON.stringify([...selected]));
+
+  // 🔥 DEBUG (optional)
+  console.log("Saved:", [...selected]);
+
+  // 🚀 REDIRECT TO STEP 2
+  window.location.href = "/onboarding2";
+});
+</script>
+
+</body>
+</html>
