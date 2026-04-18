@@ -10,13 +10,10 @@
 
     <!-- 🎨 Main CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
 
-<script>
-    function toggleSidebar() {
-        document.getElementById("sidebar").classList.toggle("collapsed");
-    }
-    </script>
+    <!-- ✅ Page-specific CSS -->
+    {% block extra_css %}{% endblock %}
+</head>
 
 <body>
 
@@ -44,35 +41,9 @@
             document.querySelector(".layout").classList.toggle("collapsed");
         }
         </script>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/opportunities.css') }}">
 
-{% block scripts %}
-<script>
-const buttons = document.querySelectorAll('.opp-filters button');
-const cards = document.querySelectorAll('.opp-card');
 
-buttons.forEach(btn => {
-  btn.addEventListener('click', () => {
-
-    buttons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    const filter = btn.innerText.trim();
-
-    cards.forEach(card => {
-      const type = card.getAttribute('data-type');
-
-      if (filter === "All" || type === filter) {
-        card.style.display = "flex";
-      } else {
-        card.style.display = "none";
-      }
-    });
-
-  });
-});
-</script>
-
-{% endblock %}
+<!-- ✅ Page-specific JS -->
+{% block extra_js %}{% endblock %}
 </body>
 </html>

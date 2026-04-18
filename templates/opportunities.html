@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/opportunities.css') }}">
+{% endblock %}
 
 {% block content %}
 
@@ -116,17 +119,49 @@
   </div>
 </div>
 
+{% endblock %}
+{% block extra_js %}
 <script>
-const btn = document.getElementById("alertBtn");
+
+// FILTER LOGIC
+const buttons = document.querySelectorAll('.opp-filters button');
+const cards = document.querySelectorAll('.opp-card');
+
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const filter = btn.innerText.trim();
+
+    cards.forEach(card => {
+      const type = card.getAttribute('data-type');
+
+      if (filter === "All" || type === filter) {
+        card.style.display = "flex";
+      } else {
+        card.style.display = "none";
+      }
+    });
+
+  });
+});
+
+
+// TOAST LOGIC
+const alertBtn = document.getElementById("alertBtn");
 const toast = document.getElementById("toast");
 
-btn.addEventListener("click", () => {
-  toast.classList.add("show");
+if (alertBtn) {
+  alertBtn.addEventListener("click", () => {
+    toast.classList.add("show");
 
-  setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2500);
-});
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2500);
+  });
+}
+
 </script>
-
 {% endblock %}
