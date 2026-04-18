@@ -342,6 +342,29 @@ h1, h2, h3 {
 .tools-page {
     padding: 30px 40px;
 }
+/* back button */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  margin-bottom: 16px;
+  border: 2px solid #30312C;
+  border-radius: 12px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  color: #30312C;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  background: #30312C;
+  color: #fff;
+}
 
 /* TOP LABEL */
 .top-label {
@@ -365,8 +388,8 @@ border-width: 5px;
 /* MAIN TITLE */
 .page-title {
     font-family: 'Syne', sans-serif;
-    font-size: 64px;   /* 🔥 EXACT BIG SIZE */
-    font-weight: 800;
+    font-size: 40px; 
+  font-weight: 800; 
     line-height: 1.1;
     color: #2c2c2c;
     margin: 0;
@@ -418,7 +441,7 @@ border-width: 5px;
   display: flex;
   align-items: center;
   background: white;
-  border: 1px solid #e5e5e5;
+  border: 1px solid #bfbcbc;
   border-radius: 30px;
   padding: 12px 18px;
   width: 100%;
@@ -441,12 +464,9 @@ border-width: 5px;
     margin-bottom: 20px;   /* 🔥 creates gap */
 }
 
-.search-box input:focus {
+.search-box:focus-within {
   border-color: #3f38e8;
-  box-shadow: 0 0 0 2px rgba(63, 56, 232, 0.15);
-  outline: none;
 }
-
 
 .categories {
   display: flex;
@@ -486,9 +506,9 @@ border-width: 5px;
   justify-content: space-between;
 }
 
-.card:hover {
-  
-  box-shadow: 0 10px 25px rgba(18, 18, 18, 0.15);
+.card:hover { 
+  transform: translateY(-3px); 
+  box-shadow: 4px 4px 0px #3F38E8; 
 }
 
 /* IMAGE */
@@ -580,39 +600,36 @@ border-width: 5px;
     font-size: 12px;
 }
 
-/* BUTTON */
-/* remove link underline */
-.btn-link {
-  text-decoration: none;
-  display: block;
-}
-
-/* button default */
 .btn {
-  width: 100%;
+  display: block;
+  text-align: center;
+
   padding: 12px;
-  border-radius: 12px;
-  border: 2px solid rgb(66, 62, 62);
-  background: white;
-  color: black;
-  font-weight: 500;
-  cursor: pointer;
-  transition: 0.2s;
-  margin-top: auto;
-}
+  margin-top: 10px;
 
-/* when clicked */
+  border: 2px solid #000;   /* black border */
+  border-radius: 10px;
 
-.btn,
-.btn:visited,
-.btn:active {
-  color: black ;
+  background: #fff;         /* white bg */
+  color: #000;              /* black text */
+
+  font-weight: 600;
   text-decoration: none;
+
+  transition: all 0.25s ease;
 }
 
+/* remove default link colors */
+.btn:link,
+.btn:visited {
+  color: #000;
+}
+
+/* HOVER EFFECT */
 .btn:hover {
-  background: #3f38e8;
-  color: white ;
+  background: #4f46e5;      /* blue bg */
+  border-color: #4f46e5;    /* blue border */
+  color: #fff;              /* white text */
 }
 .menu-item {
     text-decoration: none; /* removes underline */
