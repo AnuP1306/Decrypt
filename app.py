@@ -1674,10 +1674,6 @@ def ask_article():
     except Exception as e:
         print("❌ Article bot failed:", e)
         return jsonify({"reply": "AI is currently unavailable."})
-@app.route("/daily-brief")
-def daily_brief():
-    return render_template("daily_brief.html")
-
 
 # ================= RUN =================
 if __name__ == "__main__":

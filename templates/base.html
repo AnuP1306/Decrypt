@@ -42,11 +42,15 @@
 
 <div class="layout">
 
+    <!-- Sidebar -->
+    {% include 'components/sidebar.html' %}
+
+
     <!-- 📌 Sidebar -->
-    <div class="sidebar" id="sidebar">
+    <!-- <div class="sidebar" id="sidebar"> -->
 
         <!-- USER -->
-        <div class="sidebar-top">
+        <!-- <div class="sidebar-top">
             <div class="user-info">
                 <div class="user-avatar">U</div>
                 <div class="user-text">
@@ -58,10 +62,10 @@
                     <img src="{{ url_for('static', filename='images/menu.png') }}">
                 </button>
             </div>
-        </div>
+        </div> -->
 
         <!-- MENU -->
-        <div class="sidebar-menu">
+        <!-- <div class="sidebar-menu">
 
             <a href="/" class="menu-item {% if active_page == 'home' %}active{% endif %}">
                 <img src="{{ url_for('static', filename='images/home.png') }}">
@@ -73,7 +77,7 @@
                 <span>Daily Brief</span>
             </a>
 
-            <a href="#" class="menu-item">
+            <a href="/tools" class="menu-item">
                 <img src="{{ url_for('static', filename='images/tools-1.png') }}">
                 <span>Tools Library</span>
             </a>
@@ -88,9 +92,9 @@
                 <span>Saved Items</span>
             </a>
 
-        </div>
+        </div> -->
 
-        <!-- BOTTOM -->
+        <!-- BOTTOM
         <div class="sidebar-bottom">
 
             <div class="menu-item">
@@ -110,7 +114,8 @@
 
         </div>
 
-    </div>
+    </div> -->
+  
 
     <!-- 📄 MAIN CONTENT -->
     <main class="main-content">

@@ -1,14 +1,27 @@
 /* ===== GLOBAL ===== */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap');
+:root {
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
+}
+
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
+   font-family: var(--font-body);
   background-color: #f5f5f5;
   overflow-x: hidden;
 }
 
-h1, h2, h3 {
-  font-family: 'Syne', sans-serif;
-  font-weight: 740;
+/* MAIN HEADINGS */
+h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+}
+
+/* SUBHEADINGS */
+h2, h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
 }
 
 /* ===== NAVBAR ===== */
@@ -132,7 +145,7 @@ h1, h2, h3 {
   transition: width 0.3s ease;
   overflow: hidden;
 
-  font-family: 'Space Grotesk', sans-serif;
+font-family: var(--font-body);
 }
 
 /* USER */
@@ -458,6 +471,8 @@ gap: 9px;
 .btn-secondary:hover {
   transform: translateY(-3px);
   box-shadow: 5px 5px 0px #3F38E8;
+  }
+
 .menu-item {
   text-decoration: none;   /* ❌ removes underline */
   color: inherit;          /* ❌ removes blue color */
@@ -475,5 +490,4 @@ gap: 9px;
 
 .menu-item {
   cursor: pointer;
-}
 }

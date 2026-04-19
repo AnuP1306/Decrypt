@@ -1,6 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for
-
-home_bp = Blueprint('home', __name__)
+from flask import Blueprint, render_template, redirect, url_for, session
 
 # ✅ LANDING PAGE (default)
 # from flask import Blueprint, render_template
@@ -41,6 +39,13 @@ def login():
 @home_bp.route('/logout')
 def logout():
     return redirect(url_for('home.landing'))
+
+# LOGOUT → recommended to clear session in auth_routes.py and then redirect here
+
+# @home_bp.route('/logout')
+# def logout():
+#     session.clear()   # 🔥 important
+#     return redirect(url_for('home.landing'))
 
 
 # ✅ Daily Brief Page

@@ -24,18 +24,20 @@
     <span>Home Feed</span>
 </a>
 
-        <div class="menu-item">
+      <a href="{{ url_for('home.daily_brief') }}"
+   class="menu-item {% if request.path.startswith('/daily-brief') %}active{% endif %}">
             <img src="{{ url_for('static', filename='images/bolt.png') }}">
             <span>Daily Brief</span>
-        </div>
+         </a>
 
-       <a href="/tools" class="menu-item {% if request.path == '/tools' %}active{% endif %}">
+      <a href="{{ url_for('tools.tools') }}"
+   class="menu-item {% if request.path.startswith('/tools') %}active{% endif %}">
     <img src="{{ url_for('static', filename='images/tools-1.png') }}">
     <span>Tools Library</span>
 </a>
 
        <a href="{{ url_for('opportunities.opportunities_page') }}"
-   class="menu-item {% if request.path == '/opportunities' %}active{% endif %}">
+   class="menu-item {% if request.path.startswith('/opportunities') %}active{% endif %}">
     <img src="{{ url_for('static', filename='images/opportunity.png') }}">
     <span>Student Opportunities</span>
 </a>
@@ -95,7 +97,7 @@
             <span>Home Feed</span>
         </a>
 
-        <a href="{{ url_for('daily_brief') }}"
+        <a href="{{ url_for('home.daily_brief') }}"
            class="menu-item {% if active_page == 'daily' %}active{% endif %}">
             <img src="{{ url_for('static', filename='images/bolt.png') }}">
             <span>Daily Brief</span>
