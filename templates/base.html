@@ -6,9 +6,9 @@
     <title>Decrypt</title>
 
     <!-- 🔤 Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap&family=Inter:wght@400;500&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
 
-    <!-- 🎨 Main CSS -->
+    <!-- 🎨 Global CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
     <!-- ✅ Page-specific CSS -->
@@ -17,33 +17,118 @@
 
 <body>
 
-    <!-- 🔝 Navbar -->
-    {% include "components/navbar.html" %}
+<!-- 🔝 Navbar -->
+<nav class="navbar">
 
-    <div class="layout">
+    <div class="nav-left">
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" class="logo-img">
+        <h1 class="logo-text">Decrypt</h1>
+    </div>
 
-        <!-- 📌 Sidebar -->
-        {% include "components/sidebar.html" %}
+    <div class="nav-center">
+        <div class="search-wrapper">
+            <img src="{{ url_for('static', filename='images/search.png') }}" class="search-icon">
+            <input type="text" placeholder="Search topics, tools, news..." class="search-input">
+        </div>
+    </div>
 
-        <!-- 📄 Main Content -->
-        <main class="main-content">
-            {% block content %}
-            {% endblock %}
-        </main>
+    <div class="nav-right">
+        <div class="notif-wrapper">
+            <img src="{{ url_for('static', filename='images/notification.png') }}" class="notif-icon">
+        </div>
+    </div>
+
+</nav>
+
+<div class="layout">
+
+    <!-- 📌 Sidebar -->
+    <div class="sidebar" id="sidebar">
+
+        <!-- USER -->
+        <div class="sidebar-top">
+            <div class="user-info">
+                <div class="user-avatar">U</div>
+                <div class="user-text">
+                    <p class="user-name">Anushka</p>
+                    <span class="user-role">Explorer · Intermediate</span>
+                </div>
+
+                <button class="menu-toggle" onclick="toggleSidebar()">
+                    <img src="{{ url_for('static', filename='images/menu.png') }}">
+                </button>
+            </div>
+        </div>
+
+        <!-- MENU -->
+        <div class="sidebar-menu">
+
+            <a href="/" class="menu-item {% if active_page == 'home' %}active{% endif %}">
+                <img src="{{ url_for('static', filename='images/home.png') }}">
+                <span>Home Feed</span>
+            </a>
+
+            <a href="/daily-brief" class="menu-item {% if active_page == 'daily' %}active{% endif %}">
+                <img src="{{ url_for('static', filename='images/bolt.png') }}">
+                <span>Daily Brief</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <img src="{{ url_for('static', filename='images/tools-1.png') }}">
+                <span>Tools Library</span>
+            </a>
+
+            <a href="/opportunities" class="menu-item">
+                <img src="{{ url_for('static', filename='images/opportunity.png') }}">
+                <span>Student Opportunities</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <img src="{{ url_for('static', filename='images/saved.png') }}">
+                <span>Saved Items</span>
+            </a>
+
+        </div>
+
+        <!-- BOTTOM -->
+        <div class="sidebar-bottom">
+
+            <div class="menu-item">
+                <img src="{{ url_for('static', filename='images/bell.png') }}">
+                <span>Notifications</span>
+            </div>
+
+            <div class="menu-item">
+                <img src="{{ url_for('static', filename='images/settings.png') }}">
+                <span>Settings</span>
+            </div>
+
+            <a href="/" class="menu-item logout">
+                <img src="{{ url_for('static', filename='images/logout.png') }}">
+                <span>Log Out</span>
+            </a>
+
+        </div>
 
     </div>
 
-    <!-- 🔻 Footer -->
-    {% include "components/footer.html" %}
-    <script>
-        function toggleSidebar() {
-            document.getElementById("sidebar").classList.toggle("collapsed");
-            document.querySelector(".layout").classList.toggle("collapsed");
-        }
-        </script>
+    <!-- 📄 MAIN CONTENT -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
 
+</div>
+
+<!-- ✅ Sidebar Toggle Script -->
+<script>
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("collapsed");
+    document.querySelector(".layout").classList.toggle("collapsed");
+}
+</script>
 
 <!-- ✅ Page-specific JS -->
 {% block extra_js %}{% endblock %}
+
 </body>
 </html>

@@ -1,6 +1,6 @@
 <div class="sidebar" id="sidebar">
 
-    <!-- TOP USER -->
+   
     <div class="sidebar-top">
         <div class="user-info">
             <div class="user-avatar">U</div>
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <!-- MENU -->
+    
     <div class="sidebar-menu">
 
         <a href="{{ url_for('home.home') }}"
@@ -47,7 +47,7 @@
 
     </div>
 
-    <!-- BOTTOM -->
+    
     <div class="sidebar-bottom">
 
         <div class="menu-item">
@@ -67,3 +67,82 @@
     </div>
 
 </div>
+
+<!-- <div class="sidebar" id="sidebar">
+
+    
+    <div class="sidebar-top">
+        <div class="user-info">
+            <div class="user-avatar">U</div>
+            <div class="user-text">
+                <p class="user-name">Anushka</p>
+                <span class="user-role">Explorer · Intermediate</span>
+            </div>
+
+            <button class="menu-toggle" onclick="toggleSidebar()">
+                <img src="{{ url_for('static', filename='images/menu.png') }}">
+            </button>
+        </div>
+    </div>
+
+   
+    <div class="sidebar-menu">
+
+        
+        <a href="{{ url_for('home.home') }}"
+           class="menu-item {% if active_page == 'home' %}active{% endif %}">
+            <img src="{{ url_for('static', filename='images/home.png') }}">
+            <span>Home Feed</span>
+        </a>
+
+        <a href="{{ url_for('daily_brief') }}"
+           class="menu-item {% if active_page == 'daily' %}active{% endif %}">
+            <img src="{{ url_for('static', filename='images/bolt.png') }}">
+            <span>Daily Brief</span>
+        </a>
+
+       
+        <div class="menu-item" onclick="showToast('Tools Library coming soon 🚀')">
+            <img src="{{ url_for('static', filename='images/tools-1.png') }}">
+            <span>Tools Library</span>
+        </div>
+
+        
+        <a href="{{ url_for('opportunities.opportunities_page') }}"
+           class="menu-item {% if active_page == 'opportunities' %}active{% endif %}">
+            <img src="{{ url_for('static', filename='images/opportunity.png') }}">
+            <span>Student Opportunities</span>
+        </a>
+
+        
+        <div class="menu-item" onclick="showToast('Saved items coming soon ⭐')">
+            <img src="{{ url_for('static', filename='images/saved.png') }}">
+            <span>Saved Items</span>
+        </div>
+
+    </div>
+
+   
+    <div class="sidebar-bottom">
+
+     
+        <div class="menu-item" onclick="showToast('Notifications coming soon 🔔')">
+            <img src="{{ url_for('static', filename='images/bell.png') }}">
+            <span>Notifications</span>
+        </div>
+
+       
+        <div class="menu-item" onclick="showToast('Settings coming soon ⚙️')">
+            <img src="{{ url_for('static', filename='images/settings.png') }}">
+            <span>Settings</span>
+        </div>
+
+        
+        <a href="{{ url_for('home.logout') }}" class="menu-item logout">
+            <img src="{{ url_for('static', filename='images/logout.png') }}">
+            <span>Log Out</span>
+        </a>
+
+    </div>
+
+</div> -->
