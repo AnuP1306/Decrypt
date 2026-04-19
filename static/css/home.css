@@ -361,6 +361,7 @@
 .article-bot {
     display: none;
     width: 100%;
+    flex-shrink: 0;
     margin-top: 14px;
     font-family: "Space Grotesk", sans-serif;
     border-radius: 16px;
@@ -941,22 +942,33 @@
   font-size: 14px;
 }
 
-.bot-body {
+/* .bot-body {
   display: flex;
   flex-direction: column;
   height: 350px;
   overflow: hidden;
+} */
+.bot-body {
+  padding: 16px;
+  background: #fafafa;
+  display: block;   /* 🔥 IMPORTANT */
+  height: auto;     /* 🔥 REMOVE FIXED HEIGHT */
 }
 
 /* 🔥 CHAT AREA */
 .bot-chat {
-  flex: 1;
-  overflow-y: auto;
+  /* flex: 1;
+  overflow-y: auto; */
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin: 10px 0;
   padding-right: 4px;
+}
+.bot-chat {
+  max-height: 120px;   /* instead of flex */
+  overflow-y: auto;
+  margin: 10px 0;
 }
 
 /* MESSAGE BASE */
@@ -1080,6 +1092,6 @@
   /* .right-sidebar {
     flex: 1;
     position: sticky;
-    /* top: -10px; 
-}*/
+    /* top: -10px;  */
+
   

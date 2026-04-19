@@ -1732,7 +1732,7 @@ async function fetchNews() {
     const res = await fetch("/get-news");
     const data = await res.json();
 
-    const container = document.querySelector(".feed-container");
+    const container = document.querySelector("newsContainer");
 
     const template = document.querySelector("#newsCard");
 
@@ -1762,7 +1762,10 @@ async function fetchNews() {
 // ================= CREATE AI CARD =================
 async function createNewsCard(article, container, index) {
 
+    
+
     const template = document.getElementById("newsCard");
+   
     const card = template.cloneNode(true);
 
     card.style.display = "block";
@@ -1781,7 +1784,7 @@ async function createNewsCard(article, container, index) {
     pill.classList.add(article.domain.toLowerCase());
 
     // CONTENT
-    const content = card.querySelector("#cardContent");
+    const content = card.querySelector(".cardContent");
     content.id = `cardContent-${index}`;
 
     content.innerHTML = `
@@ -1808,7 +1811,10 @@ async function createNewsCard(article, container, index) {
     card.dataset.level = "beginner";
     card.dataset.article = JSON.stringify(article);
 
-    container.appendChild(card);
+    // console.log("isConnected:", container.isConnected);
+
+    // container.appendChild(card);
+    document.getElementById("newsContainer").appendChild(card);
 
     // ================= AI CALL =================
     if (card.dataset.slidesLoaded) return;  // 🧠 prevent duplicate calls
@@ -1867,7 +1873,7 @@ function createStaticCard(article, container) {
     pill.classList.add(article.domain.toLowerCase());
 
     // CONTENT (RAW NEWS)
-    const content = card.querySelector("#cardContent");
+    const content = card.querySelector(".cardContent");
 
     content.innerHTML = `
         <h2 class="card-title">${article.title}</h2>
@@ -1881,7 +1887,8 @@ function createStaticCard(article, container) {
     const nextBtn = card.querySelector(".next-btn");
     if (nextBtn) nextBtn.style.display = "none";
 
-    container.appendChild(card);
+    // container.appendChild(card);
+    document.getElementById("newsContainer").appendChild(card);
 }
 
 
@@ -1899,7 +1906,7 @@ function updateCard(index) {
 
     if (!slides[level] || !slides[level][page]) return;
 
-    const content = card.querySelector(`#cardContent-${index}`);
+    const content = card.querySelector(`.cardContent-${index}`);
     if (!content) return;
 
     const slide = slides[level][page];
@@ -2002,9 +2009,19 @@ async function sendArticleChat(button) {
 
 // ================= INIT =================
 // fetchNews();
-document.addEventListener("DOMContentLoaded", function () {
+// document.addEventListener("DOMContentLoaded", function () {
+//     fetchNews();
+// });
+
+
+const container = document.getElementById("newsContainer");
+
+
+const template = document.getElementById("newsCard");
+console.log("template:", template);
+window.onload = function () {
     fetchNews();
-});
+};
 
 
 
