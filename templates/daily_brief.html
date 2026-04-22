@@ -42,123 +42,12 @@
 <div class="layout">
     
 
-    
+    {% include 'components/sidebar.html' %}
 
     
-    <div class="sidebar">
+ 
 
-        <div class="sidebar-top">
-            <div class="user-info">
-                <div class="user-avatar">U</div>
-                <div class="user-text">
-                    <p class="user-name">Anushka</p>
-                    <span class="user-role">Explorer · Intermediate</span>
-                </div>
-                <button class="menu-toggle" onclick="toggleSidebar()">
-                    <img src="/static/images/menu.png">
-                </button>
-            </div>
-        </div> 
 
-        <!-- MENU -->
-     <div class="sidebar-menu">
-
-        <a href="/" class="menu-item {% if active_page == 'home' %}active{% endif %}">
-            <img src="/static/images/home.png">
-            <span>Home Feed</span>
-        </a> 
-
-         <a href="/daily-brief" class="menu-item {% if active_page == 'daily' %}active{% endif %}">
-            <img src="/static/images/bolt.png">
-            <span>Daily Brief</span>
-        </a>
-
-        <a href="/tools" class="menu-item">
-            <img src="/static/images/tools-1.png">
-            <span>Tools Library</span>
-        </a>
-
-        <a href="/opportunities" class="menu-item">
-            <img src="/static/images/opportunity.png">
-            <span>Student Opportunities</span>
-        </a>
-
-        <a href="/saved" class="menu-item">
-            <img src="/static/images/saved.png">
-            <span>Saved Items</span>
-        </a>
-
-    </div> 
-
-    <!-- BOTTOM -->
-     <div class="sidebar-bottom">
-
-        <div class="menu-item">
-            <img src="/static/images/bell.png">
-            <span>Notifications</span>
-        </div>
-
-        <div class="menu-item">
-            <img src="/static/images/settings.png">
-            <span>Settings</span>
-        </div>
-
-        <div class="menu-item logout">
-            <img src="/static/images/logout.png">
-            <span>Log Out</span>
-        </div>
-
-    </div> 
-
-         <!-- <div class="sidebar-menu">
-            <div class="menu-item">
-                <img src="/static/images/home.png">
-                <span>Home Feed</span>
-            </div>
-
-            <div class="menu-item active">
-                <img src="/static/images/bolt.png">
-                <span>Daily Brief</span>
-            </div>
-
-            <div class="menu-item">
-                <img src="/static/images/tools-1.png">
-                <span>Tools Library</span>
-            </div>
-    
-            <div class="menu-item">
-                <img src="/static/images/opportunity.png">
-                <span>Student Opportunities</span>
-            </div> 
-     -->
-            <!-- <div class="menu-item">
-                <img src="/static/images/saved.png">
-                <span>Saved Items</span>
-            </div>
-
-        </div> -->
-
-        
-     <!-- <div class="sidebar-bottom">
-
-        <div class="menu-item">
-            <img src="/static/images/bell.png">
-            <span>Notifications</span>
-        </div>
-
-        <div class="menu-item">
-            <img src="/static/images/settings.png">
-            <span>Settings</span>
-        </div>
-
-        <div class="menu-item logout">
-            <img src="/static/images/logout.png">
-            <span>Log Out</span>
-        </div>
-
-    </div> -->
-
-</div>
 
     
     <main class="main-content">
@@ -179,9 +68,9 @@
                     <!-- <h1 class="brief-title">
                         Today’s <span>Flashcards</span>
                     </h1> -->
-                    <h1 class="feed-title">
-                        Today’s <span class="highlight">Flashcards</span>
-                    </h1>
+                      <h1 class="feed-title">
+               Today’s <span class="highlight-pill">Flashcards</span>
+                   </h1>
             
                     <!-- <div class="brief-count">
                         <span id="cardCount">1</span>/<span id="totalCount">10</span>
@@ -189,7 +78,7 @@
                     </div> -->
                     <div class="card-count">
                         <span class="count-text">
-                            <span id="cardCount">1</span>/<span id="totalCount">10</span>
+                            <span id="cardCount">1</span>/<span id="totalCount">5</span>
                         </span>
                         <span class="count-label">cards</span>
                     </div>
@@ -212,33 +101,18 @@
             
             </div>
 
-            <!-- HEADER -->
-            <!-- <div class="feed-intro">
-                <h1 class="feed-title">
-                    Today’s <span class="highlight">Flashcards</span>
-                </h1>
-                <p class="feed-subtext">10 stories · swipe through quickly</p>
-            </div>
-
-             PROGRESS 
-            <div class="brief-progress">
-                <span id="progress">1/10 cards</span>
-            </div> -->
 
             <!-- 🔥 FLASHCARD (USES NEWS CARD DESIGN) -->
             <div class="news-card" id="briefCard">
 
-                <div class="card-inner">
-                    <!-- FRONT -->
-<div class="card-face front">
-
     <div class="card-image">
         <img id="briefImage" src="/static/images/news1.1.png">
 
+
         <span class="domain-pill" id="briefCategory">AI</span>
 
-        <div class="save-btn" onclick="event.stopPropagation(); toggleSave(this)">
-            <img src="/static/images/save.svg">
+        <div class="save-btn" onclick="toggleSave(this)">
+            <img src="/static/images/briefbookmark.png">
         </div>
     </div>
 
@@ -246,56 +120,23 @@
 
         <div class="card-body">
             <h2 class="card-title" id="briefTitle">Loading...</h2>
-            <p class="card-desc" id="briefDesc">
-                Tap to flip and read more
-            </p>
+            <p class="card-desc" id="briefDesc"></p>
         </div>
 
-        <!-- ACTIONS -->
+        <!-- ONLY THESE ACTIONS -->
         <div class="card-actions">
 
-            <div class="left-actions">
-
-                <div class="action like-action" onclick="event.stopPropagation(); toggleLike(this)">
-                    <img src="/static/images/like.png" class="like-icon">
-                    <span class="like-count">32</span>
-                </div>
-
-                <div class="action comment-action" onclick="event.stopPropagation(); toggleComment(this)">
-                    <img src="/static/images/comment.svg">
-                    <span class="comment-count">0</span>
-                </div>
-
-                <div class="action">
-                    <img src="/static/images/share.svg">
-                    <span>Share</span>
-                </div>
-
-                <div class="level-toggle">
-                    <button class="level-btn active" onclick="setBriefLevel('beginner', this)">B</button>
-                    <button class="level-btn" onclick="setBriefLevel('intermediate', this)">I</button>
-                    <button class="level-btn" onclick="setBriefLevel('advanced', this)">A</button>
-                </div>
-
+            <div class="level-toggle">
+                <button class="level-btn active" onclick="setBriefLevel('beginner', this)">B</button>
+                <button class="level-btn" onclick="setBriefLevel('intermediate', this)">I</button>
+                <button class="level-btn" onclick="setBriefLevel('advanced', this)">A</button>
             </div>
 
-            <button class="chatbot-btn" onclick="event.stopPropagation(); toggleBot(this)">
+            <button class="chatbot-btn" onclick="toggleBot(this)">
                 <img src="/static/images/bot.svg">
                 <span>Ask Bot</span>
             </button>
 
-        </div>
-
-        <!-- COMMENTS -->
-        <div class="comment-section">
-            <div class="comments-list"></div>
-
-            <div class="comment-input-box">
-                <input type="text" placeholder="Write a comment...">
-                <button onclick="event.stopPropagation(); postComment(this)">
-                    <img src="/static/images/send.png">
-                </button>
-            </div>
         </div>
 
         <!-- BOT -->
@@ -305,380 +146,33 @@
                     <img src="/static/images/bot-white.png">
                     <span>Article Bot</span>
                 </div>
-                <!-- <button class="close-bot" onclick="toggleBot(this)">--> 
-                <button class="close-bot" onclick="event.stopPropagation(); toggleBot(this)">✕</button> 
+                <button class="close-bot" onclick="toggleBot(this)">✕</button>
             </div>
 
             <div class="bot-body">
-
                 <div class="bot-message">
-                    Ask me anything about this article.
+                    Ask me anything about this flashcard.
                 </div>
 
                 <div class="bot-chat"></div>
 
                 <div class="bot-input">
-                    <input type="text" placeholder="Ask about this article...">
+                    <input id="articleChatInput" type="text" placeholder="Ask about this article...">
                     <button onclick="sendArticleChat(this)">
                         <img src="/static/images/send.png">
                     </button>
                 </div>
-
             </div>
         </div>
 
     </div>
 </div>
-            
-                    <!-- FRONT -->
-                    <!-- <div class="card-face front">
-            
-                        
-                        <div class="card-image">
-                            <img id="briefImage" src="/static/images/news1.1.png">
-            
-                            <span class="domain-pill" id="briefCategory">AI</span>
-            
-                            
-                            <div class="save-btn" onclick="event.stopPropagation(); toggleSave(this)">
-                                <img src="/static/images/save.svg">
-                            </div>
-                        </div>
-            
-                        
-                        <div class="card-content">
-            
-                            <div id="briefContent">
-                                <h2 class="card-title" id="briefTitle">
-                                    Loading...
-                                </h2>
-            
-                                <p class="card-desc" id="briefDesc">
-                                    Tap to flip and read more
-                                </p>
-                            </div>
-            
-                           
-                            <button class="next-btn">
-                                <img src="/static/images/arrow-right.png">
-                            </button>
-            
-                            
-                            <div class="card-actions">
-            
-                                <div class="left-actions">
-            
-                                
-                                    <div class="action like-action" onclick="event.stopPropagation(); toggleLike(this)">
-                                        <img src="/static/images/like.png" class="like-icon">
-                                        <span class="like-count">32</span>
-                                    </div>
-            
-                                    <div class="action comment-action" onclick="event.stopPropagation(); toggleComment(this)">
-                                        <img src="/static/images/comment.svg">
-                                        <span class="comment-count">0</span>
-                                    </div>
-            
-                                    <div class="action">
-                                        <img src="/static/images/share.svg">
-                                        <span>Share</span>
-                                    </div>
-            
-                                    <div class="level-toggle">
-                                        <button class="level-btn active" onclick="setBriefLevel('beginner', this)">B</button>
-                                        <button class="level-btn" onclick="setBriefLevel('intermediate', this)">I</button>
-                                        <button class="level-btn" onclick="setBriefLevel('advanced', this)">A</button>
-                                    </div>
-            
-                                </div>
-            
-                                
-                                <button class="chatbot-btn" onclick="event.stopPropagation(); toggleBot(this)">
-                                    <img src="/static/images/bot.svg">
-                                    <span>Ask Bot</span>
-                                </button>
-            
-                            </div>
-                            <div class="comment-section">
-                                <div class="comments-list"></div>
-                            
-                                <div class="comment-input-box">
-                                    <input type="text" placeholder="Write a comment...">
-                                    <button onclick="event.stopPropagation(); postComment(this)">
-                                        <img src="/static/images/send.png">
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="article-bot">
-                                <div class="bot-header">
-                                    <div class="bot-title">
-                                        <img src="/static/images/bot-white.png">
-                                        <span>Article Bot</span>
-                                    </div>
-                                    <button class="close-bot" onclick="toggleBot(this)">✕</button>
-                                </div>
-                            
-                                <div class="bot-body">
-                            
-                                    <div class="bot-message">
-                                        Ask me anything about this article.
-                                    </div>
-                            
-                                    <div class="bot-chat"></div>
-                            
-                                    <div class="bot-input">
-                                        <input type="text" placeholder="Ask about this article...">
-                                        <button onclick="sendArticleChat(this)">
-                                            <img src="/static/images/send.png">
-                                        </button>
-                                    </div>
-                            
-                                </div>
-                            </div>
-            
-                        </div>
-            
-                    </div> -->
-                    
-            
-                    <!-- BACK -->
-                    <!-- <div class="card-face back">
-            
-                        <div class="card-content">
-            
-                            <div id="briefContentBack">
-            
-                                <h2 class="card-title" id="briefTitleBack">
-                                    Loading...
-                                </h2>
-            
-                                <p class="card-desc" id="briefDescBack">
-                                    Generating AI summary...
-                                </p>
-            
-                            </div>
-            
-                            
-                            <div class="card-actions">
-            
-                                <div class="left-actions">
-            
-                                    <div class="action">
-                                        <img src="/static/images/like.png">
-                                        <span>32</span>
-                                    </div>
-            
-                                    <div class="action">
-                                        <img src="/static/images/comment.svg">
-                                        <span>0</span>
-                                    </div>
-            
-                                    <div class="action">
-                                        <img src="/static/images/share.svg">
-                                        <span>Share</span>
-                                    </div>
-            
-                                    <div class="level-toggle">
-                                        <button onclick="setBriefLevel('beginner')">B</button>
-                                        <button onclick="setBriefLevel('intermediate')">I</button>
-                                        <button onclick="setBriefLevel('advanced')">A</button>
-                                    </div>
-            
-                                </div>
-            
-                                <button class="chatbot-btn">
-                                    <img src="/static/images/bot.svg">
-                                    <span>Ask Bot</span>
-                                </button>
-            
-                            </div>
-            
-                        </div>
-            
-                    </div> -->
-                    <!-- previous -->
-                    <!-- <div class="card-face back">
-
-                        <div class="card-image">
-                            <img id="briefImageBack" src="/static/images/news1.1.png">
-                    
-                            <span class="domain-pill" id="briefCategoryBack">AI</span>
-                    
-                            
-                            <div class="save-btn" onclick="toggleSave(this)">
-                                <img src="/static/images/save.svg">
-                            </div>
-                        </div>
-                    
-                        <div class="card-content">
-                    
-                            <div id="briefContentBack">
-                    
-                                <h2 class="card-title" id="briefTitleBack">
-                                    Loading...
-                                </h2>
-                    
-                                <p class="card-desc" id="briefDescBack">
-                                    Generating AI summary...
-                                </p>
-                    
-                            </div>
-                    
-                            
-                            <button class="next-btn" onclick="event.stopPropagation(); flipCard()">
-                                <img src="/static/images/arrow-right.png">
-                            </button>
-                    
-                            
-                            <div class="card-actions">
-                    
-                                <div class="left-actions">
-                    
-                                    <div class="action">
-                                        <img src="/static/images/like.png">
-                                        <span>32</span>
-                                    </div>
-                    
-                                    <div class="action">
-                                        <img src="/static/images/comment.svg">
-                                        <span>0</span>
-                                    </div>
-                    
-                                    <div class="action">
-                                        <img src="/static/images/share.svg">
-                                        <span>Share</span>
-                                    </div>
-                    
-                                    <div class="level-toggle">
-                                        <button class="level-btn active" onclick="setBriefLevel('beginner', this)">B</button>
-                                        <button class="level-btn" onclick="setBriefLevel('intermediate', this)">I</button>
-                                        <button class="level-btn" onclick="setBriefLevel('advanced', this)">A</button>
-                                    </div>
-                    
-                                </div>
-                    
-                                
-                                <button class="chatbot-btn" onclick="toggleBot(this)">
-                                    <img src="/static/images/bot.svg">
-                                    <span>Ask Bot</span>
-                                </button>
-                    
-                            </div>
-                    
-                        </div>
-                    
-                    </div> -->
-                    <!-- BACK -->
-<div class="card-face back">
-
-    <div class="card-image">
-        <img id="briefImageBack" src="/static/images/news1.1.png">
-
-        <span class="domain-pill" id="briefCategoryBack">AI</span>
-
-        <div class="save-btn" onclick="event.stopPropagation(); toggleSave(this)">
-            <img src="/static/images/save.svg">
-        </div>
-    </div>
-
-    <div class="card-content">
-
-        <div class="card-body">
-            <h2 class="card-title" id="briefTitleBack">Loading...</h2>
-            <p class="card-desc" id="briefDescBack">
-                Generating continuation...
-            </p>
-        </div>
-
-        <!-- SAME ACTIONS (SYNCED) -->
-        <div class="card-actions">
-
-            <div class="left-actions">
-
-                <div class="action like-action" onclick="event.stopPropagation(); toggleLike(this)">
-                    <img src="/static/images/like.png" class="like-icon">
-                    <span class="like-count">32</span>
-                </div>
-
-                <div class="action comment-action" onclick="event.stopPropagation(); toggleComment(this)">
-                    <img src="/static/images/comment.svg">
-                    <span class="comment-count">0</span>
-                </div>
-
-                <div class="action">
-                    <img src="/static/images/share.svg">
-                    <span>Share</span>
-                </div>
-
-                <div class="level-toggle">
-                    <button class="level-btn active" onclick="setBriefLevel('beginner', this)">B</button>
-                    <button class="level-btn" onclick="setBriefLevel('intermediate', this)">I</button>
-                    <button class="level-btn" onclick="setBriefLevel('advanced', this)">A</button>
-                </div>
-
-            </div>
-
-            <button class="chatbot-btn" onclick="event.stopPropagation(); toggleBot(this)">
-                <img src="/static/images/bot.svg">
-                <span>Ask Bot</span>
-            </button>
-
-            <div class="comment-section">
-                <div class="comments-list"></div>
-    
-                <div class="comment-input-box">
-                    <input type="text" placeholder="Write a comment...">
-                    <button onclick="event.stopPropagation(); postComment(this)">
-                        <img src="/static/images/send.png">
-                    </button>
-                </div>
-            </div>
-    
-            <!-- BOT -->
-            <div class="article-bot">
-                <div class="bot-header">
-                    <div class="bot-title">
-                        <img src="/static/images/bot-white.png">
-                        <span>Article Bot</span>
-                    </div>
-                    <!-- <button class="close-bot" onclick="toggleBot(this)">--> 
-                    <button class="close-bot" onclick="event.stopPropagation(); toggleBot(this)">✕</button> 
-                </div>
-    
-                <div class="bot-body">
-    
-                    <div class="bot-message">
-                        Ask me anything about this article.
-                    </div>
-    
-                    <div class="bot-chat"></div>
-    
-                    <div class="bot-input">
-                        <input type="text" placeholder="Ask about this article...">
-                        <button onclick="sendArticleChat(this)">
-                            <img src="/static/images/send.png">
-                        </button>
-                    </div>
-    
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-</div>
-            
-                </div>
-            
-            </div>
 
             <!-- CONTROLS -->
-            <div class="brief-controls">
                 <div class="brief-controls">
                     <button class="brief-btn prev" onclick="prevBrief()">←  Prev</button>
                     <button class="brief-btn next" onclick="nextBrief()">Next  →</button>
                 </div>
-            </div>
 
         </div>
 
