@@ -42,8 +42,15 @@
   background: #c7ff00;
   padding: 8px;
   border-radius: 50%;
-  border-color: black;
-border-width: 5px;
+  border-style: solid;
+display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.top-label .icon img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
 }
 
 /* MAIN TITLE */
