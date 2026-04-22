@@ -1,1328 +1,3 @@
-// // async function fetchNews(category = "AI") {
-
-// //     let query = "";
-
-// //     if (category === "AI") {
-// //         query = "artificial intelligence OR AI";
-// //     } 
-// //     else if (category === "IT") {
-// //         query = "technology OR software";
-// //     } 
-// //     else if (category === "Electronics") {
-// //         query = "electronics OR hardware";
-// //     }
-
-// //     const res = await fetch(
-// //         `https://newsapi.org/v2/everything?q=${query}&sortBy=publishedAt&apiKey=6f6206bd0ca44e9a91b549f1cf461f3d`
-// //     );
-
-// //     const data = await res.json();
-
-// //     // renderNews(data.articles, category);
-// //     const article = data.articles[0]; // only ONE article per card
-// //     generateAIContent(article);
-// // }
-// // async function fetchNews(category = "AI") {
-
-// //     let query = "";
-
-// //     if (category === "AI") {
-// //         query = "artificial intelligence OR machine learning OR AI";
-// //     } 
-// //     else if (category === "IT") {
-// //         query = "technology OR software OR programming";
-// //     } 
-// //     else if (category === "Electronics") {
-// //         query = "electronics OR hardware OR semiconductors";
-// //     }
-
-// //     const res = await fetch(
-// //         `https://newsapi.org/v2/everything?q=${query}&language=en&sortBy=publishedAt&pageSize=5&apiKey=6f6206bd0ca44e9a91b549f1cf461f3d`
-// //     );
-
-// //     const data = await res.json();
-
-// //     const article = data.articles[0]; // SAME ARTICLE PER CARD
-
-// //     generateAIContent(article);
-// // }
-// async function fetchNews(category = "AI") {
-
-//     let query = "artificial intelligence";
-
-//     const url = `https://newsapi.org/v2/everything?q=${query}&language=en&sortBy=publishedAt&pageSize=5&apiKey=6f6206bd0ca44e9a91b549f1cf461f3d`;
-
-//     console.log("Fetching:", url);
-
-//     const res = await fetch(url);
-//     const data = await res.json();
-
-//     console.log("API DATA:", data);
-
-//     if (!data.articles || data.articles.length === 0) {
-//         alert("No articles found");
-//         return;
-//     }
-
-//     const article = data.articles[0];
-
-//     console.log("USING ARTICLE:", article);
-
-//     generateAIContent(article);
-// }
-
-// // async function fetchNews() {
-// //     const res = await fetch("https://newsapi.org/v2/top-headlines?country=us&apiKey=6f6206bd0ca44e9a91b549f1cf461f3d");
-// //     const data = await res.json();
-
-// //     const article = data.articles[0]; // just first news for now
-
-// //     generateAIContent(article);
-// // }
-// // function generateAIContent(article) {
-
-// //     articleData = {
-// //         beginner: [
-// //             {
-// //                 title: article.title,
-// //                 desc: article.description
-// //             }
-// //         ],
-// //         intermediate: [
-// //             {
-// //                 title: article.title,
-// //                 desc: article.content || article.description
-// //             }
-// //         ],
-// //         advanced: [
-// //             {
-// //                 title: article.title,
-// //                 desc: article.content || article.description
-// //             }
-// //         ]
-// //     };
-
-// //     updatePage();
-// // }
-
-// // function generateAIContent(article) {
-
-// //     // 🔥 UPDATE IMAGE
-// //     const img = document.querySelector(".card-image img");
-// //     img.src = article.urlToImage || "/static/images/news1.1.png";
-
-// //     // 🔥 CREATE MULTIPLE SLIDES FOR SAME ARTICLE
-// //     articleData = {
-
-// //         beginner: [
-// //             {
-// //                 title: article.title,
-// //                 desc: article.description || "No description available"
-// //             },
-// //             {
-// //                 title: "Simple Explanation",
-// //                 desc: "This news means something important but explained in a simple way for easy understanding."
-// //             },
-// //             {
-// //                 title: "Why it matters",
-// //                 desc: "This could impact real-world applications and future developments."
-// //             }
-// //         ],
-
-// //         intermediate: [
-// //             {
-// //                 title: article.title,
-// //                 desc: article.content || article.description
-// //             },
-// //             {
-// //                 title: "Deeper Insight",
-// //                 desc: "This development improves performance and capability in real scenarios."
-// //             }
-// //         ],
-
-// //         advanced: [
-// //             {
-// //                 title: article.title,
-// //                 desc: article.content || article.description
-// //             },
-// //             {
-// //                 title: "Technical Impact",
-// //                 desc: "This could influence system architectures, efficiency, and large-scale implementations."
-// //             }
-// //         ]
-// //     };
-
-// //     currentPage = 0;
-// //     updatePage();
-// // }
-// // async function generateAIContent(article) {
-
-// //     // 🔥 UPDATE IMAGE
-// //     const img = document.querySelector(".card-image img");
-// //     img.src = article.urlToImage || "/static/images/news1.1.png";
-
-// //     const baseText = article.title + ". " + (article.description || "");
-
-// //     // 🔥 CALL AI FOR DIFFERENT LEVELS
-// //     const beginner = await getAIText(baseText, "beginner");
-// //     const intermediate = await getAIText(baseText, "intermediate");
-// //     const advanced = await getAIText(baseText, "advanced");
-
-// //     articleData = {
-// //         beginner: beginner,
-// //         intermediate: intermediate,
-// //         advanced: advanced
-// //     };
-
-// //     currentPage = 0;
-// //     updatePage();
-// // }
-// // function generateAIContent(article) {
-
-// //     // 🔥 IMAGE FROM API
-// //     const img = document.querySelector(".card-image img");
-// //     img.src = article.urlToImage || "/static/images/news1.1.png";
-
-// //     // 🔥 REAL DATA (NOT STATIC)
-// //     articleData = {
-// //         beginner: [
-// //             {
-// //                 title: article.title,
-// //                 desc: article.description || "No description"
-// //             },
-// //             {
-// //                 title: "More Info",
-// //                 desc: article.content || "No extra content"
-// //             }
-// //         ],
-
-// //         intermediate: [
-// //             {
-// //                 title: article.title,
-// //                 desc: article.content || "No description"
-// //             }
-// //         ],
-
-// //         advanced: [
-// //             {
-// //                 title: article.title,
-// //                 desc: article.content || "No description"
-// //             }
-// //         ]
-// //     };
-
-// //     currentPage = 0;
-// //     updatePage();
-// // }
-// // async function getAIText(text, level) {
-
-// //     const res = await fetch("/summarize", {
-// //         method: "POST",
-// //         headers: {
-// //             "Content-Type": "application/json"
-// //         },
-// //         body: JSON.stringify({ text, level })
-// //     });
-
-// //     const data = await res.json();
-
-// //     return data.slides;  // array of slides
-// // }
-// async function generateAIContent(article) {
-
-//     const img = document.querySelector(".card-image img");
-//     img.src = article.urlToImage || "/static/images/news1.1.png";
-
-//     const text = article.title + ". " + article.description;
-
-//     const beginner = await getAIText(text, "beginner");
-//     const intermediate = await getAIText(text, "intermediate");
-//     const advanced = await getAIText(text, "advanced");
-
-//     articleData = {
-//         beginner,
-//         intermediate,
-//         advanced
-//     };
-
-//     currentPage = 0;
-//     updatePage();
-// }
-// let currentPage = 0;
-        
-//         // 🔥 DYNAMIC DATA (THIS WILL COME FROM API LATER)
-//         let currentLevel = "beginner";
-
-// // let articleData = {
-// //   beginner: [
-// //     {
-// //       title: "OpenAI launches GPT-5",
-// //       desc: "A new AI model that is smarter and better at understanding tasks.",
-// //       showImage: true
-// //     },
-// //     {
-// //       title: "What does it do?",
-// //       desc: "It helps users solve problems, answer questions, and write content easily.",
-// //       showImage: true
-// //     }
-// //   ],
-
-// //   intermediate: [
-// //     {
-// //       title: "OpenAI launches GPT-5 with reasoning",
-// //       desc: "GPT-5 improves reasoning and multi-modal understanding.",
-// //       showImage: true
-// //     },
-// //     {
-// //       title: "Key improvement",
-// //       desc: "Better context awareness and accuracy across tasks.",
-// //       showImage: true
-// //     }
-// //   ],
-
-// //   advanced: [
-// //     {
-// //       title: "GPT-5 introduces advanced reasoning architecture",
-// //       desc: "The model significantly enhances inference and contextual depth.",
-// //       showImage: true
-// //     },
-// //     {
-// //       title: "Impact",
-// //       desc: "Potential disruption across industries like healthcare, AI research, and automation.",
-// //       showImage: true
-// //     }
-// //   ]
-// // };
-// let articleData = {
-//     beginner: [],
-//     intermediate: [],
-//     advanced: []
-// };
-//         // const articlePages = [
-//         //     {
-//         //         title: "OpenAI launches GPT-5 with reasoning capabilities",
-//         //         desc: "OpenAI unveiled GPT-5 with advanced reasoning and multi-modal capabilities, marking a major leap in AI development."
-//         //     },
-//         //     {
-//         //         title: "What makes GPT-5 different?",
-//         //         desc: "GPT-5 introduces deeper reasoning, better context retention, and improved accuracy across tasks."
-//         //     },
-//         //     {
-//         //         title: "Why this matters",
-//         //         desc: "This could transform industries like education, healthcare, and software development."
-//         //     }
-//         // ];
-
-//         function nextPage() {
-//     const pages = articleData[currentLevel];
-
-//     if (currentPage < pages.length - 1) {
-//         currentPage++;
-//         updatePage();
-//     }
-// }
-
-// function prevPage() {
-//     if (currentPage > 0) {
-//         currentPage--;
-//         updatePage();
-//     }
-// }
-
-// function updatePage() {
-//     const content = document.getElementById("cardContent");
-//     const image = document.getElementById("cardImage");
-
-//     const pages = articleData[currentLevel];
-//     const page = pages[currentPage];
-
-//     content.style.opacity = 0;
-
-//     setTimeout(() => {
-//         content.innerHTML = `
-//             <h2 class="card-title">${page.title}</h2>
-//             <p class="card-desc">${page.desc}</p>
-//         `;
-
-//         content.style.opacity = 1;
-//     }, 150);
-// }
-// function setLevel(level, btn) {
-//     currentLevel = level;
-//     currentPage = 0;
-
-//     document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
-//     btn.classList.add("active");
-
-//     updatePage();
-// }
-
-// // updatePage();
-// fetchNews();
-
-
-// ================= FETCH NEWS =================
-// async function fetchNews(category = "AI") {
-
-//     let query = "artificial intelligence";
-
-//     const url = `https://newsapi.org/v2/everything?q=${query}&language=en&sortBy=publishedAt&pageSize=5&apiKey=6f6206bd0ca44e9a91b549f1cf461f3d`;
-
-//     console.log("Fetching:", url);
-
-//     const res = await fetch(url);
-//     const data = await res.json();
-
-//     console.log("API DATA:", data);
-
-//     if (!data.articles || data.articles.length === 0) {
-//         alert("No articles found");
-//         return;
-//     }
-
-//     const article = data.articles[0];
-
-//     console.log("USING ARTICLE:", article);
-
-//     generateContent(article);
-// }
-
-
-// // ================= GLOBAL STATE =================
-// let currentPage = 0;
-// let currentLevel = "beginner";
-
-// let articleData = {
-//     beginner: [],
-//     intermediate: [],
-//     advanced: []
-// };
-
-
-// // ================= TEMP CONTENT (NO AI YET) =================
-// function generateContent(article) {
-
-//     // 🔥 IMAGE
-//     const img = document.querySelector(".card-image img");
-//     img.src = article.urlToImage || "/static/images/news1.1.png";
-
-//     // 🔥 CLEAN TEXT (NO 3960 CHARS ISSUE)
-//     const base = article.description || "No description available";
-
-//     articleData = {
-
-//         beginner: [
-//             {
-//                 title: article.title,
-//                 desc: base + " This is explained in a simple and detailed way so that anyone can understand the context clearly."
-//             },
-//             {
-//                 title: "Why this matters",
-//                 desc: "This development can impact real-world applications and future innovations in this field, making it important to follow."
-//             },
-//             {
-//                 title: "Bigger Picture",
-//                 desc: "Understanding this news helps in staying updated with how technology is evolving globally and how it affects industries."
-//             }
-//         ],
-
-//         intermediate: [
-//             {
-//                 title: article.title,
-//                 desc: base
-//             },
-//             {
-//                 title: "Insight",
-//                 desc: "This shows a shift in how systems are evolving and being implemented in real scenarios."
-//             }
-//         ],
-
-//         advanced: [
-//             {
-//                 title: article.title,
-//                 desc: base
-//             }
-//         ]
-//     };
-
-//     currentPage = 0;
-//     updatePage();
-// }
-
-
-// // ================= SLIDER =================
-// function nextPage() {
-//     const pages = articleData[currentLevel];
-
-//     if (currentPage < pages.length - 1) {
-//         currentPage++;
-//         updatePage();
-//     }
-// }
-
-// function prevPage() {
-//     if (currentPage > 0) {
-//         currentPage--;
-//         updatePage();
-//     }
-// }
-
-
-// // ================= UPDATE UI =================
-// function updatePage() {
-//     const content = document.getElementById("cardContent");
-
-//     const pages = articleData[currentLevel];
-
-//     if (!pages || pages.length === 0) return; // 🛑 safety fix
-
-//     const page = pages[currentPage];
-
-//     if (!page) return; // 🛑 prevents crash
-
-//     content.style.opacity = 0;
-
-//     setTimeout(() => {
-//         content.innerHTML = `
-//             <h2 class="card-title">${page.title}</h2>
-//             <p class="card-desc">${page.desc}</p>
-//         `;
-//         content.style.opacity = 1;
-//     }, 150);
-// }
-
-
-// // ================= LEVEL SWITCH =================
-// function setLevel(level, btn) {
-//     currentLevel = level;
-//     currentPage = 0;
-
-//     document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
-//     btn.classList.add("active");
-
-//     updatePage();
-// }
-
-
-// // ================= INIT =================
-// fetchNews();
-
-
-//this version works but api limit is exceeded 
-// // ================= FETCH NEWS =================
-// async function fetchNews(category = "AI") {
-
-//     let query = "artificial intelligence";
-
-//     const url = `https://newsapi.org/v2/everything?q=${query}&language=en&sortBy=publishedAt&pageSize=5&apiKey=6f6206bd0ca44e9a91b549f1cf461f3d`;
-
-//     const res = await fetch(url);
-//     const data = await res.json();
-
-//     if (!data.articles || data.articles.length === 0) {
-//         alert("No articles found");
-//         return;
-//     }
-
-//     const article = data.articles[0];
-
-//     generateAIContent(article);
-// }
-
-
-// // ================= GLOBAL STATE =================
-// let currentPage = 0;
-// let currentLevel = "beginner";
-
-// let articleData = {
-//     beginner: [],
-//     intermediate: [],
-//     advanced: []
-// };
-
-
-// // ================= AI CALL =================
-// async function getAIText(text, level) {
-
-//     const res = await fetch("/summarize", {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify({ text, level })
-//     });
-
-//     const data = await res.json();
-
-//     if (data.error) {
-//         console.error("AI ERROR:", data);
-//         return [];
-//     }
-
-//     return data;
-// }
-
-
-// // ================= GENERATE CONTENT =================
-// async function generateAIContent(article) {
-
-//     const img = document.querySelector(".card-image img");
-//     img.src = article.urlToImage || "/static/images/news1.1.png";
-
-//     const text = article.title + ". " + (article.description || "");
-
-//     // 🔥 Load only beginner FIRST (fast UX)
-//     const beginner = await getAIText(text, "beginner");
-
-//     articleData.beginner = beginner;
-
-//     currentPage = 0;
-//     updatePage();
-
-//     // 🔥 Load others in background
-//     getAIText(text, "intermediate").then(data => {
-//         articleData.intermediate = data;
-//     });
-
-//     getAIText(text, "advanced").then(data => {
-//         articleData.advanced = data;
-//     });
-// }
-
-
-// // ================= SLIDER =================
-// function nextPage() {
-//     const pages = articleData[currentLevel];
-
-//     if (currentPage < pages.length - 1) {
-//         currentPage++;
-//         updatePage();
-//     }
-// }
-
-// function prevPage() {
-//     if (currentPage > 0) {
-//         currentPage--;
-//         updatePage();
-//     }
-// }
-
-
-// // ================= UPDATE UI =================
-// function updatePage() {
-//     const content = document.getElementById("cardContent");
-
-//     const pages = articleData[currentLevel];
-
-//     if (!pages || pages.length === 0) return;
-
-//     const page = pages[currentPage];
-
-//     if (!page) return;
-
-//     content.style.opacity = 0;
-
-//     setTimeout(() => {
-//         content.innerHTML = `
-//             <h2 class="card-title">${page.title}</h2>
-//             <p class="card-desc">${page.desc}</p>
-//         `;
-//         content.style.opacity = 1;
-//     }, 150);
-// }
-
-
-// // ================= LEVEL SWITCH =================
-// function setLevel(level, btn) {
-//     currentLevel = level;
-//     currentPage = 0;
-
-//     document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
-//     btn.classList.add("active");
-
-//     updatePage();
-// }
-
-
-// // ================= INIT =================
-// fetchNews();
-
-//working version (static data)
-// // ================= GLOBAL STATE =================
-// let currentPage = 0;
-// let currentLevel = "beginner";
-
-// let articleData = {
-//     beginner: [],
-//     intermediate: [],
-//     advanced: []
-// };
-
-
-// // ================= STATIC DATA =================
-// function loadStaticData() {
-
-//     const img = document.querySelector(".card-image img");
-//     img.src = "/static/images/news1.1.png";
-
-//     articleData = {
-
-//         beginner: [
-//             {
-//                 title: "OpenAI launches GPT-5",
-//                 desc: "OpenAI has introduced GPT-5, a new artificial intelligence model designed to improve reasoning and understanding. It can process complex inputs, generate better responses, and assist users more efficiently. This advancement makes AI more accessible and useful in everyday applications, helping people complete tasks faster and with greater accuracy."
-//             },
-//             {
-//                 title: "How it helps users",
-//                 desc: "GPT-5 improves productivity by assisting in writing, coding, and research tasks. It can understand context better and provide clearer explanations, making it useful for students, professionals, and developers. The model is designed to adapt to user needs, ensuring a smoother and more personalized experience."
-//             },
-//             {
-//                 title: "Real-world impact",
-//                 desc: "This technology can be applied in industries like healthcare, education, and business. It can automate repetitive tasks, assist decision-making, and improve efficiency. Companies can use it to enhance customer support and streamline operations."
-//             },
-//             {
-//                 title: "Future potential",
-//                 desc: "AI models like GPT-5 represent the future of intelligent systems. As they evolve, they may become even more accurate, reliable, and capable of handling complex problems across different domains."
-//             }
-//         ],
-
-//         intermediate: [
-//             {
-//                 title: "GPT-5 improves reasoning",
-//                 desc: "OpenAI's GPT-5 introduces better reasoning and contextual understanding, allowing it to handle more complex queries effectively."
-//             },
-//             {
-//                 title: "Applications",
-//                 desc: "It can be used in automation, content generation, and problem-solving tasks across industries."
-//             },
-//             {
-//                 title: "Impact",
-//                 desc: "This development signals a major step forward in AI adoption and real-world integration."
-//             }
-//         ],
-
-//         advanced: [
-//             {
-//                 title: "GPT-5 architecture",
-//                 desc: "The model enhances inference capabilities and multi-modal processing, improving performance across tasks."
-//             },
-//             {
-//                 title: "Industry shift",
-//                 desc: "It could significantly influence AI-driven systems and enterprise-level automation."
-//             }
-//         ]
-//     };
-
-//     updatePage();
-// }
-
-
-// // ================= SLIDER =================
-// function nextPage() {
-//     const pages = articleData[currentLevel];
-
-//     if (currentPage < pages.length - 1) {
-//         currentPage++;
-//         updatePage();
-//     }
-// }
-
-// function prevPage() {
-//     if (currentPage > 0) {
-//         currentPage--;
-//         updatePage();
-//     }
-// }
-
-
-// // ================= UPDATE UI =================
-// function updatePage() {
-//     const content = document.getElementById("cardContent");
-
-//     const pages = articleData[currentLevel];
-//     if (!pages || pages.length === 0) return;
-
-//     const page = pages[currentPage];
-//     if (!page) return;
-
-//     content.style.opacity = 0;
-
-//     setTimeout(() => {
-//         content.innerHTML = `
-//             <h2 class="card-title">${page.title}</h2>
-//             <p class="card-desc">${page.desc}</p>
-//         `;
-//         content.style.opacity = 1;
-//     }, 150);
-// }
-
-
-// // ================= LEVEL SWITCH =================
-// function setLevel(level, btn) {
-//     currentLevel = level;
-//     currentPage = 0;
-
-//     document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
-//     btn.classList.add("active");
-
-//     updatePage();
-// }
-
-
-// // ================= INIT =================
-// loadStaticData();
-
-// working version ends here
-
-// let currentPage = 0;
-// let currentLevel = "beginner";
-
-// let articleData = {
-//     beginner: [],
-//     intermediate: [],
-//     advanced: []
-// };
-
-
-// // ================= FETCH NEWS =================
-// async function fetchNews(category = "AI") {
-
-//     const res = await fetch(`/get-news?category=${category}`);
-//     const data = await res.json();
-
-//     if (data.error) {
-//         alert("Failed to load news");
-//         return;
-//     }
-
-//     articleData = data.slides;
-
-//     // 🔥 SET IMAGE
-//     const img = document.querySelector(".card-image img");
-//     img.src = data.image || "/static/images/news1.1.png";
-
-//     currentPage = 0;
-//     updatePage();
-// }
-
-
-// // ================= SLIDER =================
-// function nextPage() {
-//     const pages = articleData[currentLevel];
-
-//     if (currentPage < pages.length - 1) {
-//         currentPage++;
-//         updatePage();
-//     }
-// }
-
-// function prevPage() {
-//     if (currentPage > 0) {
-//         currentPage--;
-//         updatePage();
-//     }
-// }
-
-
-// // ================= UPDATE UI =================
-// function updatePage() {
-//     const content = document.getElementById("cardContent");
-
-//     const pages = articleData[currentLevel];
-//     if (!pages || pages.length === 0) return;
-
-//     const page = pages[currentPage];
-//     if (!page) return;
-
-//     content.style.opacity = 0;
-
-//     setTimeout(() => {
-//         content.innerHTML = `
-//             <h2 class="card-title">${page.title}</h2>
-//             <p class="card-desc">${page.desc}</p>
-//         `;
-//         content.style.opacity = 1;
-//     }, 150);
-// }
-
-
-// // ================= LEVEL SWITCH =================
-// function setLevel(level, btn) {
-//     currentLevel = level;
-//     currentPage = 0;
-
-//     document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
-//     btn.classList.add("active");
-
-//     updatePage();
-// }
-
-
-// // ================= INIT =================
-// fetchNews();
-
-
-//gives correct news but all in one card
-// let articles = [];
-// let currentArticleIndex = 0;
-
-// let currentPage = 0;
-// let currentLevel = "beginner";
-// let articleData = {};
-
-// // ================= FETCH ALL ARTICLES =================
-// async function fetchNews() {
-//     const res = await fetch("/get-news");
-//     const data = await res.json();
-
-//     articles = data.articles;
-
-//     loadArticle(0); // 🔥 load first article
-// }
-
-// // ================= LOAD SINGLE ARTICLE =================
-// async function loadArticle(index) {
-//     currentArticleIndex = index;
-//     currentPage = 0;
-
-//     const article = articles[index];
-
-//     // SET IMAGE
-//     document.querySelector(".card-image img").src =
-//         article.image || "/static/images/news1.1.png";
-
-//     // 🔥 CALL AI FOR THIS ARTICLE ONLY
-//     const res = await fetch("/generate-slides", {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify(article)
-//     });
-
-//     const data = await res.json();
-
-//     articleData = data.slides;
-
-//     updatePage();
-// }
-
-// // ================= NEXT ARTICLE =================
-// function nextArticle() {
-//     if (currentArticleIndex < articles.length - 1) {
-//         loadArticle(currentArticleIndex + 1);
-//     }
-// }
-
-// // ================= PREV ARTICLE =================
-// function prevArticle() {
-//     if (currentArticleIndex > 0) {
-//         loadArticle(currentArticleIndex - 1);
-//     }
-// }
-
-// // ================= SLIDER =================
-// function nextPage() {
-//     const pages = articleData[currentLevel];
-
-//     if (currentPage < pages.length - 1) {
-//         currentPage++;
-//         updatePage();
-//     } else {
-//         nextArticle(); // 🔥 move to next news
-//     }
-// }
-
-// function prevPage() {
-//     if (currentPage > 0) {
-//         currentPage--;
-//         updatePage();
-//     } else {
-//         prevArticle();
-//     }
-// }
-
-// // ================= UPDATE UI =================
-// function updatePage() {
-//     const content = document.getElementById("cardContent");
-
-//     const pages = articleData[currentLevel];
-//     if (!pages) return;
-
-//     const page = pages[currentPage];
-//     if (!page) return;
-
-//     content.style.opacity = 0;
-
-//     setTimeout(() => {
-//         content.innerHTML = `
-//             <h2 class="card-title">${page.title}</h2>
-//             <p class="card-desc">${page.desc}</p>
-//         `;
-//         content.style.opacity = 1;
-//     }, 150);
-// }
-
-// // ================= LEVEL SWITCH =================
-// function setLevel(level, btn) {
-//     currentLevel = level;
-//     currentPage = 0;
-
-//     document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
-//     btn.classList.add("active");
-
-//     updatePage();
-// }
-
-// // ================= INIT =================
-// fetchNews();
-
-// // ================= GLOBAL =================
-// let articles = [];
-// let currentArticleIndex = 0;
-
-// let currentPage = 0;
-// let currentLevel = "beginner";
-// let articleData = {};
-
-// // ================= FETCH ALL ARTICLES =================
-// async function fetchNews() {
-//     const res = await fetch("/get-news");
-//     const data = await res.json();
-
-//     articles = data.articles;
-
-//     loadArticle(0); // load first article
-// }
-
-
-// // ================= LOAD ONE ARTICLE =================
-// async function loadArticle(index) {
-//     currentArticleIndex = index;
-//     currentPage = 0;
-
-//     const article = articles[index];
-
-//     // 🔥 UPDATE IMAGE
-//     document.querySelector(".card-image img").src =
-//         article.image || "/static/images/news1.1.png";
-
-//     // 🔥 UPDATE DOMAIN PILL
-//     // const pill = document.querySelector(".news-pill"); // make sure class matches
-//     const pill = document.getElementById("domainPill");
-//     if (pill) {
-//         pill.innerText = article.domain;
-//         pill.classList.remove("ai", "it", "electronics");
-
-// // ADD NEW CLASS
-//         if (article.domain === "AI") {
-//             pill.classList.add("ai");
-//         } else if (article.domain === "IT") {
-//             pill.classList.add("it");
-//         } else {
-//             pill.classList.add("electronics");
-//         }
-//     }
-
-//     // 🔥 CALL AI FOR THIS ARTICLE
-//     const res = await fetch("/generate-slides", {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify(article)
-//     });
-
-//     const data = await res.json();
-
-//     articleData = data.slides;
-
-//     updatePage();
-// }
-
-
-// // ================= NEXT ARTICLE =================
-// function nextArticle() {
-//     if (currentArticleIndex < articles.length - 1) {
-//         loadArticle(currentArticleIndex + 1);
-//     }
-// }
-
-//polished but again same mistake
-// // ================= PREV ARTICLE =================
-// function prevArticle() {
-//     if (currentArticleIndex > 0) {
-//         loadArticle(currentArticleIndex - 1);
-//     }
-// }
-
-
-// // ================= NEXT SLIDE =================
-// function nextPage() {
-//     const pages = articleData[currentLevel];
-
-//     if (currentPage < pages.length - 1) {
-//         currentPage++;
-//         updatePage();
-//     } else {
-//         // 🔥 move to next article
-//         nextArticle();
-//     }
-// }
-
-
-// // ================= PREV SLIDE =================
-// function prevPage() {
-//     if (currentPage > 0) {
-//         currentPage--;
-//         updatePage();
-//     } else {
-//         // 🔥 go to previous article
-//         prevArticle();
-//     }
-// }
-
-
-// // ================= UPDATE UI =================
-// function updatePage() {
-//     const content = document.getElementById("cardContent");
-
-//     const pages = articleData[currentLevel];
-//     if (!pages || pages.length === 0) return;
-
-//     const page = pages[currentPage];
-//     if (!page) return;
-
-//     content.style.opacity = 0;
-
-//     setTimeout(() => {
-//         content.innerHTML = `
-//             <h2 class="card-title">${page.title}</h2>
-//             <p class="card-desc">${page.desc}</p>
-//         `;
-//         content.style.opacity = 1;
-//     }, 150);
-// }
-
-
-// // ================= LEVEL SWITCH =================
-// function setLevel(level, btn) {
-//     currentLevel = level;
-//     currentPage = 0;
-
-//     document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
-//     btn.classList.add("active");
-
-//     updatePage();
-// }
-
-
-// // ================= INIT =================
-// fetchNews();
-
-// // ================= FETCH & RENDER FEED =================
-// async function fetchNews() {
-//     const res = await fetch("/get-news");
-//     const data = await res.json();
-
-//     const container = document.querySelector(".feed-container");
-
-//     // REMOVE OLD CARD
-//     const oldCard = document.getElementById("newsCard");
-//     oldCard.remove();
-
-//     data.articles.forEach((article, index) => {
-//         createNewsCard(article, container, index);
-//     });
-// }
-
-
-// // ================= CREATE CARD =================
-// // async function createNewsCard(article, container, index) {
-
-// //     const card = document.createElement("div");
-// //     card.className = "news-card";
-
-// //     card.innerHTML = `
-// //         <div class="card-image">
-// //             <img src="${article.image || '/static/images/news1.1.png'}">
-
-// //             <span class="domain-pill ${article.domain.toLowerCase()}">
-// //                 ${article.domain}
-// //             </span>
-// //         </div>
-
-// //         <div class="card-content">
-
-// //             <div class="card-text" id="cardContent-${index}">
-// //                 <h2 class="card-title">Loading...</h2>
-// //                 <p class="card-desc">Fetching explanation...</p>
-// //             </div>
-
-// //             <div class="card-actions">
-// //                 <div class="level-toggle">
-// //                     <button class="level-btn active" onclick="setLevel(${index}, 'beginner', this)">B</button>
-// //                     <button class="level-btn" onclick="setLevel(${index}, 'intermediate', this)">I</button>
-// //                     <button class="level-btn" onclick="setLevel(${index}, 'advanced', this)">A</button>
-// //                 </div>
-// //             </div>
-
-// //         </div>
-// //     `;
-
-// //     container.appendChild(card);
-
-// //     // 🔥 LOAD AI CONTENT
-// //     const res = await fetch("/generate-slides", {
-// //         method: "POST",
-// //         headers: {
-// //             "Content-Type": "application/json"
-// //         },
-// //         body: JSON.stringify(article)
-// //     });
-
-// //     const data = await res.json();
-
-// //     card.dataset.slides = JSON.stringify(data.slides);
-// //     card.dataset.page = 0;
-// //     card.dataset.level = "beginner";
-
-// //     updateCard(index);
-// // }\
-// async function createNewsCard(article, container, index) {
-
-//     // 🔥 CLONE EXISTING CARD (THIS FIXES EVERYTHING)
-//     const template = document.getElementById("newsCard");
-//     const card = template.cloneNode(true);
-
-//     card.id = ""; // remove duplicate ID
-
-//     // ================= UPDATE IMAGE =================
-//     const img = card.querySelector(".card-image img");
-//     img.src = article.image || "/static/images/news1.1.png";
-
-//     // ================= UPDATE PILL =================
-//     const pill = card.querySelector(".domain-pill");
-//     pill.innerText = article.domain;
-
-//     pill.classList.remove("ai", "it", "electronics");
-//     pill.classList.add(article.domain.toLowerCase());
-
-//     // ================= UPDATE CONTENT ID =================
-//     const content = card.querySelector("#cardContent");
-//     content.id = `cardContent-${index}`;
-
-//     // ================= RESET TEXT =================
-//     content.innerHTML = `
-//         <h2 class="card-title">Loading...</h2>
-//         <p class="card-desc">Fetching explanation...</p>
-//     `;
-
-//     // ================= FIX BUTTON EVENTS =================
-//     card.querySelector(".next-btn")?.setAttribute("onclick", `nextPage(${index})`);
-
-//     // LEVEL BUTTONS
-//     const levelBtns = card.querySelectorAll(".level-btn");
-//     levelBtns[0].setAttribute("onclick", `setLevel(${index}, 'beginner', this)`);
-//     levelBtns[1].setAttribute("onclick", `setLevel(${index}, 'intermediate', this)`);
-//     levelBtns[2].setAttribute("onclick", `setLevel(${index}, 'advanced', this)`);
-
-//     // ================= STORE DATA =================
-//     card.dataset.page = 0;
-//     card.dataset.level = "beginner";
-
-//     container.appendChild(card);
-
-//     // ================= CALL AI =================
-//     const res = await fetch("/generate-slides", {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json"
-//         },
-//         body: JSON.stringify(article)
-//     });
-
-//     const data = await res.json();
-
-//     card.dataset.slides = JSON.stringify(data.slides);
-
-//     updateCard(index);
-// }
-
-
-// // ================= UPDATE CARD =================
-// // function updateCard(index) {
-
-// //     const card = document.querySelectorAll(".news-card")[index];
-// //     const slides = JSON.parse(card.dataset.slides);
-// //     const level = card.dataset.level;
-// //     const page = parseInt(card.dataset.page);
-
-// //     const content = document.getElementById(`cardContent-${index}`);
-
-// //     const slide = slides[level][page];
-
-// //     content.innerHTML = `
-// //         <h2 class="card-title">${slide.title}</h2>
-// //         <p class="card-desc">${slide.desc}</p>
-// //     `;
-// // }
-// function updateCard(index) {
-
-//     const card = document.querySelectorAll(".news-card")[index];
-//     const slides = JSON.parse(card.dataset.slides);
-//     const level = card.dataset.level;
-//     const page = parseInt(card.dataset.page);
-
-//     const content = card.querySelector(`#cardContent-${index}`);
-
-//     if (!slides || !slides[level]) return;
-
-//     const slide = slides[level][page];
-//     if (!slide) return;
-
-//     content.innerHTML = `
-//         <h2 class="card-title">${slide.title}</h2>
-//         <p class="card-desc">${slide.desc}</p>
-//     `;
-// }
-
-
-// // ================= LEVEL SWITCH =================
-// // function setLevel(index, level, btn) {
-
-// //     const card = document.querySelectorAll(".news-card")[index];
-
-// //     card.dataset.level = level;
-// //     card.dataset.page = 0;
-
-// //     // button UI
-// //     btn.parentElement.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
-// //     btn.classList.add("active");
-
-// //     updateCard(index);
-// // }
-// function setLevel(index, level, btn) {
-
-//     const card = document.querySelectorAll(".news-card")[index];
-
-//     card.dataset.level = level;
-//     card.dataset.page = 0;
-
-//     btn.parentElement.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
-//     btn.classList.add("active");
-
-//     updateCard(index);
-// }
-
-
-// // ================= INIT =================
-// fetchNews();
-
-
-
-
-
 //working but currently not gonna use this cause it has 15 cards 
 // ================= FETCH & RENDER FEED =================
 // async function fetchNews() {
@@ -1727,12 +402,16 @@
 //     // ================= AUTO SCROLL =================
 //     chatBox.scrollTop = chatBox.scrollHeight;
 // }
+let allArticles = [];
+let currentIndex = 0;
+const BATCH_SIZE = 5;
+
 async function fetchNews() {
 
     const res = await fetch("/get-news");
     const data = await res.json();
 
-    const container = document.querySelector("newsContainer");
+    const container = document.getElementById("newsContainer");
 
     const template = document.querySelector("#newsCard");
 
@@ -1746,16 +425,57 @@ async function fetchNews() {
     // remove old generated cards only
     document.querySelectorAll(".news-card.generated").forEach(card => card.remove());
 
-    data.articles.forEach((article, index) => {
+    // data.articles.forEach((article, index) => {
 
-        // 🔥 ONLY FIRST 3 USE AI
-        if (index < 1) {
-            createNewsCard(article, container, index);
-        } else {
-            createStaticCard(article, container);
-        }
+    //     // 🔥 ONLY FIRST 3 USE AI
+    //     if (index < 1) {
+    //         createNewsCard(article, container, index);
+    //     } else {
+    //         createStaticCard(article, container);
+    //     }
 
+    // });
+    // data.articles.forEach((article, index) => {
+        const shuffled = [...data.articles].sort(() => Math.random() - 0.5);
+
+        // shuffled.forEach((article, index) => {
+        //     createNewsCard(article, container, index);
+        // });
+        allArticles = [...data.articles].sort(() => Math.random() - 0.5);
+
+        currentIndex = 0;
+
+        // load first batch
+        loadMoreCards();
+        setTimeout(() => {
+            applyFilter();
+        }, 100);
+}
+
+function loadMoreCards() {
+
+    const container = document.getElementById("newsContainer");
+
+    const nextBatch = allArticles.slice(currentIndex, currentIndex + BATCH_SIZE);
+
+    nextBatch.forEach((article, i) => {
+        const index = currentIndex + i;
+        createNewsCard(article, container, index);
     });
+
+    // 🔥 ADD THIS EXACTLY HERE
+    // setTimeout(() => {
+    //     document.querySelectorAll(".news-card.generated").forEach((card, index) => {
+    //         if (!card.dataset.slides) {
+    //             console.log("🔄 Re-applying fallback for card:", index);
+    //             applyFallbackCard(card, index);
+    //         }
+    //     });
+    // }, 500);
+
+    currentIndex += BATCH_SIZE;
+
+    console.log("📦 Loaded batch. Current index:", currentIndex);
 }
 
 
@@ -1785,11 +505,14 @@ async function createNewsCard(article, container, index) {
 
     // CONTENT
     const content = card.querySelector(".cardContent");
-    content.id = `cardContent-${index}`;
 
+    // 🔥 SAFE DATA (FIX UNDEFINED)
+    const safeTitle = article.title || article.heading || "No title";
+    const safeDesc = article.desc || article.description || "No description";
+    
     content.innerHTML = `
-        <h2 class="card-title">Loading...</h2>
-        <p class="card-desc">Fetching explanation...</p>
+        <h2 class="card-title">${safeTitle}</h2>
+        <p class="card-desc">${safeDesc}</p>
     `;
 
     // BUTTONS
@@ -1809,12 +532,38 @@ async function createNewsCard(article, container, index) {
     // STATE
     card.dataset.page = 0;
     card.dataset.level = "beginner";
-    card.dataset.article = JSON.stringify(article);
+    // card.dataset.article = JSON.stringify(article);
+    if (article) {
+        // card.dataset.article = JSON.stringify(article);
+        // const firstSlide = article.slides?.beginner?.[0] || {};
+
+        // const cleanArticle = {
+        //     title: firstSlide.title || "No title",
+        //     desc: firstSlide.desc || "No description",
+        //     content: firstSlide.desc || ""
+        // };
+        // ✅ HANDLE BOTH GNEWS + FALLBACK
+        const cleanArticle = {
+            title: article.title || article.heading || "No title",
+            desc: article.desc || article.description || "No description",
+            content: article.content || article.desc || ""
+        };
+
+        // ✅ STORE CLEAN DATA
+        card.dataset.article = JSON.stringify(cleanArticle);
+    } else {
+        console.error("❌ Article missing for card:", index);
+    }
+    card.dataset.index = index;
+    card.dataset.domain = article.domain;
 
     // console.log("isConnected:", container.isConnected);
 
     // container.appendChild(card);
     document.getElementById("newsContainer").appendChild(card);
+   
+    // console.log(`📡 [Card ${index}] Fetching AI for:`, article.title);
+    console.log(`📡 [Card ${index}] Fetching AI for:`, safeTitle);
 
     // ================= AI CALL =================
     if (card.dataset.slidesLoaded) return;  // 🧠 prevent duplicate calls
@@ -1824,7 +573,11 @@ async function createNewsCard(article, container, index) {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(article)
+        // body: JSON.stringify(article)
+        body: JSON.stringify({
+            ...article,
+            index: index
+        })
     });
 
     const text = await res.text();
@@ -1833,8 +586,15 @@ async function createNewsCard(article, container, index) {
 
     try {
         data = JSON.parse(text);
+        // console.log(`✅ [Card ${index}] Gemini used`);
+        if (data.source === "fallback") {
+            console.log(`⚠️ [Card ${index}] Fallback used`);
+        } else {
+            console.log(`✅ [Card ${index}] Gemini used`);
+        }
     } catch {
         console.error("❌ Invalid JSON:", text);
+        console.log(`⚠️ [Card ${index}] Fallback used`);
         return;
     }
 
@@ -1844,10 +604,21 @@ async function createNewsCard(article, container, index) {
     }
 
     card.dataset.slides = JSON.stringify(data.slides);
+    card.dataset.source = data.source; // ✅ ADD THIS
+    console.log(`📊 [Card ${index}] Source:`, data.source);
+
+    // if (data.source === "fallback") {
+    //     applyFallbackCard(card, index);
+    // }
+    if (data.source === "fallback") {
+        applyFallbackCard(card, index);
+    } else {
+        updateCard(index); // ✅ ONLY update if NOT fallback
+    }
 
     if (nextBtn) nextBtn.disabled = false;
 
-    updateCard(index);
+    // updateCard(index);
 }
 
 
@@ -1860,6 +631,7 @@ function createStaticCard(article, container) {
     card.style.display = "block";
     card.classList.add("news-card", "generated");
     card.removeAttribute("id");
+    card.dataset.domain = article.domain;
 
     // IMAGE
     const img = card.querySelector(".card-image img");
@@ -1877,7 +649,7 @@ function createStaticCard(article, container) {
 
     content.innerHTML = `
         <h2 class="card-title">${article.title}</h2>
-        <p class="card-desc">${article.description || "No description available."}</p>
+        <p class="card-desc">${article.desc || "No description available."}</p>
     `;
 
     // 🔥 DISABLE BUTTONS FOR STATIC
@@ -1896,7 +668,8 @@ function createStaticCard(article, container) {
 function updateCard(index) {
 
     // const card = document.querySelectorAll(".news-card")[index];
-    const card = document.querySelectorAll(".news-card.generated")[index];
+    // const card = document.querySelectorAll(".news-card.generated")[index];
+    const card = document.querySelector(`.news-card.generated[data-index="${index}"]`);
 
     if (!card || !card.dataset.slides) return;
 
@@ -1906,7 +679,8 @@ function updateCard(index) {
 
     if (!slides[level] || !slides[level][page]) return;
 
-    const content = card.querySelector(`.cardContent-${index}`);
+    // const content = card.querySelector(`.cardContent-${index}`);
+    const content = card.querySelector(".cardContent");
     if (!content) return;
 
     const slide = slides[level][page];
@@ -1915,6 +689,7 @@ function updateCard(index) {
         <h2 class="card-title">${slide.title}</h2>
         <p class="card-desc">${slide.desc}</p>
     `;
+    
 }
 
 
@@ -1922,8 +697,9 @@ function updateCard(index) {
 function setLevel(index, level, btn) {
 
     // const card = document.querySelectorAll(".news-card")[index];
-    const card = document.querySelectorAll(".news-card.generated")[index];
-
+    // const card = document.querySelectorAll(".news-card.generated")[index];
+    const card = document.querySelector(`.news-card.generated[data-index="${index}"]`);
+    
     card.dataset.level = level;
     card.dataset.page = 0;
 
@@ -1940,7 +716,8 @@ function setLevel(index, level, btn) {
 function nextPage(index) {
 
     // const card = document.querySelectorAll(".news-card")[index];
-    const card = document.querySelectorAll(".news-card.generated")[index];
+    // const card = document.querySelectorAll(".news-card.generated")[index];
+    const card = document.querySelector(`.news-card.generated[data-index="${index}"]`);
 
     if (!card || !card.dataset.slides) return;
 
@@ -1965,23 +742,35 @@ async function sendArticleChat(button) {
 
     if (!text) return;
 
-    const botBody = card.querySelector(".bot-body");
+    // const botBody = card.querySelector(".bot-body");
+    const chatBox = card.querySelector(".bot-chat");
 
     // USER MESSAGE
-    botBody.innerHTML += `
-        <div class="bot-message user">${text}</div>
+    // botBody.innerHTML += `
+    //     <div class="bot-message user">${text}</div>
+    // `;
+
+    chatBox.innerHTML += `
+    <div class="msg user">${text}</div>
     `;
 
     input.value = "";
 
     // LOADING
     const loading = document.createElement("div");
-    loading.className = "bot-message";
+    loading.className = "msg ai";
     loading.innerText = "Thinking...";
-    botBody.appendChild(loading);
+    chatBox.appendChild(loading);
 
     // 🔥 GET ARTICLE CONTEXT
-    const article = JSON.parse(card.dataset.article);
+    // const article = JSON.parse(card.dataset.article);
+    const articleData = JSON.parse(card.dataset.article || "{}");
+
+    const fullContext = `
+    Title: ${articleData.title || ""}
+    Description: ${articleData.desc || ""}
+    Content: ${articleData.content || ""}
+    `;
 
     try {
         const res = await fetch("/ask-article", {
@@ -1991,7 +780,7 @@ async function sendArticleChat(button) {
             },
             body: JSON.stringify({
                 question: text,
-                article: article
+                article: fullContext
             })
         });
 
@@ -2003,7 +792,7 @@ async function sendArticleChat(button) {
         loading.innerText = "Error connecting to AI.";
     }
 
-    botBody.scrollTop = botBody.scrollHeight;
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
 
 
@@ -2019,9 +808,177 @@ const container = document.getElementById("newsContainer");
 
 const template = document.getElementById("newsCard");
 console.log("template:", template);
-window.onload = function () {
+// window.onload = function () {
+//     fetchNews();
+// };
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("✅ DOM loaded");
     fetchNews();
-};
+});
+window.addEventListener("scroll", () => {
+
+    if (
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 200
+    ) {
+        // near bottom
+        if (currentIndex < allArticles.length) {
+            console.log("⬇️ Loading more cards...");
+            loadMoreCards();
+        }
+    }
+
+});
+const filters = document.querySelectorAll(".filter");
+let currentFilter = "all";
+
+filters.forEach(btn => {
+    btn.addEventListener("click", () => {
+
+        filters.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const selected = btn.innerText.trim().toLowerCase();
+        currentFilter = selected;
+
+        document.querySelectorAll(".news-card.generated").forEach(card => {
+
+            const domain = (card.dataset.domain || "").trim().toLowerCase();
+
+            console.log("Filter:", selected, "| Card:", domain);
+
+            if (selected === "all" || domain === selected) {
+                card.classList.remove("hidden-card");   // ✅ SHOW
+            } else {
+                card.classList.add("hidden-card");      // ❌ HIDE
+            }
+
+        });
+    });
+});
+
+function applyFilter() {
+
+    document.querySelectorAll(".news-card.generated").forEach(card => {
+
+        const domain = (card.dataset.domain || "").trim().toLowerCase();
+
+        if (currentFilter === "all" || domain === currentFilter) {
+            card.style.display = ""; 
+        } else {
+            card.style.display = "none";
+        }
+
+    });
+
+}
+
+// function applyFallbackCard(card, index) {
+
+//     card.dataset.source = "fallback";
+   
+
+//     console.log("🧱 Applying FULL fallback for card:", index);
+
+//     const fallbackData = window.FALLBACK_DATA;
+
+//     if (!fallbackData || fallbackData.length === 0) {
+//         console.error("❌ No fallback data found");
+//         return;
+//     }
+
+//     // ✅ Pick correct fallback item
+//     // const fallback = fallbackData[index % fallbackData.length];
+//     const realIndex = parseInt(card.dataset.index);
+//     const fallback = fallbackData[realIndex % fallbackData.length];
+
+//     card.dataset.domain = fallback.domain; // 🔥 ADD THIS
+
+//     // ================= IMAGE =================
+//     const img = card.querySelector(".card-image img");
+//     img.src = fallback.image;
+//     // ================= DOMAIN =================
+//     const pill = card.querySelector(".domain-pill");
+//     pill.innerText = fallback.domain;
+
+//     pill.classList.remove("ai", "it", "electronics");
+//     pill.classList.add(fallback.domain.toLowerCase());
+
+//     // ================= CONTENT =================
+//     const content = card.querySelector(".cardContent");
+
+//     // content.innerHTML = `
+//     //     <h2 class="card-title">${fallback.title}</h2>
+//     //     <p class="card-desc">${fallback.desc}</p>
+//     // `;
+//     card.querySelector(".card-title").innerText = fallback.title;
+//     card.querySelector(".card-desc").innerText = fallback.desc;
+
+//     // ================= GROQ CONTEXT =================
+//     const cleanArticle = {
+//         title: fallback.title,
+//         desc: fallback.desc,
+//         content: fallback.desc
+//     };
+
+//     card.dataset.article = JSON.stringify(cleanArticle);
+
+//     console.log("✅ Fallback applied with full consistency");
+// }
+
+function applyFallbackCard(card, index) {
+
+    console.log("🧱 Applying FULL fallback for card:", index);
+
+    const fallbackData = window.FALLBACK_DATA;
+
+    if (!fallbackData || fallbackData.length === 0) {
+        console.error("❌ No fallback data found");
+        return;
+    }
+
+    const realIndex = parseInt(card.dataset.index) || 0;
+    const fallback = fallbackData[realIndex % fallbackData.length];
+
+    // ✅ SET SOURCE + DOMAIN
+    card.dataset.source = "fallback";
+    card.dataset.domain = fallback.domain;
+
+    // ================= IMAGE =================
+    const img = card.querySelector(".card-image img");
+    img.src = fallback.image;
+
+    // ================= DOMAIN =================
+    const pill = card.querySelector(".domain-pill");
+    pill.innerText = fallback.domain;
+
+    pill.classList.remove("ai", "it", "electronics");
+    pill.classList.add(fallback.domain.toLowerCase());
+
+    // ================= CONTENT =================
+    card.querySelector(".card-title").innerText = fallback.title;
+    card.querySelector(".card-desc").innerText = fallback.desc;
+
+    // ================= GROQ CONTEXT =================
+    const cleanArticle = {
+        title: fallback.title,
+        desc: fallback.desc,
+        content: fallback.desc
+    };
+
+    card.dataset.article = JSON.stringify(cleanArticle);
+
+    // ================= FIX: UPDATE SLIDES =================
+    if (fallback.slides) {
+        card.dataset.slides = JSON.stringify(fallback.slides);
+        card.dataset.level = "beginner";
+        card.dataset.page = 0;
+
+         // 🔥 force UI refresh
+        updateCard(index);
+    }
+
+    console.log("✅ Fallback applied correctly");
+} 
 
 
 

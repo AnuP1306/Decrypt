@@ -17,8 +17,11 @@
         <div class="feed-intro">
             <h1 class="feed-title">
                 News that actually 
-                <span class="highlight">makes sense</span>
+                <span class="highlight-text">makes sense</span>
             </h1>
+            <!-- <h1 class="feed-title">
+                News that actually makes sense
+            </h1> -->
             <p class="feed-subtext">
                 No jargon. No confusion. Just what's happening in the world — explained your way.
             </p>
@@ -142,13 +145,16 @@
                     </div>
                     <div class="bot-body">
 
-                        <!-- INTRO -->
-                        <div class="bot-message">
-                            Hey! I’ve read the full article. Ask me anything — I’ll answer based on this article only.
-                        </div>
+                        
                     
                         <!-- 🔥 NEW: CHAT MESSAGES CONTAINER -->
-                        <div class="bot-chat" id="articleChatMessages"></div>
+                        <div class="bot-chat" id="articleChatMessages">
+
+                            <!-- INTRO -->
+                            <div class="bot-message">
+                                Hey! I’ve read the full article. Ask me anything — I’ll answer based on this article only.
+                            </div>
+                        </div>
                     
                         <!-- SUGGESTIONS -->
                         <div class="bot-suggestions">
@@ -159,7 +165,7 @@
                     
                         <!-- INPUT -->
                         <div class="bot-input">
-                            <input type="text" id="articleChatInput" placeholder="Ask about this article...">
+                            <input type="text" class="articleChatInput" placeholder="Ask about this article...">
                             <button onclick="sendArticleChat(this)">
                                 <img src="/static/images/send.png">
                             </button>
@@ -274,6 +280,9 @@
 
 {% block extra_js %}
 <!-- SCRIPTS -->
+<script>
+    window.FALLBACK_DATA = JSON.parse(`{{ fallback_data | tojson | safe }}`);
+</script>
 <script>
     function toggleSidebar() {
         document.getElementById("sidebar").classList.toggle("collapsed");
@@ -635,59 +644,100 @@
     </script>
     <script>
         async function sendArticleChat(button) {
-    
-    // 🔥 get current card
-    const card = button.closest(".news-card");
-    
-    // 🔥 get input + chat box
-    const input = card.querySelector("#articleChatInput");
-    const chatBox = card.querySelector(".bot-chat");
-    
-    const text = input.value.trim();
-    if (!text) return;
-    
-    // ================= USER MESSAGE =================
-    const userMsg = document.createElement("div");
-    userMsg.className = "msg user";
-    userMsg.innerText = text;
-    
-    chatBox.appendChild(userMsg);
-    
-    input.value = "";
-    
-    // ================= AI LOADING =================
-    const aiMsg = document.createElement("div");
-    aiMsg.className = "msg ai";
-    aiMsg.innerText = "Thinking...";
-    
-    chatBox.appendChild(aiMsg);
-    
-    chatBox.scrollTop = chatBox.scrollHeight;
-    
-    // ================= API CALL =================
-    try {
-        const res = await fetch("/article-chat", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                question: text,
-                article: card.querySelector(".card-desc")?.innerText || ""
-            })
-        });
-    
-        const data = await res.json();
-    
-        aiMsg.innerText = data.reply;
-    
-    } catch (err) {
-        aiMsg.innerText = "AI is currently unavailable.";
+
+// 🔥 get current card
+const card = button.closest(".news-card");
+
+// 🔥 get input + chat box
+const input = card.querySelector(".articleChatInput");
+const chatBox = card.querySelector(".bot-chat");
+
+const text = input.value.trim();
+if (!text) return;
+
+// ================= USER MESSAGE =================
+const userMsg = document.createElement("div");
+userMsg.className = "msg user";
+userMsg.innerText = text;
+
+chatBox.appendChild(userMsg);
+
+input.value = "";
+
+// ================= AI LOADING =================
+const aiMsg = document.createElement("div");
+aiMsg.className = "msg ai";
+aiMsg.innerText = "Thinking...";
+
+chatBox.appendChild(aiMsg);
+
+chatBox.scrollTop = chatBox.scrollHeight;
+
+// ================= API CALL =================
+console.log("📤 Sending article:", {
+    question: text,
+    // article: card.querySelector(".card-desc")?.innerText
+    article: `
+    Title: ${card.querySelector(".card-title")?.innerText}
+    Description: ${card.querySelector(".card-desc")?.innerText}
+    `
+});
+try {
+
+    // const articleText = card.querySelector(".card-desc")?.innerText;
+
+    const title = card.querySelector(".card-title")?.innerText || "";
+    const desc = card.querySelector(".card-desc")?.innerText || "";
+
+    if (!title || !desc) {
+        console.error("❌ Missing article data");
+        aiMsg.innerText = "Article data not available.";
+        return;
+    }
+
+    const articleText = `
+    Title: ${title}
+    Description: ${desc}
+    `;
+
+    // const articleText = card.innerText;
+
+    // ✅ ADD THIS BLOCK
+    if (!articleText) {
+        console.error("❌ No article content found");
+        aiMsg.innerText = "No article data available.";
+        return;
     }
     
-    // ================= AUTO SCROLL =================
-    chatBox.scrollTop = chatBox.scrollHeight;
+    const res = await fetch("/ask-article", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        // body: JSON.stringify({
+        //     question: text,
+        //     article: card.querySelector(".card-desc")?.innerText || ""
+        // })
+        body: JSON.stringify({
+            question: text,
+            article: articleText
+        })
+    });
+    if (!res.ok) {
+        throw new Error("Server error");
     }
+
+    const data = await res.json();
+
+    aiMsg.innerText = data.reply;
+
+} catch (err) {
+    aiMsg.innerText = "AI is currently unavailable.";
+}
+
+// ================= AUTO SCROLL =================
+chatBox.scrollTop = chatBox.scrollHeight;
+}
     </script>
 <script src="{{ url_for('static', filename='js/news.js') }}"></script>
 {% endblock %}

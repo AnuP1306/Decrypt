@@ -17,6 +17,8 @@ from flask import Blueprint, render_template, redirect, url_for, session
 # #     return redirect("/")
 
 from flask import Blueprint, render_template, redirect
+import json
+import os
 
 home_bp = Blueprint('home', __name__)
 
@@ -28,7 +30,21 @@ def landing():
 # ✅ HOME PAGE (after explore)
 @home_bp.route('/home')
 def home():
-    return render_template("home.html", active_page="home")
+
+    # 🔥 LOAD JSON FROM FILE
+    file_path = os.path.join("static", "data", "fallback_news.json")
+
+    with open(file_path, "r", encoding="utf-8") as f:
+        fallback_data = json.load(f)
+
+    return render_template(
+        "home.html",
+        active_page="home",
+        fallback_data=fallback_data
+    )
+# @home_bp.route('/home')
+# def home():
+#     return render_template("home.html", active_page="home", fallback_data=FALLBACK_DATA)
 
 # LOGIN PAGE
 @home_bp.route('/login')
