@@ -3,20 +3,38 @@
     max-width: 780px;
     margin: 0 auto;
     padding-right: 30px; /* scrollbar spacing fix */
+    
   }
-.feed-title {
+/* .feed-title {
     font-family: Syne, sans-serif;
     font-size: 34px;
     font-weight: 750;
     color: rgb(48, 49, 44);
     line-height: 1.2;
     margin: 0px;
+    display: inline;
+    line-height: 1.4;
 }
 .feed-subtext {
     margin-top: 8px;
     font-family: "Space Grotesk", sans-serif;
     font-size: 14px;
     color: rgb(106, 106, 106);
+} */
+
+.feed-title {
+  font-family: Syne, sans-serif;
+  font-size: 34px;
+  font-weight: 750;
+  color: rgb(48, 49, 44);
+  line-height: 1.2;
+  margin: 0px;
+}
+.feed-subtext {
+  margin-top: 8px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 14px;
+  color: rgb(106, 106, 106);
 }
   
   /* ===== HEADING ===== */
@@ -28,6 +46,16 @@
   .highlight {
     background: #c8f54c;
     padding: 4px 10px;
+    border-radius: 10px;
+    /* display: inline-block;
+   
+    position: relative;    
+    z-index: 1; */
+  }
+
+  .highlight-text {
+    background: #c8f54c;
+    padding: 6px 12px;
     border-radius: 10px;
   }
   

@@ -1,5 +1,5 @@
 /* ===== RIGHT SIDEBAR ===== */
-.right-sidebar {
+/* .right-sidebar {
     border-left: 1px solid #dddee0;
     margin-left: 10px;
     padding-left: 35px;
@@ -11,9 +11,44 @@
     flex-direction: column;
     gap: 16px;
 
-    /* align-self: flex-start;
-    margin-top: 0;
-    padding-top: 0; */
+    
+} */
+
+/* .right-sidebar {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+} */
+/* .right-sidebar{
+    border-left: 1px solid #dddee0;
+    margin-left: 10px;
+    padding-left: 35px;
+    width: 300px;
+    padding-top: 20px;
+    padding-right: 30px;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+} */
+
+.right-sidebar {
+    border-left: 1px solid #dddee0;
+    margin-left: 5px;
+    padding-left: 35px;
+    width: 300px;
+    padding-right: 30px;
+    padding-top:0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    /* ✅ FIX START */
+    position: sticky;
+    top: 10px; /* below navbar */
+    height: fit-content;
 }
 
 /* CARD */
@@ -128,25 +163,6 @@
 
 
 /* ===== RIGHT SIDEBAR ===== */                                         
-/* .right-sidebar {
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-} */
-.right-sidebar{
-    border-left: 1px solid #dddee0;
-    margin-left: 10px;
-    padding-left: 35px;
-    width: 300px;
-    padding-top: 20px;
-    padding-right: 30px;
-    margin-left: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
 
 /* CARD */
 .rs-card {
