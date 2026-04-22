@@ -107,11 +107,31 @@
     btn.addEventListener('click', async () => {
       if (selected.size === 0) return;
 
-      const data = {
-        step1: JSON.parse(sessionStorage.getItem('onboarding_step1') || "[]"),
-        step2: sessionStorage.getItem('onboarding_step2'),
-        step3: [...selected]
-      };
+      let step1;
+try {
+  step1 = JSON.parse(sessionStorage.getItem('onboarding_step1') || '[]');
+} catch {
+  step1 = [];
+}
+
+let step2;
+try {
+  step2 = JSON.parse(sessionStorage.getItem('onboarding_step2') || 'null');
+} catch {
+  step2 = null;
+}
+
+const data = {
+  step1,
+  step2,
+  step3: [...selected]
+};
+
+      // const data = {
+      //   step1: JSON.parse(sessionStorage.getItem('onboarding_step1') || "[]"),
+      //   step2: sessionStorage.getItem('onboarding_step2'),
+      //   step3: [...selected]
+      // };
 
       console.log("FINAL DATA:", data);
 
@@ -134,6 +154,21 @@
         console.error("Save failed:", err);
       }
     });
+
+//     let step1;
+// try {
+//   step1 = JSON.parse(sessionStorage.getItem('onboarding_step1'));
+// } catch {
+//   step1 = [];
+// }
+
+// let step2;
+// try {
+//   step2 = JSON.parse(sessionStorage.getItem('onboarding_step2'));
+// } catch {
+//   step2 = null;
+// }
+
   </script>
 
   </script>

@@ -133,7 +133,8 @@
         btn.addEventListener('click', () => {
             if (!selected) return;
 
-            sessionStorage.setItem('onboarding_step2', selected);
+            // sessionStorage.setItem('onboarding_step2', selected);
+            sessionStorage.setItem('onboarding_step2', JSON.stringify(selected));
 
             console.log("Step2 saved:", selected);
 

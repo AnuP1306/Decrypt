@@ -123,7 +123,10 @@
         options.forEach(o => o.classList.remove('active'));
         option.classList.add('active');
 
-        selected = option.innerText.trim();
+        // selected = option.innerText.trim();
+        selected = option.querySelector('span') 
+  ? option.innerText.replace(option.querySelector('span').innerText, '').trim()
+  : option.innerText.trim();
 
         btn.classList.add('enabled');
       });
@@ -132,7 +135,8 @@
     btn.addEventListener('click', () => {
       if (!selected) return;
 
-      sessionStorage.setItem('onboarding_step1', selected);
+      // sessionStorage.setItem('onboarding_step1', selected);
+      sessionStorage.setItem('onboarding_step1', JSON.stringify([selected]));
 
       console.log("Step1 saved:", selected);
 
