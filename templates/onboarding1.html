@@ -1,142 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Onboarding - Step 1</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&family=Space+Grotesk:wght@400;500&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/onboarding1.css') }}">
+
+  <!-- ✅ ADD THIS (layout fix) -->
+  <style>
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      /* consistent spacing between boxes */
+      margin-top: 20px;
+    }
+
+    .option {
+      padding: 16px 20px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: all 0.2s ease;
+    }
+
+    .option:hover {
+      background: #f5f5f5;
+    }
+
+    .option.active {
+      background: linear-gradient(135deg, #4f46e5, #4338ca) !important;
+      color: #ffffff !important;
+      border: none !important;
+    }
+
+    .option.active * {
+      color: #ffffff !important;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="onboard-wrapper">
+  <div class="onboard-wrapper">
 
-  <!-- TOP BAR -->
-  <div class="top-bar">
-
-    <div class="logo-row">
-  <img src="{{ url_for('static', filename='images/logo.svg') }}">
-  <span class="logo-text">DECRYPT</span>
-</div>
-
-    <div class="progress-info">1 of 3</div>
-
-  </div>
-
-  <!-- PROGRESS BAR -->
-  <div class="progress-bar">
-    <div class="progress-fill"></div>
-  </div>
-
-  <!-- MAIN CONTENT -->
-  <div class="content">
-
-    <!-- STEP -->
-    <div class="step-pill">⚡Step 1</div>
-
-    <!-- TITLE -->
-    <h1>
-      what kind of tech<br>
-      person are you?
-    </h1>
-
-    <p class="subtitle">
-      pick your vibe(s) (pick as many as you want)
-    </p>
-
-    <!-- OPTIONS -->
-    <div class="options">
-
-      <div class="option">
-        <span>💻</span> Developer
+    <div class="top-bar">
+      <div class="logo-row">
+        <img src="{{ url_for('static', filename='images/logo.svg') }}">
+        <span class="logo-text">DECRYPT</span>
       </div>
 
-      <div class="option">
-        <span>🎨</span> Designer
+      <div class="progress-info">1 of 3</div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill step1"></div>
+    </div>
+
+    <div class="content">
+
+      <div class="step-pill">⚡ Step 1</div>
+
+      <h1>
+        What's your vibe?<br>
+      </h1>
+
+      <p class="subtitle">
+        no judgment, seriously
+      </p>
+
+      <!-- ✅ UPDATED OPTIONS (ONLY 3) -->
+      <div class="options">
+
+        <div class="option">
+          <span>🤖</span>
+          Artificial Intelligence
+        </div>
+
+        <div class="option">
+          <span>🔌</span>
+          Electronics
+        </div>
+
+        <div class="option">
+          <span>👨‍💻</span>
+          Technology
+        </div>
+
       </div>
 
-      <div class="option">
-        <span>📊</span> Product/PM
-      </div>
+      <div class="actions">
 
-      <div class="option">
-        <span>🧠</span> Data/AI nerd
-      </div>
+        <a href="{{ url_for('auth.onboarding1') }}" class="back-link">← back</a>
 
-      <div class="option">
-        <span>₿</span> Crypto curious
-      </div>
+        <button type="button" class="continue-btn" data-url="{{ url_for('auth.onboarding2') }}">
+          Continue →
+        </button>
 
-      <div class="option">
-        <span>🔐</span> Cybersecurity
-      </div>
-
-      <div class="option">
-        <span>🚀</span> Startup founder (in training)
-      </div>
-
-      <div class="option">
-        <span>👀</span> Just curious
       </div>
 
     </div>
 
-    <!-- BUTTON -->
-  <button 
-  type="button"
-  class="continue-btn" 
-  data-url="{{ url_for('auth.onboarding2') }}">
-  Continue →
-</button>
-
   </div>
 
-</div>
+  <script>
+    const options = document.querySelectorAll('.option');
+    const btn = document.querySelector('.continue-btn');
 
-<script>
-const options = document.querySelectorAll('.option');
-const btn = document.querySelector('.continue-btn');
+    let selected = null;
 
-let selected = new Set();
+    options.forEach(option => {
+      option.addEventListener('click', () => {
 
-options.forEach(option => {
-  option.addEventListener('click', () => {
+        options.forEach(o => o.classList.remove('active'));
+        option.classList.add('active');
 
-    const text = option.innerText.trim();
+        selected = option.innerText.trim();
 
-    if (selected.has(text)) {
-      selected.delete(text);
-      option.classList.remove('active');
-    } else {
-      selected.add(text);
-      option.classList.add('active');
-    }
+        btn.classList.add('enabled');
+      });
+    });
 
-    // enable button
-    if (selected.size > 0) {
-      btn.classList.add('enabled');
-    } else {
-      btn.classList.remove('enabled');
-    }
-  });
-});
+    btn.addEventListener('click', () => {
+      if (!selected) return;
 
+      sessionStorage.setItem('onboarding_step1', selected);
 
-// 🚀 CONTINUE BUTTON LOGIC
-btn.addEventListener('click', () => {
-  if (selected.size === 0) return;
+      console.log("Step1 saved:", selected);
 
-  // ✅ SAVE TO SESSION STORAGE
-  sessionStorage.setItem('onboarding_step1', JSON.stringify([...selected]));
-
-  // 🔥 DEBUG (optional)
-  console.log("Saved:", [...selected]);
-
-  // 🚀 REDIRECT TO STEP 2
-  window.location.href = "/onboarding2";
-});
-</script>
+      window.location.href = "/onboarding2";
+    });
+  </script>
 
 </body>
+
 </html>
