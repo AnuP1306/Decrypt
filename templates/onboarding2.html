@@ -1,124 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Onboarding - Step 2</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/onboarding2.css') }}">
+<head>
+    <meta charset="UTF-8">
+    <title>Onboarding - Step 2</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&family=Space+Grotesk:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/onboarding2.css') }}">
+
+    <!-- ✅ ADD THIS (layout fix) -->
+    <style>
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            /* consistent spacing between boxes */
+            margin-top: 20px;
+        }
+
+        .option {
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .option:hover {
+            background: #f5f5f5;
+        }
+
+        .option.active {
+            background: linear-gradient(135deg, #4f46e5, #4338ca) !important;
+            color: #ffffff !important;
+            border: none !important;
+        }
+
+        .option.active * {
+            color: #ffffff !important;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="onboard-wrapper">
+    <div class="onboard-wrapper">
 
-  <!-- TOP BAR -->
-  <div class="top-bar">
+        <div class="top-bar">
+            <div class="logo-row">
+                <img src="{{ url_for('static', filename='images/logo.svg') }}">
+                <span class="logo-text">DECRYPT</span>
+            </div>
 
-    <div class="logo-row">
-      <img src="{{ url_for('static', filename='images/logo.svg') }}">
-      <span class="logo-text">DECRYPT</span>
-    </div>
+            <div class="progress-info">2 of 3</div>
+        </div>
 
-    <div class="progress-info">2 of 3</div>
+        <div class="progress-bar">
+            <div class="progress-fill step2"></div>
+        </div>
 
-  </div>
+        <div class="content">
 
-  <!-- PROGRESS BAR -->
-  <div class="progress-bar">
-    <div class="progress-fill step2"></div>
-  </div>
+            <div class="step-pill">⚡ Step 2</div>
 
-  <!-- CONTENT -->
-  <div class="content">
+            <h1>
+                how much do you<br>
+                already know?
+            </h1>
 
-    <div class="step-pill">⚡ Step 2</div>
+            <p class="subtitle">
+                no judgment, seriously
+            </p>
 
-    <h1>
-      how much do you<br>
-      already know?
-    </h1>
+            <!-- ✅ UPDATED OPTIONS (ONLY 3) -->
+            <div class="options">
 
-    <p class="subtitle">
-      no judgment, seriously
-    </p>
+                <div class="option">
+                    <span>🌱</span>
+                    Beginner — I know what WiFi is and that’s it
+                </div>
 
-    <!-- OPTIONS -->
-    <div class="options">
+                <div class="option">
+                    <span>📈</span>
+                    Intermediate — I’ve used ChatGPT more than Google
+                </div>
 
-      <div class="option">
-        <span>🌱</span>
-        Beginner — I know what WiFi is and that’s it
-      </div>
+                <div class="option">
+                    <span>🔥</span>
+                    Advanced — I have opinions about programming languages
+                </div>
 
-      <div class="option">
-        <span>📈</span>
-        Intermediate — I’ve used ChatGPT more than Google
-      </div>
+            </div>
 
-      <div class="option">
-        <span>🔥</span>
-        Advanced — I have opinions about programming languages
-      </div>
+            <div class="actions">
 
-      <div class="option">
-        <span>👾</span>
-        Expert — I’m only here to fact-check y’all
-      </div>
+                <a href="{{ url_for('auth.onboarding1') }}" class="back-link">← back</a>
 
-    </div>
+                <button type="button" class="continue-btn" data-url="{{ url_for('auth.onboarding3') }}">
+                    Continue →
+                </button>
 
-    <!-- ACTIONS -->
-    <div class="actions">
+            </div>
 
-      <a href="{{ url_for('auth.onboarding1') }}" class="back-link">← back</a>
-
-      <button 
-        type="button"
-        class="continue-btn"
-        data-url="{{ url_for('auth.onboarding3') }}">
-        Continue →
-      </button>
+        </div>
 
     </div>
 
-  </div>
+    <script>
+        const options = document.querySelectorAll('.option');
+        const btn = document.querySelector('.continue-btn');
 
-</div>
+        let selected = null;
 
-<script>
-const options = document.querySelectorAll('.option');
-const btn = document.querySelector('.continue-btn');
+        options.forEach(option => {
+            option.addEventListener('click', () => {
 
-let selected = null;
+                options.forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
 
-options.forEach(option => {
-  option.addEventListener('click', () => {
+                selected = option.innerText.trim();
 
-    // single select
-    options.forEach(o => o.classList.remove('active'));
-    option.classList.add('active');
+                btn.classList.add('enabled');
+            });
+        });
 
-    selected = option.innerText.trim();
+        btn.addEventListener('click', () => {
+            if (!selected) return;
 
-    btn.classList.add('enabled');
-  });
-});
+            sessionStorage.setItem('onboarding_step2', selected);
 
+            console.log("Step2 saved:", selected);
 
-// 🚀 CONTINUE BUTTON
-btn.addEventListener('click', () => {
-  if (!selected) return;
-
-  // ✅ SAVE STEP 2
-  sessionStorage.setItem('onboarding_step2', selected);
-
-  console.log("Step2 saved:", selected);
-
-  // 👉 go to step 3
-  window.location.href = "/onboarding3";
-});
-</script>
+            window.location.href = "/onboarding3";
+        });
+    </script>
 
 </body>
+
 </html>
