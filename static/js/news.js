@@ -408,7 +408,8 @@ const BATCH_SIZE = 5;
 
 async function fetchNews() {
 
-    const res = await fetch("/get-news");
+   const topics = (window.USER_TOPICS || []).join(",");
+const res = await fetch(`/get-news?topics=${encodeURIComponent(topics)}`);
     const data = await res.json();
 
     const container = document.getElementById("newsContainer");

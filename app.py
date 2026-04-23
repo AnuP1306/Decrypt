@@ -46,7 +46,6 @@ def call_gemini_with_retry(model, prompt, retries=3, delay=2):
 # ================= SETUP =================
 load_dotenv()
 
-app = Flask(__name__)
 app.register_blueprint(home_bp)
 app.register_blueprint(opportunities)   # samiksha ✅ added
 app.register_blueprint(auth_bp)   # ✅ ADD THIS
@@ -107,11 +106,37 @@ def chat():
 @app.route("/get-news", methods=["GET"])
 def get_news():
 
-    queries = {
+    # ✅ Use user topics if provided
+    user_topics = request.args.get("topics", "")
+    topic_list = [t.strip() for t in user_topics.split(",") if t.strip()]
+
+    # Map topics to query terms
+    TOPIC_MAP = {
+        "Machine Learning": "machine learning OR deep learning OR neural networks",
+        "Web Dev": "web development OR frontend OR backend OR JavaScript",
+        "Robotics": "robotics OR automation OR robot",
+        "Cloud Computing": "cloud computing OR AWS OR Azure OR Google Cloud",
+        "Quantum Computing": "quantum computing OR qubit",
+        "Space Technology": "space technology OR NASA OR SpaceX OR satellite",
+        "IOT": "Internet of Things OR IoT OR smart devices",
+        "Cybersecurity": "cybersecurity OR hacking OR ransomware OR data breach",
+    }
+
+    DEFAULT_QUERIES = {
         "AI": "artificial intelligence OR machine learning OR deep learning",
         "IT": "software OR programming OR cybersecurity OR web development",
         "Electronics": "electronics OR semiconductor OR robotics OR IoT"
     }
+
+    if topic_list:
+        queries = {}
+        for topic in topic_list[:4]:  # max 4 API calls
+            if topic in TOPIC_MAP:
+                queries[topic] = TOPIC_MAP[topic]
+        if not queries:
+            queries = DEFAULT_QUERIES
+    else:
+        queries = DEFAULT_QUERIES
 
     all_articles = []
 

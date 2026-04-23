@@ -1,3 +1,4 @@
+from distro import name
 from flask import Blueprint, request, jsonify, session, render_template
 from utils.firebase_admin import verify_token, db
 
@@ -6,14 +7,34 @@ auth_bp = Blueprint('auth', __name__)
 @auth_bp.route('/verify-token', methods=['POST'])
 def verify_user():
     data = request.get_json()
+
+    print("📥 Incoming data:", data)
+
     id_token = data.get('token')
+    name = data.get('name', 'Explorer')
 
     decoded = verify_token(id_token)
 
     if not decoded:
         return jsonify({"status": "error"}), 401
 
-    session['user'] = decoded['uid']
+    print("🔍 Decoded token:", decoded)
+
+    user_id = decoded['uid']
+    session['user'] = user_id
+
+    print("✅ Saving user:", user_id, name)
+
+    # ✅ Firestore logic (FIXED)
+    user_ref = db.collection('users').document(user_id)
+    doc = user_ref.get()
+
+    if not doc.exists:
+        user_ref.set({
+            "name": name
+        }, merge=True)
+
+    print("✅ Saved to Firestore")
 
     return jsonify({"status": "success"})
 
@@ -44,10 +65,21 @@ def save_onboarding():
 
     data = request.get_json()
 
+    # Extract clean level label
+    raw_level = data.get("step2", "") or ""
+    if "Beginner" in raw_level:
+        level_clean = "Beginner"
+    elif "Intermediate" in raw_level:
+        level_clean = "Intermediate"
+    elif "Advanced" in raw_level:
+        level_clean = "Advanced"
+    else:
+        level_clean = "Beginner"
+
     db.collection('users').document(user_id).set({
-        "interests": data.get("step1"),
-        "level": data.get("step2"),
-        "topics": data.get("step3")
+        "interests": data.get("step1", []),
+        "level": level_clean,
+        "topics": data.get("step3", [])
     }, merge=True)
 
     return jsonify({"status": "saved"})

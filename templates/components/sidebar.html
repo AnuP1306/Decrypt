@@ -3,11 +3,11 @@
    
     <div class="sidebar-top">
         <div class="user-info">
-            <div class="user-avatar">U</div>
-            <div class="user-text">
-                <p class="user-name">Anushka</p>
-                <span class="user-role">Explorer · Intermediate</span>
-            </div>
+           <div class="user-avatar">{{ (user_name or 'E')[0] | upper }}</div>
+<div class="user-text">
+    <p class="user-name">{{ user_name or 'Explorer' }}</p>
+    <span class="user-role">Explorer · {{ user_level or 'Beginner' }}</span>
+</div>
 
             <button class="menu-toggle" onclick="toggleSidebar()">
                 <img src="{{ url_for('static', filename='images/menu.png') }}">

@@ -280,8 +280,15 @@
 
 {% block extra_js %}
 <!-- SCRIPTS -->
-<script>
+<!-- <script>
     window.FALLBACK_DATA = JSON.parse(`{{ fallback_data | tojson | safe }}`);
+    window.USER_TOPICS = {{ user_topics | tojson | safe }};
+    window.USER_LEVEL = "{{ user_level | safe }}";
+</script> -->
+<script>
+    window.FALLBACK_DATA = JSON.parse('{{ fallback_data | tojson | safe }}');
+    window.USER_TOPICS = JSON.parse('{{ user_topics | default([]) | tojson | safe }}');
+    window.USER_LEVEL = "{{ user_level | default('Beginner') }}";
 </script>
 <script>
     function toggleSidebar() {

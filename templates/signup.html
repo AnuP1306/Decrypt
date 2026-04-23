@@ -37,7 +37,8 @@
 
           <div class="form-group">
             <label>What do we call you?</label>
-            <input type="text" placeholder="Your name (or alias, we don’t judge)">
+            <!-- <input type="text" placeholder="Your name (or alias, we don’t judge)"> -->
+             <input id="nameInput" type="text" placeholder="Your name (or alias, we don’t judge)">
           </div>
 
           <div class="form-group">
@@ -145,23 +146,39 @@
     // 🚀 SIGNUP LOGIC
     document.getElementById("signupBtn").addEventListener("click", async () => {
 
-      const email = document.querySelector('input[type="email"]').value;
-      const password = document.querySelector('input[type="password"]').value;
+      // const email = document.querySelector('input[type="email"]').value;
+      // const password = document.querySelector('input[type="password"]').value;
+      // 
+      const name = document.getElementById("nameInput").value.trim() || "Explorer";
+const email = document.querySelector('input[type="email"]').value;
+// const password = document.querySelector('input[type="password"]').value;
+const password = document.querySelectorAll('input[type="password"]')[0].value;
+const confirmPassword = document.querySelectorAll('input[type="password"]')[1].value;
+
+if (password !== confirmPassword) {
+  alert("Passwords do not match");
+  return;
+}
 
       try {
         const userCred = await createUserWithEmailAndPassword(auth, email, password);
 
         const token = await userCred.user.getIdToken();
 
-        await fetch("/verify-token", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ token })
-        });
+const res = await fetch("/verify-token", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ token, name })
+});
 
-        window.location.href = "/onboarding1";
+const data = await res.json();
+console.log("VERIFY RESPONSE:", data);
+
+if (data.status === "success") {
+  window.location.href = "/onboarding1";
+} else {
+  alert("Auth failed");
+}
 
       } catch (err) {
         alert(err.message);
