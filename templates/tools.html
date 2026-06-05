@@ -15,14 +15,17 @@
 
 <div class="tools-page">
 
+ <div class="tools-header">   <!-- ✅ NEW WRAPPER -->
+
   <a href="{{ url_for('home.home') }}" class="back-btn">
   ← Back
 </a>
     <div class="top-label">
-  <span class="icon">🔧</span>
+  <span class="icon">
+     <img src="{{ url_for('static', filename='images/wrench.png') }}" alt="tool">
+  </span>
   TOOLS LIBRARY
 </div>
-
     <!-- Heading -->
     <h1 class="page-title">AI tools that actually
          <span class="heighlight">go hard</span> 
@@ -59,6 +62,8 @@
   <button data-filter="design">Design</button>
   <button data-filter="coding">Coding</button>
 </div>
+
+</div>  <!-- ✅ END HEADER -->
     <!-- tool cards -->
 
 
@@ -67,7 +72,7 @@
 <div class="card" data-category="research">
 
   <div class="card-img">
-<img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="Elicit">   <div class="rating">⭐ 4.8</div>
+<img src="{{ url_for('static', filename='images/elicit api.png') }}" alt="Elicit">   <div class="rating">⭐ 4.8</div>
 
     <div class="tags-top">
       <span class="tag free">FREE</span>
@@ -94,7 +99,7 @@
  <div class="card" data-category="research">
 
   <div class="card-img">
-<img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="Scite">
+<img src="{{ url_for('static', filename='images/scite.ai.png') }}" alt="scite">
     <div class="rating">⭐ 4.6</div>
 
     <div class="tags-top">
@@ -120,7 +125,7 @@
  <div class="card" data-category="research">
 
   <div class="card-img">
-<img src="https://cdn-icons-png.flaticon.com/512/4149/4149678.png" alt="Consensus">
+<img src="{{ url_for('static', filename='images/consensus.png') }}" alt="consensus">
     <div class="rating">⭐ 4.7</div>
 
     <div class="tags-top">
@@ -147,7 +152,7 @@
  <div class="card" data-category="design">
 
   <div class="card-img">
-<img src="https://cdn-icons-png.flaticon.com/512/1821/1821923.png" alt="Visily"> 
+<img src="{{ url_for('static', filename='images/visily.png') }}" alt="Elicit"> 
    <div class="rating">⭐ 4.9</div>
 
     <div class="tags-top">
@@ -502,6 +507,7 @@
   </div>
 </div>   
 </div>
+
  </div>
 
     {% endblock %}

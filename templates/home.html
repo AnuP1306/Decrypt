@@ -33,7 +33,7 @@
                 <img src="/static/images/logo.svg" class="brief-icon">
                 <div>
                     <p class="brief-title">Today’s Brief</p>
-                    <span class="brief-sub">10 stories for you · Est. 8 min read</span>
+                    <span class="brief-sub">05 stories for you · Est. 8 min read</span>
                 </div>
             </div>
 
@@ -173,24 +173,7 @@
                     
                     </div>
         
-                    <!-- <div class="bot-body">
-                        <div class="bot-message">
-                            Hey! I’ve read the full article. Ask me anything — I’ll answer based on this article only.
-                        </div>
-        
-                        <div class="bot-suggestions">
-                            <span>TLDR?</span>
-                            <span>Why it matters?</span>
-                            <span>Explain simply</span>
-                        </div>
-        
-                        <div class="bot-input">
-                            <input type="text" placeholder="Ask about this article...">
-                            <button onclick="sendArticleChat(this)">
-                                <img src="/static/images/send.png">
-                            </button>
-                        </div>
-                    </div> -->
+                    
                 </div>
         
             </div>
@@ -231,8 +214,9 @@
         </div>
 
         <p class="rs-empty">No saved articles yet.</p>
-
-        <span class="rs-link" onclick="goToSaved()">View All →</span>
+        
+        <a href="/saved" class="rs-link">View All →</a>
+            
     </div>
 
     <!-- TRENDING TOOLS -->
@@ -280,15 +264,36 @@
 
 {% block extra_js %}
 <!-- SCRIPTS -->
-<!-- <script>
-    window.FALLBACK_DATA = JSON.parse(`{{ fallback_data | tojson | safe }}`);
-    window.USER_TOPICS = {{ user_topics | tojson | safe }};
-    window.USER_LEVEL = "{{ user_level | safe }}";
-</script> -->
+
+
 <script>
-    window.FALLBACK_DATA = JSON.parse('{{ fallback_data | tojson | safe }}');
-    window.USER_TOPICS = JSON.parse('{{ user_topics | default([]) | tojson | safe }}');
+    // window.FALLBACK_DATA = (`{{ fallback_data | tojson | safe }}`);
+    window.FALLBACK_DATA = JSON.parse(`{{ fallback_data | tojson | safe }}`);
+    // window.USER_TOPICS = (`{{ user_topics | tojson | safe }}`);
     window.USER_LEVEL = "{{ user_level | default('Beginner') }}";
+    window.USER_DOMAIN_RAW = JSON.parse(`{{ user_domain | tojson | safe }}`);
+
+   
+
+    const domainMap = {
+    "artificial intelligence": "ai",
+    "technology": "it",
+    "electronics": "electronics"
+    };
+
+   
+
+    window.USER_DOMAIN = "all";
+
+    if (window.USER_DOMAIN_RAW && window.USER_DOMAIN_RAW.length > 0) {
+        window.USER_DOMAIN = window.USER_DOMAIN_RAW[0].toLowerCase();
+    }
+
+    console.log("🎯 USER DOMAIN:", window.USER_DOMAIN);
+
+   
+
+    console.log("🎯 USER DOMAIN:", window.USER_DOMAIN);
 </script>
 <script>
     function toggleSidebar() {
@@ -326,7 +331,27 @@
     <script>
     function toggleSave(btn) {
         btn.classList.toggle("saved");
-    }</script>
+        const card = btn.closest(".news-card");
+        const id = card.dataset.articleId || (card.dataset.articleId = (card.dataset.index || Date.now()).toString());
+        const key = 'savedArticles';
+
+        const data = {
+            id,
+            title: card.querySelector(".card-title")?.innerText || "",
+            desc: card.querySelector(".card-desc")?.innerText || "",
+            image: card.querySelector(".card-image img")?.src || "",
+            domain: card.querySelector(".domain-pill")?.innerText || "NEWS"
+        };
+
+        let items = JSON.parse(localStorage.getItem(key) || '[]');
+        if (btn.classList.contains("saved")) {
+            if (!items.find(a => a.id === id)) items.push(data);
+        } else {
+            items = items.filter(a => a.id !== id);
+        }
+        localStorage.setItem(key, JSON.stringify(items));
+    }
+    </script>
     
     <script>
         function toggleComment(btn) {
@@ -364,178 +389,9 @@
             input.value = "";
         }
         </script>
-        <script>
-    //         let currentPage = 0;
-            
-    //         // 🔥 DYNAMIC DATA (THIS WILL COME FROM API LATER)
-    //         let currentLevel = "beginner";
+   
     
-    // const articleData = {
-    //   beginner: [
-    //     {
-    //       title: "OpenAI launches GPT-5",
-    //       desc: "A new AI model that is smarter and better at understanding tasks.",
-    //       showImage: true
-    //     },
-    //     {
-    //       title: "What does it do?",
-    //       desc: "It helps users solve problems, answer questions, and write content easily.",
-    //       showImage: true
-    //     }
-    //   ],
     
-    //   intermediate: [
-    //     {
-    //       title: "OpenAI launches GPT-5 with reasoning",
-    //       desc: "GPT-5 improves reasoning and multi-modal understanding.",
-    //       showImage: true
-    //     },
-    //     {
-    //       title: "Key improvement",
-    //       desc: "Better context awareness and accuracy across tasks.",
-    //       showImage: true
-    //     }
-    //   ],
-    
-    //   advanced: [
-    //     {
-    //       title: "GPT-5 introduces advanced reasoning architecture",
-    //       desc: "The model significantly enhances inference and contextual depth.",
-    //       showImage: true
-    //     },
-    //     {
-    //       title: "Impact",
-    //       desc: "Potential disruption across industries like healthcare, AI research, and automation.",
-    //       showImage: true
-    //     }
-    //   ]
-    // };
-    //         // const articlePages = [
-    //         //     {
-    //         //         title: "OpenAI launches GPT-5 with reasoning capabilities",
-    //         //         desc: "OpenAI unveiled GPT-5 with advanced reasoning and multi-modal capabilities, marking a major leap in AI development."
-    //         //     },
-    //         //     {
-    //         //         title: "What makes GPT-5 different?",
-    //         //         desc: "GPT-5 introduces deeper reasoning, better context retention, and improved accuracy across tasks."
-    //         //     },
-    //         //     {
-    //         //         title: "Why this matters",
-    //         //         desc: "This could transform industries like education, healthcare, and software development."
-    //         //     }
-    //         // ];
-    
-    //         function nextPage() {
-    //     const pages = articleData[currentLevel];
-    
-    //     if (currentPage < pages.length - 1) {
-    //         currentPage++;
-    //         updatePage();
-    //     }
-    // }
-    
-    // function prevPage() {
-    //     if (currentPage > 0) {
-    //         currentPage--;
-    //         updatePage();
-    //     }
-    // }
-    
-    // function updatePage() {
-    //     const content = document.getElementById("cardContent");
-    //     const image = document.getElementById("cardImage");
-    
-    //     const pages = articleData[currentLevel];
-    //     const page = pages[currentPage];
-    
-    //     content.style.opacity = 0;
-    
-    //     setTimeout(() => {
-    //         content.innerHTML = `
-    //             <h2 class="card-title">${page.title}</h2>
-    //             <p class="card-desc">${page.desc}</p>
-    //         `;
-    
-    //         content.style.opacity = 1;
-    //     }, 150);
-    // }
-    // function setLevel(level, btn) {
-    //     currentLevel = level;
-    //     currentPage = 0;
-    
-    //     document.querySelectorAll(".level-btn").forEach(b => b.classList.remove("active"));
-    //     btn.classList.add("active");
-    
-    //     updatePage();
-    // }
-    
-    // updatePage();
-            
-    //         // function nextPage() {
-    //         //     currentPage++;
-            
-    //         //     if (currentPage >= articlePages.length) {
-    //         //         currentPage = 0; // loop back
-    //         //     }
-            
-    //         //     const content = document.getElementById("cardContent");
-            
-    //         //     // fade effect
-    //         //     content.style.opacity = 0;
-            
-    //         //     setTimeout(() => {
-    //         //         content.innerHTML = `
-    //         //             <h2 class="card-title">${articlePages[currentPage].title}</h2>
-    //         //             <p class="card-desc">${articlePages[currentPage].desc}</p>
-    //         //         `;
-    //         //         content.style.opacity = 1;
-    //         //     }, 200);
-    //         // }
-    //         </script>
-    
-    <!-- let currentLevel = "beginner";
-    
-    const articleData = {
-      beginner: [
-        {
-          title: "OpenAI launches GPT-5",
-          desc: "A new AI model that is smarter and better at understanding tasks.",
-          showImage: true
-        },
-        {
-          title: "What does it do?",
-          desc: "It helps users solve problems, answer questions, and write content easily.",
-          showImage: true
-        }
-      ],
-    
-      intermediate: [
-        {
-          title: "OpenAI launches GPT-5 with reasoning",
-          desc: "GPT-5 improves reasoning and multi-modal understanding.",
-          showImage: true
-        },
-        {
-          title: "Key improvement",
-          desc: "Better context awareness and accuracy across tasks.",
-          showImage: true
-        }
-      ],
-    
-      advanced: [
-        {
-          title: "GPT-5 introduces advanced reasoning architecture",
-          desc: "The model significantly enhances inference and contextual depth.",
-          showImage: true
-        },
-        {
-          title: "Impact",
-          desc: "Potential disruption across industries like healthcare, AI research, and automation.",
-          showImage: true
-        }
-      ]
-    }; -->
-    <!-- <script src="/static/js/news.js"></script> -->
     <script>
         function openTool(url) {
             window.open(url, "_blank");
@@ -580,31 +436,14 @@
     
         chatBody.scrollTop = chatBody.scrollHeight;
     }
-            // function sendChat() {
-            //     const input = document.getElementById("chatInput");
-            //     const text = input.value.trim();
-            //     if (!text) return;
-            
-            //     const chatBody = document.getElementById("chatBody");
-            
-            //     // user msg
-            //     chatBody.innerHTML += `<div class="chat-msg user">${text}</div>`;
-            
-            //     // fake bot response
-            //     chatBody.innerHTML += `<div class="chat-msg bot">
-            //         This is a demo response. AI will be connected later.
-            //     </div>`;
-            
-            //     input.value = "";
-            //     chatBody.scrollTop = chatBody.scrollHeight;
-            // }
+          
             
             // 🔥 SAVED BUTTON
             function goToSaved() {
                 alert("Saved page not built yet");
             
                 // ✅ FUTURE:
-                // window.location.href = "/saved";
+                window.location.href = "/saved";
             }
             </script>
     <script>
@@ -628,26 +467,7 @@
     
             chatBox.scrollTop = chatBox.scrollHeight;
         }   
-        // function addArticleMessage(text, type) {
-    
-        //     const chatBox = document.getElementById("articleChatMessages");
-    
-        //     const msg = document.createElement("div");
-        //     msg.classList.add("msg");
-    
-        //     if (type === "user") {
-        //         msg.classList.add("user");
-        //     } else {
-        //         msg.classList.add("ai");
-        //     }
-    
-        //     msg.innerText = text;
-    
-        //     chatBox.appendChild(msg);
-    
-        //     // 🔥 AUTO SCROLL
-        //     chatBox.scrollTop = chatBox.scrollHeight;
-        // }
+   
     </script>
     <script>
         async function sendArticleChat(button) {
@@ -721,10 +541,7 @@ try {
         headers: {
             "Content-Type": "application/json"
         },
-        // body: JSON.stringify({
-        //     question: text,
-        //     article: card.querySelector(".card-desc")?.innerText || ""
-        // })
+        
         body: JSON.stringify({
             question: text,
             article: articleText

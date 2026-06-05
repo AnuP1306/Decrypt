@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template
-
+from routes.home_routes import get_user_data
 opportunities = Blueprint('opportunities', __name__)
 
 @opportunities.route('/opportunities')
 def opportunities_page():
+    user_name, user_level, user_domain = get_user_data()
     opportunities_data = [
         {
             "title": "Google Software Courses",
@@ -95,5 +96,8 @@ def opportunities_page():
     return render_template(
         "opportunities.html",
         opportunities=opportunities_data,
-        active_page="opportunities"
+        active_page="opportunities",
+        user_name=user_name,          # 🔥 ADD
+        user_level=user_level,        # 🔥 ADD
+        user_domain=user_domain       # 🔥 ADD
     )

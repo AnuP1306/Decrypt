@@ -16,10 +16,14 @@ html, body {
 }
 
 .main-content {
-   min-height: auto;   /* 🔥 REMOVE 100vh */
-  margin-left: 240px;
+  margin-left: 260px;
   padding: 20px 40px;
+
+  display: flex;
+  justify-content: center;
+
   background: #F7F3F0;
+  box-sizing: border-box;
 }
 
 /* ===== NAVBAR ===== */

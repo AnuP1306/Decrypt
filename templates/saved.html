@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Saved Items – Decrypt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/home.css">
+    <link rel="stylesheet" href="/static/css/saved.css">
+</head>
+<body>
+ 
+<!-- NAVBAR (exact same as other pages) -->
+<nav class="navbar">
+    <div class="nav-left">
+        <img src="/static/images/logo.svg" class="logo-img">
+        <h1 class="logo-text">Decrypt</h1>
+    </div>
+    <div class="nav-center">
+        <div class="search-wrapper">
+            <img src="/static/images/search.png" class="search-icon">
+            <input type="text" placeholder="Search topics, tools, news..." class="search-input">
+        </div>
+    </div>
+    <div class="nav-right">
+        <div class="notif-wrapper">
+            <img src="/static/images/notification.png" class="notif-icon">
+        </div>
+    </div>
+</nav>
+ 
+<!-- LAYOUT -->
+<div class="layout">
+ 
+    {% include 'components/sidebar.html' %}
+ 
+    <main class="main-content saved-main">
+
+          <div class="saved-container">  <!-- 🔥 ADD THIS -->
+
+            <a href="{{ url_for('home.home') }}" class="back-btn">
+            ← Back
+             </a>
+ 
+        <!-- PAGE HEADER -->
+        <div class="saved-hero">
+
+    <div class="saved-mini-header">
+        <div class="saved-icon-box">
+            <img src="/static/images/saved.png">
+        </div>
+        <span>YOUR COLLECTION</span>
+    </div>
+
+    <h1 class="saved-title">
+  Your saved chaos is now a
+  <br>
+  <span class="highlight">clean system</span>
+</h1>
+
+<div class="saved-banner">
+  Everything you bookmarked, finally in one place...Because keeping up with tech is basically a full-time job.
+</div>
+
+</div>
+ 
+        <!-- ===== SECTION 1: SAVED ARTICLES ===== -->
+        <section class="saved-section">
+            <div class="saved-section-header">
+                <h2 class="saved-section-title">Saved Articles</h2>
+                <span class="saved-count" id="articleCount">0 saved</span>
+            </div>
+ 
+            <div class="saved-scroll-row" id="savedArticlesRow">
+                <!-- JS will inject cards here -->
+                <div class="saved-empty-state" id="articlesEmpty">
+                    <div class="empty-icon">🔖</div>
+                    <p>No saved articles yet.<br>Bookmark articles from the Home Feed.</p>
+                </div>
+            </div>
+        </section>
+ 
+        <!-- ===== SECTION 2: SAVED FLASHCARDS ===== -->
+        <section class="saved-section">
+            <div class="saved-section-header">
+                <h2 class="saved-section-title">Saved Flashcards</h2>
+                <span class="saved-count" id="flashcardCount">0 saved</span>
+            </div>
+ 
+            <div class="saved-scroll-row" id="savedFlashcardsRow">
+                <!-- JS will inject cards here -->
+                <div class="saved-empty-state" id="flashcardsEmpty">
+                    <div class="empty-icon">⚡</div>
+                    <p>No saved flashcards yet.<br>Bookmark cards from Daily Brief.</p>
+                </div>
+            </div>
+        </section>
+ 
+    </main>
+</div>
+ 
+<script>
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("collapsed");
+}
+ 
+// ===== SAVED ITEMS MANAGER =====
+ 
+// Load saved items from localStorage
+function getSavedArticles() {
+    return JSON.parse(localStorage.getItem('savedArticles') || '[]');
+}
+ 
+function getSavedFlashcards() {
+    return JSON.parse(localStorage.getItem('savedFlashcards') || '[]');
+}
+ 
+function removeSavedArticle(id) {
+    let items = getSavedArticles();
+    items = items.filter(a => a.id !== id);
+    localStorage.setItem('savedArticles', JSON.stringify(items));
+    renderSavedArticles();
+}
+ 
+function removeSavedFlashcard(id) {
+    let items = getSavedFlashcards();
+    items = items.filter(f => f.id !== id);
+    localStorage.setItem('savedFlashcards', JSON.stringify(items));
+    renderSavedFlashcards();
+}
+ 
+// ===== RENDER SAVED ARTICLES =====
+function renderSavedArticles() {
+    const articles = getSavedArticles();
+    const row = document.getElementById('savedArticlesRow');
+    const empty = document.getElementById('articlesEmpty');
+    const countEl = document.getElementById('articleCount');
+ 
+    countEl.textContent = `${articles.length} saved`;
+ 
+    // Remove old cards (keep empty state)
+    row.querySelectorAll('.saved-card').forEach(c => c.remove());
+ 
+    if (articles.length === 0) {
+        empty.style.display = 'flex';
+        return;
+    }
+ 
+    empty.style.display = 'none';
+ 
+    articles.forEach(article => {
+        const card = document.createElement('div');
+        card.className = 'saved-card saved-article-card';
+        card.dataset.id = article.id;
+ 
+        card.innerHTML = `
+            <div class="sc-image">
+                ${article.image
+                    ? `<img src="${article.image}" alt="${article.title}" onerror="this.parentElement.style.background='linear-gradient(135deg,#3f38e8,#5a54ff)'">`
+                    : ''}
+                <span class="sc-domain-pill">${article.domain || 'NEWS'}</span>
+                <button class="sc-unbookmark-btn" onclick="unbookmarkArticle('${article.id}', this)" title="Unsave">
+                    <img src="/static/images/briefbookmark.png">
+                </button>
+            </div>
+            <div class="sc-content">
+                <h3 class="sc-title">${article.title}</h3>
+                <p class="sc-desc">${article.desc || ''}</p>
+            </div>
+        `;
+ 
+        row.insertBefore(card, empty);
+    });
+}
+ 
+// ===== RENDER SAVED FLASHCARDS =====
+function renderSavedFlashcards() {
+    const flashcards = getSavedFlashcards();
+    const row = document.getElementById('savedFlashcardsRow');
+    const empty = document.getElementById('flashcardsEmpty');
+    const countEl = document.getElementById('flashcardCount');
+ 
+    countEl.textContent = `${flashcards.length} saved`;
+ 
+    row.querySelectorAll('.saved-card').forEach(c => c.remove());
+ 
+    if (flashcards.length === 0) {
+        empty.style.display = 'flex';
+        return;
+    }
+ 
+    empty.style.display = 'none';
+ 
+    flashcards.forEach(card => {
+        const el = document.createElement('div');
+        el.className = 'saved-card saved-flashcard-card';
+        el.dataset.id = card.id;
+ 
+        el.innerHTML = `
+            <div class="sc-image sc-image-flash">
+                ${card.image
+                    ? `<img src="${card.image}" alt="${card.title}" onerror="this.parentElement.style.background='linear-gradient(135deg,#3f38e8,#5a54ff)'">`
+                    : ''}
+                <span class="sc-domain-pill">${card.domain || 'BRIEF'}</span>
+                <button class="sc-unbookmark-btn" onclick="unbookmarkFlashcard('${card.id}', this)" title="Unsave">
+                    <img src="/static/images/briefbookmark.png">
+                </button>
+            </div>
+            <div class="sc-content">
+                <h3 class="sc-title">${card.title}</h3>
+                <p class="sc-desc">${card.desc || ''}</p>
+                <span class="sc-flash-badge">⚡ Flashcard</span>
+            </div>
+        `;
+ 
+        row.insertBefore(el, empty);
+    });
+}
+ 
+// ===== UNBOOKMARK HANDLERS =====
+function unbookmarkArticle(id, btn) {
+    // Animate out
+    const card = btn.closest('.saved-card');
+    card.style.transform = 'scale(0.92)';
+    card.style.opacity = '0';
+    card.style.transition = 'all 0.25s ease';
+    setTimeout(() => {
+        removeSavedArticle(id);
+        // Also update home feed bookmark state if visible
+        syncBookmarkState(id, false, 'article');
+    }, 250);
+}
+ 
+function unbookmarkFlashcard(id, btn) {
+    const card = btn.closest('.saved-card');
+    card.style.transform = 'scale(0.92)';
+    card.style.opacity = '0';
+    card.style.transition = 'all 0.25s ease';
+    setTimeout(() => {
+        removeSavedFlashcard(id);
+        syncBookmarkState(id, false, 'flashcard');
+    }, 250);
+}
+ 
+function syncBookmarkState(id, saved, type) {
+    // This syncs with other pages via localStorage event
+    window.dispatchEvent(new CustomEvent('bookmarkChanged', {
+        detail: { id, saved, type }
+    }));
+}
+ 
+// ===== INIT =====
+renderSavedArticles();
+renderSavedFlashcards();
+</script>

@@ -14,6 +14,8 @@ import random
 import time
 import json
 from groq import Groq
+from routes.saved_routes import saved_bp
+
 
 
 with open("static/data/fallback_news.json", "r") as f:
@@ -50,12 +52,14 @@ app.register_blueprint(home_bp)
 app.register_blueprint(opportunities)   # samiksha ✅ added
 app.register_blueprint(auth_bp)   # ✅ ADD THIS
 app.register_blueprint(tools_bp)
+app.register_blueprint(saved_bp)
 
 # app.register_blueprint(opportunities)
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 GNEWS_API_KEY = os.getenv("GNEWS_API_KEY")
 groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
 
 today = datetime.utcnow().strftime('%Y-%m-%d')
 
@@ -94,93 +98,73 @@ def chat():
 
 # ================= FETCH NEWS =================
 
-# @app.route("/get-news", methods=["GET"])
-# def get_news():
-#     print("⚠️ Using FALLBACK NEWS (API limit hit)")
-
-#     return jsonify({
-#         "articles": FALLBACK_DATA
-#     })
-
-# temorarily removing otherwise works
+# this version will only show fallback data
 @app.route("/get-news", methods=["GET"])
 def get_news():
+    print("⚠️ Using FALLBACK NEWS (API limit hit)")
 
-    # ✅ Use user topics if provided
-    user_topics = request.args.get("topics", "")
-    topic_list = [t.strip() for t in user_topics.split(",") if t.strip()]
+    return jsonify({
+        "articles": FALLBACK_DATA
+    })
 
-    # Map topics to query terms
-    TOPIC_MAP = {
-        "Machine Learning": "machine learning OR deep learning OR neural networks",
-        "Web Dev": "web development OR frontend OR backend OR JavaScript",
-        "Robotics": "robotics OR automation OR robot",
-        "Cloud Computing": "cloud computing OR AWS OR Azure OR Google Cloud",
-        "Quantum Computing": "quantum computing OR qubit",
-        "Space Technology": "space technology OR NASA OR SpaceX OR satellite",
-        "IOT": "Internet of Things OR IoT OR smart devices",
-        "Cybersecurity": "cybersecurity OR hacking OR ransomware OR data breach",
-    }
+# temporarily removing otherwise works (shows data from API)
 
-    DEFAULT_QUERIES = {
-        "AI": "artificial intelligence OR machine learning OR deep learning",
-        "IT": "software OR programming OR cybersecurity OR web development",
-        "Electronics": "electronics OR semiconductor OR robotics OR IoT"
-    }
-
-    if topic_list:
-        queries = {}
-        for topic in topic_list[:4]:  # max 4 API calls
-            if topic in TOPIC_MAP:
-                queries[topic] = TOPIC_MAP[topic]
-        if not queries:
-            queries = DEFAULT_QUERIES
-    else:
-        queries = DEFAULT_QUERIES
-
-    all_articles = []
-
-    for domain, query in queries.items():
-        url = f"https://gnews.io/api/v4/search?q={query}&lang=en&max=5&from={today}&sortby=publishedAt&apikey={GNEWS_API_KEY}"
-
-        res = requests.get(url)
-        data = res.json()
-
-        if "articles" in data:
-            for art in data["articles"]:
-                all_articles.append({
-                    "title": art.get("title", ""),
-                    "desc": art.get("description", ""),
-                    "content": art.get("content", ""),
-                    "image": art.get("image"),
-                    "domain": domain
-                })
-
-    # random.shuffle(all_articles)
-
-    return jsonify({"articles": all_articles})
-
-# @app.route("/get-news")
+# @app.route("/get-news", methods=["GET"])
 # def get_news():
-#     print("🔥 get-news called")
 
-#     return jsonify({
-#         "articles": [
-#             {
-#                 "title": "Test News Working",
-#                 "description": "If you see this, frontend is PERFECT",
-#                 "image": "",
-#                 "domain": "AI"
-#             },
-#             {
-#                 "title": "Second Test",
-#                 "description": "Static fallback",
-#                 "image": "",
-#                 "domain": "IT"
-#             }
-#         ]
-#     })
+#     # ✅ Use user topics if provided
+#     user_topics = request.args.get("topics", "")
+#     topic_list = [t.strip() for t in user_topics.split(",") if t.strip()]
 
+#     # Map topics to query terms
+#     TOPIC_MAP = {
+#         "Machine Learning": "machine learning OR deep learning OR neural networks",
+#         "Web Dev": "web development OR frontend OR backend OR JavaScript",
+#         "Robotics": "robotics OR automation OR robot",
+#         "Cloud Computing": "cloud computing OR AWS OR Azure OR Google Cloud",
+#         "Quantum Computing": "quantum computing OR qubit",
+#         "Space Technology": "space technology OR NASA OR SpaceX OR satellite",
+#         "IOT": "Internet of Things OR IoT OR smart devices",
+#         "Cybersecurity": "cybersecurity OR hacking OR ransomware OR data breach",
+#     }
+
+#     DEFAULT_QUERIES = {
+#         "AI": "artificial intelligence OR machine learning OR deep learning",
+#         "IT": "software OR programming OR cybersecurity OR web development",
+#         "Electronics": "electronics OR semiconductor OR robotics OR IoT"
+#     }
+
+#     if topic_list:
+#         queries = {}
+#         for topic in topic_list[:4]:  # max 4 API calls
+#             if topic in TOPIC_MAP:
+#                 queries[topic] = TOPIC_MAP[topic]
+#         if not queries:
+#             queries = DEFAULT_QUERIES
+#     else:
+#         queries = DEFAULT_QUERIES
+
+#     all_articles = []
+
+#     for domain, query in queries.items():
+#         url = f"https://gnews.io/api/v4/search?q={query}&lang=en&max=5&from={today}&sortby=publishedAt&apikey={GNEWS_API_KEY}"
+
+#         res = requests.get(url)
+#         data = res.json()
+
+#         if "articles" in data:
+#             for art in data["articles"]:
+#                 all_articles.append({
+#                     "title": art.get("title", ""),
+#                     "desc": art.get("description", ""),
+#                     "content": art.get("content", ""),
+#                     "image": art.get("image"),
+#                     "domain": domain
+#                 })
+
+#     # random.shuffle(all_articles)
+
+#     return jsonify({"articles": all_articles})
 
 # ================= GENERATE SLIDES =================
 @app.route("/generate-slides", methods=["POST"])
@@ -342,12 +326,13 @@ def ask_article():
     """
 
     try:
-    #     response = client.models.generate_content(
-    #         model="gemini-2.5-flash",
-    #         contents=prompt
-    #     )
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
 
-    #     return jsonify({"reply": response.text})
+        return jsonify({"reply": response.text})
+
         response = groq_client.chat.completions.create(
             model="llama-3.1-8b-instant",
             messages=[
@@ -375,7 +360,7 @@ def ask_article():
             ],
             temperature=0.7,
         )
-
+    
         reply = response.choices[0].message.content
 
         return jsonify({"reply": reply})

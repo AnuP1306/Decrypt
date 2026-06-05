@@ -1,6 +1,14 @@
 let briefData = [];
 let currentIndex = 0;
+// let currentLevel = "beginner";
 let currentLevel = "beginner";
+
+if (window.USER_LEVEL) {
+    const lvl = window.USER_LEVEL.toLowerCase();
+
+    if (lvl.includes("intermediate")) currentLevel = "intermediate";
+    else if (lvl.includes("advanced")) currentLevel = "advanced";
+}
 let totalCards = 0;
 let visited = new Set();
 
@@ -10,7 +18,31 @@ function toggleBot(btn) {
     btn.classList.toggle("active");
     bot.classList.toggle("show");
 }
-function toggleSave(btn) { btn.classList.toggle("saved"); }
+
+// function toggleSave(btn) { btn.classList.toggle("saved"); }
+function toggleSave(btn) {
+    btn.classList.toggle("saved");
+    const card = btn.closest(".news-card");
+    const id = card.dataset.articleId || (card.dataset.articleId = Date.now().toString());
+    const key = 'savedFlashcards';
+
+    const data = {
+        id,
+        title: document.getElementById("briefTitle")?.innerText || "",
+        desc: document.getElementById("briefDesc")?.innerText || "",
+        image: document.getElementById("briefImage")?.src || "",
+        domain: document.getElementById("briefCategory")?.innerText || "BRIEF"
+    };
+
+    let items = JSON.parse(localStorage.getItem(key) || '[]');
+    if (btn.classList.contains("saved")) {
+        if (!items.find(a => a.id === id)) items.push(data);
+    } else {
+        items = items.filter(a => a.id !== id);
+    }
+    localStorage.setItem(key, JSON.stringify(items));
+}
+
 function toggleSidebar() {
     document.getElementById("sidebar").classList.toggle("collapsed");
 }
@@ -98,100 +130,198 @@ async function enrichWithDescriptions(articles) {
 }
 
 // ================= FETCH =================
+// async function fetchBrief() {
+//     try {
+//         const res = await fetch("/get-news?category=AI");
+//         const data = await res.json();
+
+//         if (data.articles && Array.isArray(data.articles) && data.articles.length > 0) {
+//             briefData = data.articles.slice(0, 5);
+//             briefData = await enrichWithDescriptions(briefData);  // ✅ BUG 2 FIX
+//         } else {
+//             console.warn("⚠️ No API data → using fallback");
+//             briefData = getFallbackData();
+//         }
+
+//         totalCards = Math.max(briefData.length, 1);
+//         renderBrief();
+
+//     } catch (err) {
+//         console.error("❌ Fetch error:", err);
+//         briefData = [{
+//             title: "Offline mode",
+//             desc: "Unable to fetch latest news. Check your connection.",
+//             content: "",
+//             domain: "System",
+//             image: "/static/images/news1.1.png",
+//             descriptions: {
+//                 beginner: "You are offline. Please check your connection and refresh.",
+//                 intermediate: "Network connection unavailable. Please verify connectivity.",
+//                 advanced: "Network connectivity error. Verify ISP connection and restart."
+//             }
+//         }];
+//         totalCards = 1;
+//         renderBrief();
+//     }
+// }
+
 async function fetchBrief() {
     try {
-        const res = await fetch("/get-news?category=AI");
-        const data = await res.json();
+        const categories = [
+          "AI","Machine Learning","Data Science","Cybersecurity",
+          "Web Development","Cloud Computing","DevOps",
+          "Blockchain","Startups","Tech News","Electronics"
+        ];
 
-        if (data.articles && Array.isArray(data.articles) && data.articles.length > 0) {
-            briefData = data.articles.slice(0, 5);
-            briefData = await enrichWithDescriptions(briefData);  // ✅ BUG 2 FIX
-        } else {
-            console.warn("⚠️ No API data → using fallback");
-            briefData = getFallbackData();
+        let allArticles = [];
+
+        const shuffled = categories.sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 5);
+
+        for (let cat of selected) {
+            const res = await fetch(`/get-news?category=${encodeURIComponent(cat)}`);
+            const data = await res.json();
+
+            if (data.articles && data.articles.length > 0) {
+
+                const formatted = data.articles.map(article => ({
+                    title: article.title,
+                    desc: article.desc || article.description || "",
+                    content: article.content || "",
+                    image: article.image || "/static/images/news1.1.png",
+                    domain: cat,
+
+                    // 🔥 IMPORTANT — MATCH YOUR FORMAT
+                    descriptions: {
+                        beginner: article.desc || "Simple explanation not available.",
+                        intermediate: article.desc || "Intermediate explanation not available.",
+                        advanced: article.desc || "Advanced explanation not available."
+                    }
+                }));
+
+                allArticles = allArticles.concat(formatted);
+            }
         }
 
-        totalCards = Math.max(briefData.length, 1);
+        // shuffle and pick 5
+        allArticles.sort(() => 0.5 - Math.random());
+        briefData = allArticles.slice(0, 5);
+
+        // 🔥 NOW enhance using your AI generator
+        briefData = await enrichWithDescriptions(briefData);
+
+        totalCards = briefData.length;
         renderBrief();
 
     } catch (err) {
         console.error("❌ Fetch error:", err);
-        briefData = [{
-            title: "Offline mode",
-            desc: "Unable to fetch latest news. Check your connection.",
-            content: "",
-            domain: "System",
-            image: "/static/images/news1.1.png",
-            descriptions: {
-                beginner: "You are offline. Please check your connection and refresh.",
-                intermediate: "Network connection unavailable. Please verify connectivity.",
-                advanced: "Network connectivity error. Verify ISP connection and restart."
-            }
-        }];
-        totalCards = 1;
+        briefData = getFallbackData();
+        totalCards = briefData.length;
         renderBrief();
     }
 }
 
+
+
+// function getFallbackData() {
+//     return [
+//         {
+//             title: "AI agents are automating workflows",
+//             desc: "Autonomous AI agents are replacing repetitive business processes.",
+//             content: "Companies are adopting AI agents to streamline workflows and reduce manual work.",
+//             domain: "AI", image: "/static/images/news1.1.png",
+//             descriptions: {
+//                 beginner: "AI agents are smart programs that do repetitive tasks automatically, saving businesses time.",
+//                 intermediate: "Autonomous AI agents use machine learning to automate complex workflows with minimal human intervention.",
+//                 advanced: "AI agents employ reinforcement learning and process automation to reduce operational overhead and improve efficiency metrics."
+//             }
+//         },
+//         {
+//             title: "Cyber attacks increasing globally",
+//             desc: "Organizations face rising ransomware threats in 2026.",
+//             content: "Ransomware attacks have increased 40% in the past year.",
+//             domain: "IT", image: "/static/images/news1.1.png",
+//             descriptions: {
+//                 beginner: "Hackers are locking computer systems and demanding money. Companies need better protection.",
+//                 intermediate: "Ransomware attacks have increased significantly using phishing and zero-day exploits to encrypt critical data.",
+//                 advanced: "Ransomware has evolved to include supply chain targeting and multi-stage encryption, requiring advanced threat detection protocols."
+//             }
+//         },
+//         {
+//             title: "Quantum computing milestone",
+//             desc: "Researchers achieved stable multi-qubit operations.",
+//             content: "A breakthrough allows for more stable operations with multiple qubits.",
+//             domain: "Electronics", image: "/static/images/news1.1.png",
+//             descriptions: {
+//                 beginner: "Scientists made quantum computers work better by keeping multiple quantum bits stable simultaneously.",
+//                 intermediate: "Researchers achieved improved coherence times for multi-qubit systems enabling more complex algorithms.",
+//                 advanced: "Advances in quantum error correction extended coherence times, facilitating complex algorithms beyond NISQ limitations."
+//             }
+//         },
+//         {
+//             title: "Web3 adoption growing",
+//             desc: "Decentralized apps are gaining real-world usage.",
+//             content: "Web3 applications are seeing increased adoption in payments and DeFi.",
+//             domain: "IT", image: "/static/images/news1.1.png",
+//             descriptions: {
+//                 beginner: "Web3 apps use blockchain so people control their own data without big companies in the middle.",
+//                 intermediate: "Decentralized apps built on blockchain are gaining traction with improved UX and lower barriers to entry.",
+//                 advanced: "Layer-2 scaling solutions have enabled economically viable DeFi protocols with improved governance models driving mainstream adoption."
+//             }
+//         },
+//         {
+//             title: "Edge computing expanding",
+//             desc: "More processing is moving closer to devices.",
+//             content: "Edge computing reduces latency by processing data at the network edge.",
+//             domain: "Electronics", image: "/static/images/news1.1.png",
+//             descriptions: {
+//                 beginner: "Instead of sending data to distant servers, computers process it nearby — making things faster.",
+//                 intermediate: "Edge architecture distributes processing across networked devices, reducing latency and bandwidth consumption.",
+//                 advanced: "Federated edge computing with containerization and 5G integration enables real-time IoT stream processing with reduced cloud dependency."
+//             }
+//         }
+//     ];
+// }
+
 function getFallbackData() {
     return [
-        {
-            title: "AI agents are automating workflows",
-            desc: "Autonomous AI agents are replacing repetitive business processes.",
-            content: "Companies are adopting AI agents to streamline workflows and reduce manual work.",
-            domain: "AI", image: "/static/images/news1.1.png",
-            descriptions: {
-                beginner: "AI agents are smart programs that do repetitive tasks automatically, saving businesses time.",
-                intermediate: "Autonomous AI agents use machine learning to automate complex workflows with minimal human intervention.",
-                advanced: "AI agents employ reinforcement learning and process automation to reduce operational overhead and improve efficiency metrics."
-            }
-        },
-        {
-            title: "Cyber attacks increasing globally",
-            desc: "Organizations face rising ransomware threats in 2026.",
-            content: "Ransomware attacks have increased 40% in the past year.",
-            domain: "IT", image: "/static/images/news1.1.png",
-            descriptions: {
-                beginner: "Hackers are locking computer systems and demanding money. Companies need better protection.",
-                intermediate: "Ransomware attacks have increased significantly using phishing and zero-day exploits to encrypt critical data.",
-                advanced: "Ransomware has evolved to include supply chain targeting and multi-stage encryption, requiring advanced threat detection protocols."
-            }
-        },
-        {
-            title: "Quantum computing milestone",
-            desc: "Researchers achieved stable multi-qubit operations.",
-            content: "A breakthrough allows for more stable operations with multiple qubits.",
-            domain: "Electronics", image: "/static/images/news1.1.png",
-            descriptions: {
-                beginner: "Scientists made quantum computers work better by keeping multiple quantum bits stable simultaneously.",
-                intermediate: "Researchers achieved improved coherence times for multi-qubit systems enabling more complex algorithms.",
-                advanced: "Advances in quantum error correction extended coherence times, facilitating complex algorithms beyond NISQ limitations."
-            }
-        },
-        {
-            title: "Web3 adoption growing",
-            desc: "Decentralized apps are gaining real-world usage.",
-            content: "Web3 applications are seeing increased adoption in payments and DeFi.",
-            domain: "IT", image: "/static/images/news1.1.png",
-            descriptions: {
-                beginner: "Web3 apps use blockchain so people control their own data without big companies in the middle.",
-                intermediate: "Decentralized apps built on blockchain are gaining traction with improved UX and lower barriers to entry.",
-                advanced: "Layer-2 scaling solutions have enabled economically viable DeFi protocols with improved governance models driving mainstream adoption."
-            }
-        },
-        {
-            title: "Edge computing expanding",
-            desc: "More processing is moving closer to devices.",
-            content: "Edge computing reduces latency by processing data at the network edge.",
-            domain: "Electronics", image: "/static/images/news1.1.png",
-            descriptions: {
-                beginner: "Instead of sending data to distant servers, computers process it nearby — making things faster.",
-                intermediate: "Edge architecture distributes processing across networked devices, reducing latency and bandwidth consumption.",
-                advanced: "Federated edge computing with containerization and 5G integration enables real-time IoT stream processing with reduced cloud dependency."
-            }
-        }
+      {
+        title: "Zero-day exploit discovered",
+        desc: "Critical vulnerability found in major systems.",
+        domain: "Cybersecurity",
+        image: "/static/images/news1.1.png",
+        descriptions: { beginner:"Hackers found a new weakness...", intermediate:"...", advanced:"..." }
+      },
+      {
+        title: "New React framework released",
+        desc: "Improves performance and DX.",
+        domain: "Web Development",
+        image: "/static/images/news1.1.png",
+        descriptions: { beginner:"A better way to build websites...", intermediate:"...", advanced:"..." }
+      },
+      {
+        title: "AI model beats benchmarks",
+        desc: "New ML architecture improves accuracy.",
+        domain: "Machine Learning",
+        image: "/static/images/news1.1.png",
+        descriptions: { beginner:"Smarter AI created...", intermediate:"...", advanced:"..." }
+      },
+      {
+        title: "Cloud costs rising",
+        desc: "Companies optimizing infra usage.",
+        domain: "Cloud Computing",
+        image: "/static/images/news1.1.png",
+        descriptions: { beginner:"Cloud services getting expensive...", intermediate:"...", advanced:"..." }
+      },
+      {
+        title: "Indie game explodes",
+        desc: "Small dev team goes viral.",
+        domain: "Gaming Tech",
+        image: "/static/images/news1.1.png",
+        descriptions: { beginner:"A small game became popular...", intermediate:"...", advanced:"..." }
+      }
     ];
-}
+  }
 
 // ================= RENDER =================
 function renderBrief() {

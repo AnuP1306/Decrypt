@@ -124,9 +124,23 @@
         option.classList.add('active');
 
         // selected = option.innerText.trim();
-        selected = option.querySelector('span') 
-  ? option.innerText.replace(option.querySelector('span').innerText, '').trim()
-  : option.innerText.trim();
+        // selected = option.querySelector('span') 
+        //   ? option.innerText.replace(option.querySelector('span').innerText, '').trim()
+        //   : option.innerText.trim();
+        let raw = option.querySelector('span') 
+          ? option.innerText.replace(option.querySelector('span').innerText, '').trim()
+          : option.innerText.trim();
+
+        // 🔥 MAP TO SYSTEM VALUES
+        if (raw.toLowerCase().includes("artificial")) {
+            selected = "AI";
+        } else if (raw.toLowerCase().includes("technology")) {
+            selected = "IT";
+        } else if (raw.toLowerCase().includes("electronic")) {
+            selected = "Electronics";
+        } else {
+            selected = raw;
+        }
 
         btn.classList.add('enabled');
       });

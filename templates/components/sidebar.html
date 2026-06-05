@@ -6,7 +6,9 @@
            <div class="user-avatar">{{ (user_name or 'E')[0] | upper }}</div>
 <div class="user-text">
     <p class="user-name">{{ user_name or 'Explorer' }}</p>
-    <span class="user-role">Explorer · {{ user_level or 'Beginner' }}</span>
+    <!-- <span class="user-role">Explorer · {{ user_level or 'Beginner' }}</span> -->
+    <span class="user-role">{{  user_domain[0] if user_domain else "AI" }} · {{ user_level or 'Beginner'}}</span>
+
 </div>
 
             <button class="menu-toggle" onclick="toggleSidebar()">
@@ -41,11 +43,20 @@
     <img src="{{ url_for('static', filename='images/opportunity.png') }}">
     <span>Student Opportunities</span>
 </a>
-
-        <div class="menu-item">
+<!-- <a href="{{ url_for('home.saved_items') }}"
+   class="menu-item {% if request.path.startswith('/saved') %}active{% endif %}">
+    <img src="{{ url_for('static', filename='images/saved.png') }}">
+    <span>Saved Items</span>
+</a> -->
+<a href="{{ url_for('saved.saved_items') }}"
+   class="menu-item {% if request.path.startswith('/saved') %}active{% endif %}">
+    <img src="{{ url_for('static', filename='images/saved.png') }}">
+    <span>Saved Items</span>
+        </a>
+        <!-- <div class="menu-item">
             <img src="{{ url_for('static', filename='images/saved.png') }}">
             <span>Saved Items</span>
-        </div>
+        </div> -->
 
     </div>
 

@@ -41,6 +41,7 @@ def home():
     user_name = "Explorer"
     user_level = "Beginner"
     user_topics = []
+    user_domain = [] 
 
     user_id = session.get('user')
     if user_id:
@@ -51,6 +52,7 @@ def home():
                 user_name = profile.get('name', 'Explorer')
                 user_level = profile.get('level', 'Beginner')
                 user_topics = profile.get('topics', [])
+                user_domain = profile.get('interests', [])
         except Exception as e:
             print("⚠️ Could not load user profile:", e)
 
@@ -60,8 +62,32 @@ def home():
         fallback_data=fallback_data,
         user_name=user_name,
         user_level=user_level,
-        user_topics=user_topics
+        user_topics=user_topics,
+        user_domain=user_domain
     )
+
+def get_user_data():
+    from flask import session
+    from utils.firebase_admin import db
+
+    user_name = "Explorer"
+    user_level = "Beginner"
+    user_domain = []
+
+    user_id = session.get('user')
+
+    if user_id:
+        try:
+            doc = db.collection('users').document(user_id).get()
+            if doc.exists:
+                profile = doc.to_dict()
+                user_name = profile.get('name', 'Explorer')
+                user_level = profile.get('level', 'Beginner')
+                user_domain = profile.get('interests', [])
+        except:
+            pass
+
+    return user_name, user_level, user_domain
 # @home_bp.route('/home')
 # def home():
 #     return render_template("home.html", active_page="home", fallback_data=FALLBACK_DATA)
@@ -89,23 +115,65 @@ def logout():
 
 
 # ✅ Daily Brief Page
+# @home_bp.route('/daily-brief')
+# def daily_brief():
+#     from flask import session
+#     from utils.firebase_admin import db
+
+#     user_name = "Explorer"
+#     user_level = "Beginner"
+
+#     user_id = session.get('user')
+#     if user_id:
+#         try:
+#             doc = db.collection('users').document(user_id).get()
+#             if doc.exists:
+#                 profile = doc.to_dict()
+#                 user_name = profile.get('name', 'Explorer')
+#                 user_level = profile.get('level', 'Beginner')
+#         except:
+#             pass
+
+#     return render_template("daily_brief.html", active_page="daily", user_name=user_name, user_level=user_level)
+
 @home_bp.route('/daily-brief')
 def daily_brief():
-    from flask import session
-    from utils.firebase_admin import db
+    user_name, user_level, user_domain = get_user_data()
 
-    user_name = "Explorer"
-    user_level = "Beginner"
+    return render_template(
+        "daily_brief.html",
+        active_page="daily",
+        user_name=user_name,
+        user_level=user_level,
+        user_domain=user_domain
+    )
 
-    user_id = session.get('user')
-    if user_id:
-        try:
-            doc = db.collection('users').document(user_id).get()
-            if doc.exists:
-                profile = doc.to_dict()
-                user_name = profile.get('name', 'Explorer')
-                user_level = profile.get('level', 'Beginner')
-        except:
-            pass
+@home_bp.route('/saved')
+def saved_items():
+    user_name, user_level, user_domain = get_user_data()
 
-    return render_template("daily_brief.html", active_page="daily", user_name=user_name, user_level=user_level)
+    return render_template(
+        "saved.html",
+        user_name=user_name,
+        user_level=user_level,
+        user_domain=user_domain
+    )
+# @home_bp.route('/saved')
+# def saved_items():
+#     from flask import session
+#     from utils.firebase_admin import db
+
+#     user_name = "Explorer"
+#     user_level = "Beginner"
+#     user_id = session.get('user')
+#     if user_id:
+#         try:
+#             doc = db.collection('users').document(user_id).get()
+#             if doc.exists:
+#                 profile = doc.to_dict()
+#                 user_name = profile.get('name', 'Explorer')
+#                 user_level = profile.get('level', 'Beginner')
+#         except:
+#             pass
+
+#     return render_template("saved.html", user_name=user_name, user_level=user_level)
